@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "description": "__MSG_extDesc__",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "default_locale": "en",
   "homepage_url": "https://github.com/omaressamre/hudhud",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqfBsZ11G9rMD3UI/0l13FGWW8HekZdBe1JgtJ9rsGZ0ZYLR1jJS0F+ezPTra+5WNdVJKrD/9Sj6dcPd7feQg/w3Y0PvipvsN4+i+mfdvjfkUsm9FYkZcYhbO1HKdaXHKTH9c/AURK1FyQy416DFnoCDz3qwjJyePyUOJacRgK8pbMcW+scVPvxuxKWean5L9cGH2BULz2z4eDi1Wyj4fENFaDqPZxSKCGduPHqt4QCTzVE3Ivwki1oHlPP5x4WkaDj1iz22EVveUCJSzjnpC4g8we/khH615TxNzyJ9NoUKsJDLhCKketBEvhPcS7OPmEWh8mD3QwuHP7BQt5WbE2wIDAQAB",
