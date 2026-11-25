@@ -550,7 +550,10 @@ async function startDownload({ tabId, item, baseName, engineId, variant = 0, aud
         const j = jobs.find((x) => x.jobId === jobId);
         if (!j) return;
         j.downloadId = res.downloadId;
-        if (d && d.state !== 'in_progress') finishJob(j, d.state, { file: d.filename, error: d.error });
+        const early = earlyDownloads.get(res.downloadId);
+        earlyDownloads.delete(res.downloadId);
+        const state = early?.state && early.state !== 'in_progress' ? early.state : d?.state;
+        if (state && state !== 'in_progress') finishJob(j, state, { file: early?.file || d?.filename, error: early?.error || d?.error });
       });
     }
   } catch (e) {
@@ -621,11 +624,33 @@ onNativeEvent((m) => updateJobs((jobs) => {
   }
 }));
 
+// A small file can finish before the job learns its downloadId (seen in Firefox):
+// remember what happened to unknown downloads and apply it when the id arrives.
+const earlyDownloads = new Map();
+function applyEarlyDownload(j) {
+  const e = earlyDownloads.get(j.downloadId);
+  if (!e || !e.state || e.state === 'in_progress') return;
+  earlyDownloads.delete(j.downloadId);
+  finishJob(j, e.state, { file: e.file, error: e.error });
+  if (j.mode === 'hls') {
+    chrome.runtime.sendMessage({ target: 'offscreen', type: 'hls-cleanup', jobId: j.jobId }).catch(() => {});
+    removeHeaderRule(j.jobId);
+  }
+}
+
 chrome.downloads.onChanged.addListener((delta) => {
   if (!delta.state && !delta.error && !delta.filename) return;
   updateJobs(async (jobs) => {
     const j = jobs.find((x) => x.downloadId === delta.id);
-    if (!j) return;
+    if (!j) {
+      const e = earlyDownloads.get(delta.id) || {};
+      if (delta.filename) e.file = delta.filename.current;
+      if (delta.error) e.error = delta.error.current;
+      if (delta.state) e.state = delta.state.current;
+      earlyDownloads.set(delta.id, e);
+      setTimeout(() => earlyDownloads.delete(delta.id), 60_000);
+      return;
+    }
     if (delta.filename) j.file = delta.filename.current;
     if (!j.file && delta.state?.current === 'complete') {
       const [d] = await chrome.downloads.search({ id: delta.id });
@@ -660,7 +685,7 @@ async function onHlsMessage(m) {
       const downloadId = await chrome.downloads.download({ url: m.fallbackUrl, filename: j.path, conflictAction: 'uniquify', saveAs: false });
       return updateJobs((list) => {
         const x = list.find((y) => y.jobId === m.jobId);
-        if (x) Object.assign(x, { downloadId, mode: undefined, noAudio: true, note: t('errMergeFailed', m.message), percent: 0, speed: undefined });
+        if (x) { Object.assign(x, { downloadId, mode: undefined, noAudio: true, note: t('errMergeFailed', m.message), percent: 0, speed: undefined }); applyEarlyDownload(x); }
       });
     } catch (e) {
       m = { ...m, message: String(e.message || e) };
@@ -683,7 +708,7 @@ async function onHlsMessage(m) {
       const downloadId = await chrome.downloads.download({ url: m.url, filename: path, conflictAction: 'uniquify', saveAs: false });
       await updateJobs((list) => {
         const x = list.find((y) => y.jobId === m.jobId);
-        if (x) Object.assign(x, { downloadId, path, percent: 100, speed: '', eta: '', note: m.note || '', converted: !!m.converted });
+        if (x) { Object.assign(x, { downloadId, path, percent: 100, speed: '', eta: '', note: m.note || '', converted: !!m.converted }); applyEarlyDownload(x); }
       });
     } catch (e) {
       chrome.runtime.sendMessage({ target: 'offscreen', type: 'hls-cleanup', jobId: m.jobId }).catch(() => {});

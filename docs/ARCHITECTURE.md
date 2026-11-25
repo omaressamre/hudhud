@@ -28,3 +28,7 @@ A single static Go binary. Reads length-prefixed JSON from stdin, runs yt-dlp/ff
 ## Versions
 
 `extension/manifest.json` `version` and `helper/main.go` `Version` are always equal and match the git tag `vX.Y.Z`.
+
+## Firefox
+
+`scripts/firefox-manifest.mjs` turns the same source into the Firefox build: background as a module event page, no `offscreen` permission, `browser_specific_settings.gecko` (id `hudhud@omaressamre.github.io`, update URL on the site). Firefox has no offscreen API, so `engines/browser.js` loads `offscreen.html` in a hidden iframe of the background page; messages are the same. The release workflow signs the build as an unlisted add-on (`web-ext sign`, keys in `AMO_JWT_ISSUER`/`AMO_JWT_SECRET`) and the site serves `firefox/hudhud.xpi` and `firefox/updates.json`. The helper is registered for Firefox with `allowed_extensions`; on Firefox the self-update replaces only the helper (`helperOnly`).

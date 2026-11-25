@@ -34,3 +34,7 @@ The media fixtures (a few hundred MB of generated test videos and HLS playlists)
 ## Visual checks
 
 `tests/ui_shots.py` and `tests/ui_states.py` screenshot the popup, options and welcome pages in Arabic/English × light/dark into `HH_SHOTS` (default `/tmp/hh-test-shots`) for comparison with the Figma frames.
+
+## Firefox
+
+CI runs `tests/firefox_e2e.py` in headless Firefox with geckodriver and Selenium, on fixtures made by `tests/fixtures/gen.sh` (needs ffmpeg). WebDriver can't script `moz-extension://` pages, so the test adds a content-script bridge to a copy of the build (never shipped). It checks install, the helper over native messaging, HLS → MP4 through the offscreen iframe, and a direct download. `web-ext lint` runs on the same build.

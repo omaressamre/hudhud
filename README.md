@@ -33,6 +33,10 @@ Hudhud is not in the Chrome Web Store. Get it from the [latest release](https://
 
 `hudhud-vX.Y.Z-extension-only.zip` is the extension alone, for people who don't want the helper (it can't update itself). Uninstall with the matching `uninstall` script, then remove Hudhud from `chrome://extensions`.
 
+### Firefox
+
+Install the signed add-on from the [site](https://omaressamre.github.io/hudhud/#download) (Firefox 140 or newer). It updates itself through Firefox. For YouTube and playlists also run the installer for your system above — it registers the helper with Firefox too, and the add-on updates the helper with one click.
+
 > Coming from the old **VidSaver** build? Run its uninstaller first — Hudhud uses a new helper name (`com.hudhud.helper`) and folder.
 
 ## Repository layout
@@ -42,7 +46,7 @@ Hudhud is not in the Chrome Web Store. Get it from the [latest release](https://
 | `extension/` | MV3 extension: service worker, popup, options, welcome, offscreen converter |
 | `helper/` | Go native-messaging helper (`com.hudhud.helper`) |
 | `installers/` | Per-user installers for Windows, macOS, Linux |
-| `scripts/` | `gen-locales.mjs` (strings → `_locales`), `fetch-fonts.sh`, `build.sh` |
+| `scripts/` | `gen-locales.mjs` (strings → `_locales`), `fetch-fonts.sh`, `build.sh`, `firefox-manifest.mjs` (Firefox build), `firefox-updates.mjs` |
 | `tests/` | Unit tests and Chrome end-to-end tests |
 | `site/` | Static landing page (GitHub Pages) |
 | `docs/` | Architecture and testing notes |

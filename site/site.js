@@ -28,6 +28,8 @@ const EN = {
   dlTitle: 'Download', dlSub: 'Hudhud isn’t in the Chrome Web Store — you get it straight from here. Latest release:',
   dlMain: 'Download Hudhud', dlMainSub: 'Extension + helper · Chrome · Edge · Brave',
   dlExtOnly: 'Just the extension, without the helper (advanced)',
+  ffSub: 'Signed add-on that updates itself. For YouTube, also get the helper for your system above.',
+  ffMain: 'Add Hudhud to Firefox', ffMainSub: 'Then get the helper below for YouTube and playlists',
   osWin: 'install.bat', osMac: 'install.command', osLinux: 'bash install.sh',
   dlNote: 'The helper uses yt-dlp, ffmpeg and Deno, downloaded from their official sources during install.',
   drm: '<strong>Hudhud doesn’t break copy protection.</strong> Encrypted (DRM) videos such as Netflix or Shahid are recognised and skipped.',
@@ -63,7 +65,7 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n-aria]').forEach((el) => el.setAttribute('aria-label', dict[el.dataset.i18nAria]));
   document.querySelectorAll('[data-i18n-alt]').forEach((el) => el.setAttribute('alt', dict[el.dataset.i18nAlt]));
   document.title = (lang === 'en' ? EN : AR_EXTRA).title;
-  updateShot(); updateVersion(); setOsName();
+  updateShot(); updateVersion(); setOsName(); setFirefoxMain();
 }
 
 function updateShot() {
@@ -80,7 +82,7 @@ function setOsName() {
 }
 function updateVersion() {
   const el = document.querySelector('small[data-release]');
-  if (!el || !release) return;
+  if (!el || !release || document.querySelector('[data-bundle][data-firefox]')) return;
   const base = root.lang === 'en' ? EN.dlMainSub : AR.dlMainSub;
   el.textContent = `${base} · ${(root.lang === 'en' ? EN : AR_EXTRA).version(release.tag)}`;
 }
@@ -100,7 +102,8 @@ async function loadRelease() {
       if (a) card.href = a.browser_download_url;
     });
     const mine = document.querySelector('.os-card.mine');
-    if (mine) document.querySelector('[data-bundle]').href = mine.href;
+    const main = document.querySelector('[data-bundle]');
+    if (mine && !main.dataset.firefox) main.href = mine.href;
     updateVersion();
   } catch (e) { /* offline or rate-limited: keep the releases page link */ }
 }
@@ -116,13 +119,36 @@ function markOs() {
   }
 }
 
+const IS_FIREFOX = /Firefox\//.test(navigator.userAgent);
+async function showFirefox() {
+  const card = document.querySelector('[data-firefox]');
+  try {
+    const r = await fetch('firefox/hudhud.xpi', { method: 'HEAD' });
+    if (!r.ok) return;
+  } catch { return; }
+  card.hidden = false;
+  if (IS_FIREFOX) {
+    const main = document.querySelector('[data-bundle]');
+    main.href = card.href;
+    main.dataset.firefox = '1';
+    setFirefoxMain();
+  }
+}
+function setFirefoxMain() {
+  const main = document.querySelector('[data-bundle][data-firefox]');
+  if (!main) return;
+  const en = root.lang === 'en';
+  main.querySelector('strong').textContent = en ? EN.ffMain : 'أضف هدهد لفايرفوكس';
+  main.querySelector('small').textContent = en ? EN.ffMainSub : 'وبعدها نزّل المساعد من تحت عشان يوتيوب والبلاي ليستات';
+}
+
 function hidePlaceholders() {
   document.querySelectorAll('[data-donate]').forEach((a) => { if (/INSTAPAY_HANDLE|example\.com/.test(a.href)) a.hidden = true; });
 }
 
 snapshotArabic();
 if (root.lang === 'en') applyLang('en'); else updateShot();
-markOs(); hidePlaceholders(); loadRelease();
+markOs(); hidePlaceholders(); loadRelease(); showFirefox();
 
 document.getElementById('lang').addEventListener('click', () => {
   const next = root.lang === 'ar' ? 'en' : 'ar';

@@ -109,6 +109,8 @@ h3 small { font-weight: 400; color: var(--text-2); font-size: 14px; }
 .os-card strong { font-size: 18px; }
 .os-card small { color: var(--text-2); font-family: ui-monospace, Consolas, monospace; font-size: 13px; direction: ltr; }
 .os-card:hover { border-color: var(--border-strong); }
+.ff-card { margin-top: 0; }
+.ff-card small { font-family: var(--font); direction: inherit; font-size: 14px; }
 .os-card.mine { border-color: var(--coral); box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 18%, transparent); }
 .note { color: var(--text-2); font-size: 14px; margin: 4px 0 0; }
 .drm { display: flex; align-items: center; gap: 18px; margin-top: 36px; padding: 18px 22px; border-radius: 20px; background: var(--card); border: 1px dashed var(--border-strong); }

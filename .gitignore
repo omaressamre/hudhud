@@ -16,3 +16,6 @@ extension/fonts/*.ttf
 site/fonts/*.woff2
 site/fonts/*.ttf
 .DS_Store
+
+# Firefox add-on, added to the site at deploy time
+site/firefox/
