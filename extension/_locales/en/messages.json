@@ -575,6 +575,21 @@
   "version": {
     "message": "Version $1"
   },
+  "checkUpdates": {
+    "message": "Check for updates"
+  },
+  "checking": {
+    "message": "Checking…"
+  },
+  "upToDate": {
+    "message": "You have the latest version"
+  },
+  "updateFound": {
+    "message": "Version $1 is out. Open Hudhud and press “Update”."
+  },
+  "updateCheckFailed": {
+    "message": "Couldn’t reach GitHub right now"
+  },
   "privacy": {
     "message": "Privacy"
   },

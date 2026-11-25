@@ -575,6 +575,21 @@
   "version": {
     "message": "النسخة $1"
   },
+  "checkUpdates": {
+    "message": "تحقق من التحديثات"
+  },
+  "checking": {
+    "message": "بيدوّر…"
+  },
+  "upToDate": {
+    "message": "عندك آخر إصدار"
+  },
+  "updateFound": {
+    "message": "فيه إصدار جديد ($1). افتح هدهد ودوس «حدّث»."
+  },
+  "updateCheckFailed": {
+    "message": "مقدرتش أوصل لـGitHub دلوقتي"
+  },
   "privacy": {
     "message": "الخصوصية"
   },

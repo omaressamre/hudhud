@@ -107,6 +107,15 @@ async function loadNative() {
 
 function renderStatic() {
   $('#ver').textContent = t('version', chrome.runtime.getManifest().version);
+  $('#btnCheckUpdate').addEventListener('click', async () => {
+    const b = $('#btnCheckUpdate'), st = $('#selfUpdateStatus');
+    b.disabled = true; st.textContent = t('checking');
+    try {
+      const latest = await send({ type: 'checkUpdate' });
+      st.textContent = latest === null ? t('updateCheckFailed') : latest ? t('updateFound', latest) : t('upToDate');
+    } catch { st.textContent = t('updateCheckFailed'); }
+    b.disabled = false;
+  });
   $('#rateLimit').placeholder = t('noLimit');
 }
 

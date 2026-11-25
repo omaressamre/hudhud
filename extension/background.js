@@ -729,7 +729,7 @@ async function checkHelperUpdate(force = false) {
     const newer = latest && cmpVer(latest, current) > 0;
     const managed = newer && (await isManagedInstall(info));
     await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed } : null });
-    return newer ? latest : null;
+    return newer ? latest : ''; // '' = up to date, null = couldn't check
   } catch { return null; }
 }
 
