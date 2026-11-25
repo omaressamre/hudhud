@@ -45,7 +45,9 @@ jobs:
       - name: Lint with web-ext
         run: npx --yes web-ext@8 lint --source-dir /tmp/hh-firefox --self-hosted
       - name: Helper
-        run: cd helper && go build -o /tmp/hhhost/hudhud-helper .
+        run: |
+          cd helper && go build -o /tmp/hhhost/hudhud-helper .
+          cp ../tests/fakebin/yt-dlp /tmp/hhhost/yt-dlp && chmod +x /tmp/hhhost/yt-dlp
       - name: End-to-end in Firefox
         run: |
           tests/fixtures/gen.sh /tmp/hh-site

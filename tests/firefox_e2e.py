@@ -88,6 +88,9 @@ try:
       r = bridge({'type': 'download', 'itemId': item['id'], 'baseName': f'ff-{kind}', 'engine': 'browser'})
       check(f'{kind}: download starts', bool(r and r.get('ok')), json.dumps(r)[:300])
       results[kind] = item['id']
+    if item and kind == 'direct':
+      r = bridge({'type': 'download', 'itemId': item['id'], 'baseName': 'ff-native', 'engine': 'native'})
+      check('native: download starts', bool(r and r.get('ok')), json.dumps(r)[:300])
 
   deadline = time.time() + 120
   jobs = []
@@ -96,7 +99,8 @@ try:
     if jobs and all(j['state'] in ('complete', 'interrupted') for j in jobs): break
     time.sleep(2)
   for j in jobs:
-    print(' job', json.dumps({k: j.get(k) for k in ('mode', 'state', 'downloadId', 'error', 'file', 'path', 'percent', 'note')}), flush=True)
+    print(' job', json.dumps({k: j.get(k) for k in ('engine', 'mode', 'state', 'downloadId', 'error', 'file', 'path', 'percent', 'note')}), flush=True)
+  check('native: job completes', any(j.get('engine') == 'native' and j['state'] == 'complete' for j in jobs))
   if any(j['state'] != 'complete' for j in jobs):
     failures.append('jobs finish')
     print('FAIL jobs finish')
