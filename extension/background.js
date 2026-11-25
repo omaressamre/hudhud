@@ -718,7 +718,9 @@ async function checkHelperUpdate(force = false) {
   try {
     const { helperUpdateAt = 0 } = await chrome.storage.local.get('helperUpdateAt');
     if (!force && Date.now() - helperUpdateAt < 12 * 3600_000) return null;
-    const info = await nativeInfo(true);
+    let info = await nativeInfo(true);
+    // the first ping after the browser starts can be slow (yt-dlp/antivirus); try once more
+    if (!info) { await new Promise((r) => setTimeout(r, 4000)); info = await nativeInfo(true); }
     await chrome.storage.local.set({ helperUpdateAt: Date.now() });
     // the older of the extension and the helper decides (they ship together with one version)
     const ext = chrome.runtime.getManifest().version;
@@ -728,9 +730,19 @@ async function checkHelperUpdate(force = false) {
     const latest = String((await r.json()).tag_name || '').replace(/^v/, '');
     const newer = latest && cmpVer(latest, current) > 0;
     const managed = newer && (await isManagedInstall(info));
-    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed } : null });
+    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed, extDir: info?.extDir || '' } : null });
     return newer ? latest : ''; // '' = up to date, null = couldn't check
   } catch { return null; }
+}
+
+/** re-check whether one-click update is possible (the popup asks when the banner offers a download) */
+async function refreshManaged() {
+  const { helperUpdate: up } = await chrome.storage.local.get('helperUpdate');
+  if (!up || up.managed) return up;
+  const info = (await nativeInfo()) || (await nativeInfo(true));
+  const next = { ...up, managed: await isManagedInstall(info), extDir: info?.extDir || '' };
+  await chrome.storage.local.set({ helperUpdate: next });
+  return next;
 }
 
 /** one-click update: the helper replaces itself and the extension folder, then we reload */
@@ -807,6 +819,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     case 'uiLang': reply(getSettings().then((s) => s.uiLang || 'auto')); return true;
     case 'checkUpdate': reply(checkHelperUpdate(true)); return true;
     case 'selfUpdate': reply(selfUpdate()); return true;
+    case 'refreshManaged': reply(refreshManaged()); return true;
   }
   return false;
 });

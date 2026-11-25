@@ -107,3 +107,6 @@ section:empty { display: none; }
 .foot { display: flex; align-items: center; justify-content: space-between; font-size: 11px; padding-top: 2px; }
 .support { display: inline-flex; align-items: center; gap: 6px; color: var(--hh-accent-primary); text-decoration: none; font-size: 13px; font-weight: 500; }
 .support svg { width: 16px; height: 16px; }
+.copy-row { display: flex; flex-direction: column; align-items: stretch; gap: 6px; width: 100%; margin-top: 2px; }
+.copy-row .path { direction: ltr; text-align: left; font: 11px/1.4 ui-monospace, Consolas, monospace; background: var(--hh-bg-surface); border-radius: 8px; padding: 6px 8px; overflow-wrap: anywhere; }
+.copy-row .btn { align-self: flex-start; }

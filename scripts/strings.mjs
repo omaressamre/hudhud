@@ -112,6 +112,8 @@ export default {
   updateBodyManaged: ['بياخد أقل من دقيقة، وإعداداتك وتحميلاتك مش هتتمسح.', 'Takes under a minute. Your settings and downloads stay.'],
   updateCta: ['حمّل التحديث', 'Get the update'],
   updateNow: ['حدّث دلوقتي', 'Update now'],
+  updateMoveBody: ['عشان التحديث يبقى بضغطة: شيل هدهد من صفحة الإضافات وحمّله تاني من الفولدر ده (مرة واحدة بس).', 'For one-click updates: remove Hudhud on the extensions page and load it again from this folder (only once).'],
+  copyPath: ['انسخ المسار', 'Copy path'],
   updating: ['بيحدّث…', 'Updating…'],
   updateBusy: ['استنى التحميلات تخلص الأول، وبعدين حدّث.', 'Wait for the downloads to finish, then update.'],
   updateNotManaged: ['الإضافة دي مش متسطّبة من فولدر هدهد، حمّل التحديث وشغّل التسطيب.', 'This copy isn’t installed from the Hudhud folder. Download the update and run the installer.'],

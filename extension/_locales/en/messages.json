@@ -302,6 +302,12 @@
   "updateNow": {
     "message": "Update now"
   },
+  "updateMoveBody": {
+    "message": "For one-click updates: remove Hudhud on the extensions page and load it again from this folder (only once)."
+  },
+  "copyPath": {
+    "message": "Copy path"
+  },
   "updating": {
     "message": "Updating…"
   },

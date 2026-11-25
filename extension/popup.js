@@ -68,12 +68,24 @@ function renderBanners() {
   }
   if (justUpdated) out.push(banner('info', 'check', t('updatedTo', justUpdated), null, null, () => { justUpdated = ''; renderBanners(); }));
   const up = local.helperUpdate;
+  if (up && up.latest && !up.managed && !managedChecked) {
+    managedChecked = true;
+    send({ type: 'refreshManaged' }).catch(() => {});
+  }
   if (up && up.latest && up.latest !== local.dismissedUpdate) {
+    // installed with the installer, but Chrome loads the extension from another folder
+    if (!up.managed && up.extDir) {
+      out.push(banner('info', 'refresh', t('updateTitle', up.latest), t('updateMoveBody'),
+        el('div', { class: 'copy-row' }, [el('bdi', { class: 'path', text: up.extDir }),
+          btn('secondary', t('copyPath'), (e) => { navigator.clipboard.writeText(up.extDir); e.currentTarget.textContent = '✓'; })]),
+        () => chrome.storage.local.set({ dismissedUpdate: up.latest })));
+    } else {
     const action = up.managed
       ? btn('primary', updating ? t('updating') : t('updateNow'), (e) => runSelfUpdate(e.currentTarget), updating ? { class: 'btn btn-primary', disabled: true } : undefined)
       : btn('primary', t('updateCta'), () => chrome.tabs.create({ url: releaseAsset(currentOs()) }));
     out.push(banner('info', 'refresh', t('updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'), action,
       updating ? null : () => chrome.storage.local.set({ dismissedUpdate: up.latest })));
+    }
   }
   const needHelper = state && !hasNative() && state.items.some((i) => i.kind === 'page' || (!i.engines.length && !i.drm));
   if (needHelper) out.push(helperBanner());
@@ -108,6 +120,7 @@ function helperBanner() {
 }
 let updating = false;
 let justUpdated = '';
+let managedChecked = false;
 async function runSelfUpdate() {
   updating = true; renderBanners();
   try {

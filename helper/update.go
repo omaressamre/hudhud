@@ -66,6 +66,14 @@ func managedExtensionVersion() string {
 	return m.Version
 }
 
+// managedExtensionDir is the folder Chrome should load the extension from ("" when there is none).
+func managedExtensionDir() string {
+	if managedExtensionVersion() == "" {
+		return ""
+	}
+	return filepath.Join(installDir(), "extension")
+}
+
 func assetName() string {
 	switch runtime.GOOS {
 	case "windows":

@@ -29,7 +29,7 @@ import (
 	"time"
 )
 
-const Version = "0.9.2"
+const Version = "0.9.3"
 
 type Req struct {
 	ID        string `json:"id"`
@@ -364,6 +364,7 @@ func info() map[string]any {
 		"active":        active,
 		"maxConcurrent": max,
 		"installId":     installID(),
+		"extDir":        managedExtensionDir(),
 		"extVersion":    managedExtensionVersion(),
 	}
 }
