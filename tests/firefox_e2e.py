@@ -47,7 +47,7 @@ for k, v in {
   'browser.download.folderList': 2, 'browser.download.dir': DL, 'browser.download.useDownloadDir': True,
   'browser.download.always_ask_before_handling_new_types': False,
   'browser.helperApps.neverAsk.saveToDisk': 'video/mp4,application/octet-stream',
-  'devtools.console.stdout.content': True, 'browser.dom.window.dump.enabled': True,
+  'devtools.console.stdout.content': True, 'devtools.console.stdout.chrome': True, 'browser.dom.window.dump.enabled': True,
   'extensions.logging.enabled': True,
 }.items():
   o.set_preference(k, v)
@@ -96,7 +96,10 @@ try:
     if jobs and all(j['state'] in ('complete', 'interrupted') for j in jobs): break
     time.sleep(2)
   for j in jobs:
-    print(' job', j.get('mode'), j['state'], j.get('error'), j.get('file'), flush=True)
+    print(' job', json.dumps({k: j.get(k) for k in ('mode', 'state', 'downloadId', 'error', 'file', 'path', 'percent', 'note')}), flush=True)
+  if any(j['state'] != 'complete' for j in jobs):
+    failures.append('jobs finish')
+    print('FAIL jobs finish')
   files = [os.path.join(r, f) for r, _, fs in os.walk(DL) for f in fs]
   print(' files', files, flush=True)
   for kind in results:
@@ -111,6 +114,7 @@ finally:
   d.quit()
   if failures:
     print('--- geckodriver/firefox log (tail) ---')
-    print(''.join(l for l in open(LOG, errors='replace').readlines()[-150:]))
+    lines = open(LOG, errors='replace').readlines()
+    print(''.join(l for l in lines if 'Hudhud' in l or 'moz-extension' in l or 'Error' in l)[-20000:])
 
 sys.exit(1 if failures else 0)
