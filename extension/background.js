@@ -427,14 +427,16 @@ function notify(j) {
   if (j.error === 'CANCELED' || j.error === 'USER_CANCELED') return;
   const ok = j.state === 'complete';
   const name = String(j.file || j.path || '').split(/[\\/]/).pop();
-  chrome.notifications.create(j.jobId, {
+  const opts = {
     type: 'basic',
     iconUrl: ok ? 'icons/notify-done.png' : 'icons/notify-error.png',
     title: ok ? t('notifDone') : t('notifFailed'),
     message: ok ? (j.files > 1 ? `${name} (${t('filesN', j.files)})` : name) : `${name}\n${j.error || ''}`.slice(0, 250),
-    buttons: ok && !IS_FIREFOX ? [{ title: t('notifOpen') }] : undefined, // Firefox has no notification buttons
     priority: 0,
-  }).catch(() => {});
+  };
+  // Firefox rejects the buttons key (even when undefined), and throws synchronously
+  if (ok && !IS_FIREFOX) opts.buttons = [{ title: t('notifOpen') }];
+  try { chrome.notifications.create(j.jobId, opts).catch(() => {}); } catch (e) { console.warn('[Hudhud] notification', e); }
 }
 async function bumpStats() {
   const { stats = {} } = await chrome.storage.local.get('stats');
