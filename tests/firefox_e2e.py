@@ -41,22 +41,38 @@ for k, v in {
 d = webdriver.Firefox(options=o, service=Service(log_output=LOG))
 d.set_script_timeout(60)
 
+def ext_tab(page):
+  """WebDriver can't navigate to moz-extension:// URLs, but an extension page can open its own pages."""
+  d.switch_to.window(EXT_HANDLE)
+  d.execute_async_script("const cb=arguments[1]; chrome.tabs.update({url: chrome.runtime.getURL(arguments[0])}).then(()=>cb(1), e=>cb(String(e)))", page)
+  time.sleep(2)
+
 def ext_call(msg):
   return d.execute_async_script('const cb = arguments[arguments.length-1]; chrome.runtime.sendMessage(arguments[0]).then(cb, (e) => cb({ok:false, error:String(e)}));', msg)
 
 try:
-  d.install_addon(EXT, temporary=True)
-  time.sleep(2)
+  d.install_addon(EXT, temporary=True)  # selenium zips the folder
+  # the extension opens its welcome page on install: use that tab as our way in
+  EXT_HANDLE = None
+  for _ in range(20):
+    for h in d.window_handles:
+      d.switch_to.window(h)
+      if d.current_url.startswith('moz-extension://'): EXT_HANDLE = h; break
+    if EXT_HANDLE: break
+    time.sleep(0.5)
+  check('welcome page opens on install', EXT_HANDLE is not None, str([d.current_url]))
+  if not EXT_HANDLE: raise SystemExit
+  BASE = d.current_url.split('/welcome.html')[0]
 
   # 1) pages render, strings translated
-  d.get(f'{BASE}/options.html'); time.sleep(2)
+  ext_tab('options.html')
   ver = d.execute_script("return document.querySelector('#ver')?.textContent || ''")
   check('options renders', 'Version' in ver or 'النسخة' in ver, ver)
-  d.get(f'{BASE}/popup.html'); time.sleep(1.5)
+  ext_tab('popup.html')
   check('popup renders', d.execute_script("return !!document.querySelector('.popup') && document.body.innerText.length > 20"))
 
   # 2) helper over native messaging
-  d.get(f'{BASE}/options.html'); time.sleep(1)
+  ext_tab('options.html')
   info = ext_call({'type': 'nativeInfo'})
   check('helper connects', bool(info.get('ok') and info.get('data', {}).get('version')), json.dumps(info)[:200])
 
@@ -64,7 +80,7 @@ try:
   results = {}
   for page, kind in (('hlspage.html', 'hls'), ('directpage.html', 'direct')):
     d.switch_to.new_window('tab'); d.get(f'http://127.0.0.1:8765/{page}'); time.sleep(3)
-    d.switch_to.new_window('tab'); d.get(f'{BASE}/options.html'); time.sleep(1)
+    ext_tab('options.html')
     tab = d.execute_async_script("const cb=arguments[0]; chrome.tabs.query({url:'http://127.0.0.1/*'}).then(t=>cb(t.filter(x=>x.url.includes('%s')).map(x=>x.id)[0]))" % page)
     st = ext_call({'type': 'getState', 'tabId': tab})
     items = (st.get('data') or {}).get('items', [])
@@ -78,6 +94,7 @@ try:
   deadline = time.time() + 90
   jobs = []
   while time.time() < deadline:
+    d.switch_to.window(EXT_HANDLE)
     jobs = d.execute_async_script("const cb=arguments[0]; chrome.storage.local.get('jobs').then(r=>cb(r.jobs||[]))")
     if jobs and all(j['state'] in ('complete', 'interrupted') for j in jobs): break
     time.sleep(2)
@@ -93,6 +110,8 @@ try:
       try: dur = float(out.stdout.strip())
       except ValueError: pass
     check(f'{kind}: playable mp4', bool(dur and dur > 3), f'{f} {dur}')
+except SystemExit:
+  pass
 finally:
   d.quit()
   if failures:
