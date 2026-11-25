@@ -803,6 +803,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     .then(() => p)
     .then((data) => sendResponse({ ok: true, data }), (e) => sendResponse({ ok: false, error: String(e?.message || e) }));
   if (msg?.target === 'offscreen') return false;
+  // messages from our content script may leave tabId out: it's the sender's tab
+  if (msg && typeof msg === 'object' && msg.tabId == null && sender.tab) msg.tabId = sender.tab.id;
   if (typeof msg?.type === 'string' && msg.type.startsWith('hls-')) { onHlsMessage(msg); return false; }
   switch (msg?.type) {
     case 'elements':
