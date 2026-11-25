@@ -16,11 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v5
       - name: Fonts (optional, falls back to system fonts)
@@ -38,5 +35,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
+  # deploying from its own job avoids "No artifacts named github-pages" when the upload isn't listed yet
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v5
