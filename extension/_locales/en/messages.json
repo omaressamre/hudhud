@@ -308,6 +308,12 @@
   "copyPath": {
     "message": "Copy path"
   },
+  "moveTitle": {
+    "message": "Get one-click updates"
+  },
+  "moveBody": {
+    "message": "Remove Hudhud on the extensions page and load it again from this folder. Only once."
+  },
   "updating": {
     "message": "Updating…"
   },

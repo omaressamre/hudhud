@@ -764,6 +764,13 @@ async function checkHelperUpdate(force = false) {
   } catch { return null; }
 }
 
+/** is Chrome running Hudhud from the installer's folder? (Firefox: always fine) */
+async function installStatus() {
+  if (IS_FIREFOX) return { managed: true, extDir: '' };
+  const info = (await nativeInfo()) || (await nativeInfo(true));
+  return { managed: await isManagedInstall(info), extDir: info?.extDir || '' };
+}
+
 /** re-check whether one-click update is possible (the popup asks when the banner offers a download) */
 async function refreshManaged() {
   const { helperUpdate: up } = await chrome.storage.local.get('helperUpdate');
@@ -858,6 +865,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     case 'checkUpdate': reply(checkHelperUpdate(true)); return true;
     case 'selfUpdate': reply(selfUpdate()); return true;
     case 'refreshManaged': reply(refreshManaged()); return true;
+    case 'installStatus': reply(installStatus()); return true;
   }
   return false;
 });

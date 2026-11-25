@@ -72,6 +72,14 @@ function renderBanners() {
     managedChecked = true;
     send({ type: 'refreshManaged' }).catch(() => {});
   }
+  // No update yet, but Chrome loads Hudhud from another folder than the installer's: say so now,
+  // so the next update is one click (dismissible).
+  if (!(up && up.latest) && install && !install.managed && install.extDir && !local.dismissedMove) {
+    out.push(banner('info', 'refresh', t('moveTitle'), t('moveBody'),
+      el('div', { class: 'copy-row' }, [el('bdi', { class: 'path', text: install.extDir }),
+        btn('secondary', t('copyPath'), (e) => { navigator.clipboard.writeText(install.extDir); e.currentTarget.textContent = '✓'; })]),
+      () => chrome.storage.local.set({ dismissedMove: true })));
+  }
   if (up && up.latest && up.latest !== local.dismissedUpdate) {
     // installed with the installer, but Chrome loads the extension from another folder
     if (!up.managed && up.extDir) {
@@ -89,7 +97,7 @@ function renderBanners() {
   }
   const needHelper = state && !hasNative() && state.items.some((i) => i.kind === 'page' || (!i.engines.length && !i.drm));
   if (needHelper) out.push(helperBanner());
-  const k = JSON.stringify([doneCount, nextAt, up, updating, justUpdated, local.dismissedUpdate, needHelper, osPick, state?.items.find((i) => i.kind === 'page')?.site]);
+  const k = JSON.stringify([doneCount, nextAt, up, updating, justUpdated, install, local.dismissedMove, local.dismissedUpdate, needHelper, osPick, state?.items.find((i) => i.kind === 'page')?.site]);
   if (k === keys.banners) return;
   keys.banners = k;
   $('#banners').replaceChildren(...out);
@@ -121,6 +129,8 @@ function helperBanner() {
 let updating = false;
 let justUpdated = '';
 let managedChecked = false;
+let install = null; // { managed, extDir } from the background, once per popup
+send({ type: 'installStatus' }).then((s) => { install = s; renderBanners(); }).catch(() => {});
 let justUpdatedHelper = false;
 async function runSelfUpdate() {
   updating = true; renderBanners();
@@ -489,7 +499,7 @@ async function loadState() {
   renderAll();
 }
 async function loadJobs() {
-  const r = await chrome.storage.local.get(['jobs', 'stats', 'helperUpdate', 'dismissedUpdate', 'dismissedPlaylist', 'justUpdated']);
+  const r = await chrome.storage.local.get(['jobs', 'stats', 'helperUpdate', 'dismissedUpdate', 'dismissedPlaylist', 'justUpdated', 'dismissedMove']);
   // only the new version shows it (the old popup also sees the key just before the reload)
   if (r.justUpdated && r.justUpdated === chrome.runtime.getManifest().version) {
     justUpdated = r.justUpdated;
