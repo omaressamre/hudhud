@@ -1,6 +1,6 @@
 import { platformReady, currentOs, installer } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t, tn, fmtNum } from './lib/i18n.js';
-import { CONFIG, releaseAsset } from './lib/config.js';
+import { CONFIG, openReleaseAsset } from './lib/config.js';
 import { icon, iconEl, mascot } from './ui/icons.js';
 
 const $ = (s) => document.querySelector(s);
@@ -82,7 +82,7 @@ function renderBanners() {
     } else {
     const action = up.managed
       ? btn('primary', updating ? t('updating') : t('updateNow'), (e) => runSelfUpdate(e.currentTarget), updating ? { class: 'btn btn-primary', disabled: true } : undefined)
-      : btn('primary', t('updateCta'), () => chrome.tabs.create({ url: releaseAsset(currentOs()) }));
+      : btn('primary', t('updateCta'), () => openReleaseAsset(currentOs()));
     out.push(banner('info', 'refresh', t('updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'), action,
       updating ? null : () => chrome.storage.local.set({ dismissedUpdate: up.latest })));
     }
@@ -113,7 +113,7 @@ function helperBanner() {
     ]));
   }
   wrap.append(picker);
-  wrap.append(btn('primary', t('helperDownload', OS_LABEL[os]), () => chrome.tabs.create({ url: releaseAsset(os) }), { class: 'btn btn-primary wide' }));
+  wrap.append(btn('primary', t('helperDownload', OS_LABEL[os]), () => openReleaseAsset(os), { class: 'btn btn-primary wide' }));
   const file = os === 'mac' ? 'install.command' : os === 'win' ? 'install.bat' : 'install.sh';
   wrap.append(el('div', { class: 'steps' }, [el('span', { text: t('helperStep1', file) }), el('span', { text: t('helperStep2') }), el('span', { text: t('helperStep3') })]));
   return wrap;

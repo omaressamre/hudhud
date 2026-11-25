@@ -90,9 +90,17 @@ async function loadRelease() {
     const r = await fetch(`https://api.github.com/repos/${REPO}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' } });
     if (!r.ok) return;
     const j = await r.json();
-    const ext = (j.assets || []).find((a) => /^hudhud-extension-.*\.zip$/.test(a.name));
+    const assets = j.assets || [];
+    const find = (re) => assets.find((a) => re.test(a.name));
     release = { tag: String(j.tag_name || '').replace(/^v/, '') };
+    const ext = find(/^hudhud-v[\d.]+-extension-only\.zip$/) || find(/^hudhud-extension-.*\.zip$/);
     if (ext) document.querySelector('[data-extonly]').href = ext.browser_download_url;
+    document.querySelectorAll('.os-card').forEach((card) => {
+      const a = find(new RegExp(`^hudhud-v[\\d.]+-${card.dataset.os}\\.zip$`));
+      if (a) card.href = a.browser_download_url;
+    });
+    const mine = document.querySelector('.os-card.mine');
+    if (mine) document.querySelector('[data-bundle]').href = mine.href;
     updateVersion();
   } catch (e) { /* offline or rate-limited: keep the releases page link */ }
 }

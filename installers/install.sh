@@ -125,7 +125,7 @@ mkdir -p "$DEST" "$CACHE" || die "can't create $DEST"
 step "Helper program"
 HELPER_SRC="$SRC/bin/hudhud-helper-$OSN-$ARCH"
 [ -f "$HELPER_SRC" ] || die "the helper binary is not in this folder ($HELPER_SRC).
-  This looks like the source code. Download hudhud-helper-$( [ "$OSN" = darwin ] && echo macos || echo linux ).zip from
+  This looks like the source code. Download hudhud-vX.Y.Z-$( [ "$OSN" = darwin ] && echo macos || echo linux ).zip from
   https://github.com/omaressamre/hudhud/releases/latest, unzip it and run the installer from there."
 pkill -f "$DEST/hudhud-helper" 2>/dev/null || true
 cp -f "$HELPER_SRC" "$DEST/hudhud-helper" || die "can't copy the helper"

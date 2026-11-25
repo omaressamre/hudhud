@@ -1,7 +1,7 @@
 import { DEFAULT_SETTINGS } from './lib/naming.js';
 import { installer, platformReady, currentOs } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t } from './lib/i18n.js';
-import { CONFIG, releaseAsset } from './lib/config.js';
+import { CONFIG, releaseAsset, releasesPage } from './lib/config.js';
 import { icon, mascot } from './ui/icons.js';
 
 const $ = (s) => document.querySelector(s);
@@ -90,7 +90,8 @@ async function loadNative() {
   ['#btnChoose', '#btnResetDir', '#btnUpdate'].forEach((s) => { $(s).disabled = !info; });
   $('#btnUpdate').hidden = !info;
   $('#btnGetHelper').hidden = !!info;
-  $('#btnGetHelper').href = releaseAsset(currentOs());
+  $('#btnGetHelper').href = releasesPage();
+  releaseAsset(currentOs()).then((u) => { $('#btnGetHelper').href = u; });
   if (!info) {
     st.className = 'stat bad';
     st.textContent = t('helperNotInstalled', installer());

@@ -13,9 +13,23 @@ export const CONFIG = {
 };
 
 
-export const releaseAsset = (os) => {
-  const name = os === 'mac' ? 'hudhud-helper-macos.zip' : os === 'win' ? 'hudhud-helper-windows.zip' : 'hudhud-helper-linux.zip';
-  return `https://github.com/${CONFIG.repo}/releases/latest/download/${name}`;
-};
 export const releasesPage = () => `https://github.com/${CONFIG.repo}/releases/latest`;
 export const latestReleaseApi = () => `https://api.github.com/repos/${CONFIG.repo}/releases/latest`;
+
+const OS_ZIP = { win: 'windows', mac: 'macos', linux: 'linux' };
+/**
+ * Download link for the latest package for `os` ('win' | 'mac' | 'linux').
+ * Files are named hudhud-vX.Y.Z-<os>.zip, so the name comes from the release; falls back to the releases page.
+ */
+export async function releaseAsset(os) {
+  const want = new RegExp(`^hudhud-v[\\d.]+-${OS_ZIP[os] || 'linux'}\\.zip$`);
+  try {
+    const r = await fetch(latestReleaseApi(), { headers: { Accept: 'application/vnd.github+json' } });
+    if (r.ok) {
+      const a = ((await r.json()).assets || []).find((x) => want.test(x.name));
+      if (a) return a.browser_download_url;
+    }
+  } catch {}
+  return releasesPage();
+}
+export const openReleaseAsset = async (os) => chrome.tabs.create({ url: await releaseAsset(os) });

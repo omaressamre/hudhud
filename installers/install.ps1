@@ -313,7 +313,7 @@ try {
     Write-Host "ERROR: $($_.Exception.Message)" -ForegroundColor Red
     if ($script:NoExe) {
         Write-Host 'This looks like the source code, not the helper download.'
-        Write-Host 'Download hudhud-helper-windows.zip from the Releases page, unzip it, and run install.bat from there:'
+        Write-Host 'Download hudhud-vX.Y.Z-windows.zip from the Releases page, unzip it, and run install.bat from there:'
         Write-Host '  https://github.com/omaressamre/hudhud/releases/latest' -ForegroundColor Cyan
     } else {
         Write-Host 'Check your internet connection / antivirus and run install.bat again (downloads will resume).'

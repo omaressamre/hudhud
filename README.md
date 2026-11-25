@@ -23,15 +23,15 @@ Hudhud is not in the Chrome Web Store. Get it from the [latest release](https://
 
 | System | Download | Run |
 |---|---|---|
-| Windows | `hudhud-helper-windows.zip` | `install.bat` |
-| macOS | `hudhud-helper-macos.zip` | `install.command` |
-| Linux | `hudhud-helper-linux.zip` | `bash install.sh` |
+| Windows | `hudhud-vX.Y.Z-windows.zip` | `install.bat` |
+| macOS | `hudhud-vX.Y.Z-macos.zip` | `install.command` |
+| Linux | `hudhud-vX.Y.Z-linux.zip` | `bash install.sh` |
 
 1. Unzip and run the installer. It is per-user (no admin), downloads yt-dlp, ffmpeg and Deno, registers the helper with Chrome, Edge and Brave, and copies the extension to the Hudhud folder (`%LOCALAPPDATA%\Hudhud\extension`, `~/Library/Application Support/Hudhud/extension` or `~/.local/share/hudhud/extension`).
 2. A setup page opens: in `chrome://extensions` turn on **Developer mode**, click **Load unpacked** and pick that folder. You only do this once.
 3. **Updates:** when a new release is out, the popup shows **Update now**. The helper downloads the release for your system, checks it against `SHA256SUMS.txt`, replaces the extension folder and itself, and the extension reloads.
 
-`hudhud-extension-vX.Y.Z.zip` is the extension alone, for people who don't want the helper (it can't update itself). Uninstall with the matching `uninstall` script, then remove Hudhud from `chrome://extensions`.
+`hudhud-vX.Y.Z-extension-only.zip` is the extension alone, for people who don't want the helper (it can't update itself). Uninstall with the matching `uninstall` script, then remove Hudhud from `chrome://extensions`.
 
 > Coming from the old **VidSaver** build? Run its uninstaller first — Hudhud uses a new helper name (`com.hudhud.helper`) and folder.
 

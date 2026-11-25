@@ -31,7 +31,8 @@ async function init() {
   $('#hero').append(mascot('found', 420));
   $('#s2body').textContent = t('step2Body', installer());
   $('#btnHelper').textContent = t('helperDownload', OS[currentOs()] || 'Windows');
-  $('#btnHelper').href = releaseAsset(currentOs());
+  $('#btnHelper').href = releasesPage();
+  releaseAsset(currentOs()).then((u) => { $('#btnHelper').href = u; });
   $('#btnOther').href = releasesPage();
   $('#btnTry').href = CONFIG.testVideo;
   if (!(await refresh())) {

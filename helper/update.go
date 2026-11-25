@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"time"
@@ -74,15 +75,29 @@ func managedExtensionDir() string {
 	return filepath.Join(installDir(), "extension")
 }
 
-func assetName() string {
+func osLabel() string {
 	switch runtime.GOOS {
 	case "windows":
-		return "hudhud-helper-windows.zip"
+		return "windows"
 	case "darwin":
-		return "hudhud-helper-macos.zip"
+		return "macos"
 	default:
-		return "hudhud-helper-linux.zip"
+		return "linux"
 	}
+}
+
+// legacyAssetName is the package name used up to 0.9.3 (still published for older helpers).
+func legacyAssetName() string { return "hudhud-helper-" + osLabel() + ".zip" }
+
+// packageAsset picks this platform's package from a release: hudhud-vX.Y.Z-<os>.zip, or the legacy name.
+func (r *release) packageAsset() (name, url string) {
+	re := regexp.MustCompile(`^hudhud-v[0-9][0-9.]*-` + osLabel() + `\.zip$`)
+	for _, a := range r.Assets {
+		if re.MatchString(a.Name) {
+			return a.Name, a.URL
+		}
+	}
+	return legacyAssetName(), r.asset(legacyAssetName())
 }
 
 // helperEntry is the path of this platform's helper binary inside the release zip.
@@ -267,7 +282,8 @@ func selfUpdate() (map[string]any, error) {
 		return nil, fmt.Errorf("%s: %v", tr("مقدرتش أوصل لـGitHub", "couldn't reach GitHub"), err)
 	}
 	latest := strings.TrimPrefix(rel.Tag, "v")
-	zipURL, sumsURL := rel.asset(assetName()), rel.asset("SHA256SUMS.txt")
+	pkgName, zipURL := rel.packageAsset()
+	sumsURL := rel.asset("SHA256SUMS.txt")
 	if zipURL == "" || sumsURL == "" {
 		return nil, errors.New(tr("الإصدار ده مفيهوش ملف لنظامك", "this release has no package for your system"))
 	}
@@ -283,12 +299,12 @@ func selfUpdate() (map[string]any, error) {
 	if _, err := fetchTo(sumsURL, filepath.Join(work, "SHA256SUMS.txt")); err != nil {
 		return nil, err
 	}
-	zipPath := filepath.Join(work, assetName())
+	zipPath := filepath.Join(work, pkgName)
 	got, err := fetchTo(zipURL, zipPath)
 	if err != nil {
 		return nil, err
 	}
-	if want := expectedSum(filepath.Join(work, "SHA256SUMS.txt"), assetName()); want == "" || want != got {
+	if want := expectedSum(filepath.Join(work, "SHA256SUMS.txt"), pkgName); want == "" || want != got {
 		return nil, errors.New(tr("ملف التحديث مش سليم (checksum)", "the update file failed its checksum"))
 	}
 

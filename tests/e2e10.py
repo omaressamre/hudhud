@@ -8,7 +8,8 @@ from common import SHOTS
 HOME = os.environ.get('HH_INSTALL_HOME', '/tmp/fh4')
 DEST = HOME + '/.local/share/hudhud'
 EXT = DEST + '/extension'
-BUNDLE = os.environ.get('HH_BUNDLE', os.path.join(os.path.dirname(__file__), '..', 'dist', 'hudhud-helper-linux.zip'))
+import glob
+BUNDLE = os.environ.get('HH_BUNDLE') or sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'dist', 'hudhud-v*-linux.zip')))[-1]
 PROFILE = '/tmp/hh-prof-update'
 NEW = '0.9.9'
 
@@ -22,11 +23,12 @@ with zipfile.ZipFile(BUNDLE) as zin, zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLA
       m = json.loads(data); m['version'] = NEW; data = json.dumps(m, indent=2).encode()
     zout.writestr(it, data)
 pkg = buf.getvalue()
-open(rel + '/hudhud-helper-linux.zip', 'wb').write(pkg)
-open(rel + '/SHA256SUMS.txt', 'w').write(f"{hashlib.sha256(pkg).hexdigest()}  hudhud-helper-linux.zip\n")
+PKG = f'hudhud-v{NEW}-linux.zip'
+open(rel + '/' + PKG, 'wb').write(pkg)
+open(rel + '/SHA256SUMS.txt', 'w').write(f"{hashlib.sha256(pkg).hexdigest()}  {PKG}\n")
 PORT = 8792
 open(rel + '/latest', 'w').write(json.dumps({'tag_name': 'v' + NEW, 'assets': [
-  {'name': n, 'browser_download_url': f'http://127.0.0.1:{PORT}/{n}'} for n in ('hudhud-helper-linux.zip', 'SHA256SUMS.txt')]}))
+  {'name': n, 'browser_download_url': f'http://127.0.0.1:{PORT}/{n}'} for n in (PKG, 'SHA256SUMS.txt')]}))
 class H(http.server.SimpleHTTPRequestHandler):
   def __init__(s, *a, **k): super().__init__(*a, directory=rel, **k)
   def log_message(s, *a): pass

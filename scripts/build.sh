@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Builds release artifacts into dist/:
-#   hudhud-extension-vX.Y.Z.zip     unpacked extension (Load unpacked)
-#   hudhud-helper-windows.zip       install.bat + hudhud-helper.exe
-#   hudhud-helper-macos.zip         install.command + universal set of binaries
-#   hudhud-helper-linux.zip         install.sh + amd64/arm64 binaries
+#   hudhud-vX.Y.Z-windows.zip       install.bat + hudhud-helper.exe + extension/
+#   hudhud-vX.Y.Z-macos.zip         install.command + darwin binaries + extension/
+#   hudhud-vX.Y.Z-linux.zip         install.sh + amd64/arm64 binaries + extension/
+#   hudhud-vX.Y.Z-extension-only.zip  the extension alone (Load unpacked, no self-update)
+#   hudhud-helper-{windows,macos,linux}.zip  same bytes under the pre-0.9.4 names, so helpers
+#                                   0.9.0–0.9.3 can still self-update (drop these in 1.0)
 # Usage: scripts/build.sh [--no-fonts]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -39,11 +41,12 @@ for d in win mac linux; do
 done
 chmod +x "$stage"/mac/*.sh "$stage"/mac/*.command "$stage"/linux/*.sh "$stage"/mac/bin/* "$stage"/linux/bin/*
 
-( cd "$stage/win" && zip -qr "$DIST/hudhud-helper-windows.zip" . )
-( cd "$stage/mac" && zip -qr "$DIST/hudhud-helper-macos.zip" . )
-( cd "$stage/linux" && zip -qr "$DIST/hudhud-helper-linux.zip" . )
-( cd extension && zip -qr "$DIST/hudhud-extension-v$VERSION.zip" . -x 'fonts/README.md' )
-( zip -qj "$DIST/hudhud-extension-v$VERSION.zip" LICENSE TRADEMARKS.md )
+( cd "$stage/win" && zip -qr "$DIST/hudhud-v$VERSION-windows.zip" . )
+( cd "$stage/mac" && zip -qr "$DIST/hudhud-v$VERSION-macos.zip" . )
+( cd "$stage/linux" && zip -qr "$DIST/hudhud-v$VERSION-linux.zip" . )
+( cd extension && zip -qr "$DIST/hudhud-v$VERSION-extension-only.zip" . -x 'fonts/README.md' )
+( zip -qj "$DIST/hudhud-v$VERSION-extension-only.zip" LICENSE TRADEMARKS.md )
+for os in windows macos linux; do cp "$DIST/hudhud-v$VERSION-$os.zip" "$DIST/hudhud-helper-$os.zip"; done
 rm -rf "$stage"
 ( cd "$DIST" && sha256sum *.zip > SHA256SUMS.txt )
 ls -la "$DIST"

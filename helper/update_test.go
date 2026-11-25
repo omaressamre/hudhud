@@ -45,6 +45,10 @@ func setupInstall(t *testing.T) (dir string) {
 }
 
 func serveRelease(t *testing.T, zipBytes []byte, badSum bool) {
+	serveReleaseAs(t, "hudhud-v9.9.9-"+osLabel()+".zip", zipBytes, badSum)
+}
+
+func serveReleaseAs(t *testing.T, name string, zipBytes []byte, badSum bool) {
 	t.Helper()
 	sum := sha256.Sum256(zipBytes)
 	hexsum := hex.EncodeToString(sum[:])
@@ -57,14 +61,15 @@ func serveRelease(t *testing.T, zipBytes []byte, badSum bool) {
 		json.NewEncoder(w).Encode(map[string]any{
 			"tag_name": "v9.9.9",
 			"assets": []map[string]string{
-				{"name": assetName(), "browser_download_url": srv.URL + "/pkg"},
+				{"name": name, "browser_download_url": srv.URL + "/pkg"},
+				{"name": "hudhud-v9.9.9-extension-only.zip", "browser_download_url": srv.URL + "/nope"},
 				{"name": "SHA256SUMS.txt", "browser_download_url": srv.URL + "/sums"},
 			},
 		})
 	})
 	mux.HandleFunc("/pkg", func(w http.ResponseWriter, r *http.Request) { w.Write(zipBytes) })
 	mux.HandleFunc("/sums", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "%s  %s\n%s  other.zip\n", hexsum, assetName(), strings.Repeat("1", 64))
+		fmt.Fprintf(w, "%s  %s\n%s  other.zip\n", hexsum, name, strings.Repeat("1", 64))
 	})
 	srv = httptest.NewServer(mux)
 	t.Cleanup(srv.Close)
@@ -143,5 +148,16 @@ func TestSelfUpdateIncompletePackage(t *testing.T) {
 	}
 	if managedExtensionVersion() != "0.8.1" {
 		t.Fatal("install changed after a failed update")
+	}
+}
+
+func TestSelfUpdateLegacyAssetName(t *testing.T) {
+	setupInstall(t)
+	serveReleaseAs(t, legacyAssetName(), makeZip(t, map[string]string{helperEntry(): "new-helper", "extension/manifest.json": `{"version":"9.9.9"}`}), false)
+	if _, err := selfUpdate(); err != nil {
+		t.Fatal(err)
+	}
+	if managedExtensionVersion() != "9.9.9" {
+		t.Fatal("not updated from a legacy-named package")
 	}
 }
