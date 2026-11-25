@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hudhud setup · تسطيب هدهد</title>
+<link rel="icon" href="extension/assets/icon.svg">
+<style>
+  :root { --coral:#EE6A4D; --plum:#2D1E3E; --bg:#FFF6EC; --surface:#fff; --sunken:#FFE2C4; --border:#EFE4D6; --text:#2D1E3E; --text2:#7D6E86; --ok:#2F8F73; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#17111D; --surface:#211A2A; --sunken:#3A2D45; --border:#3A2F46; --text:#F4ECF6; --text2:#A99BB4; --ok:#7FD1B9; color-scheme: dark; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 'Readex Pro', 'Segoe UI', Tahoma, system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 20px 60px; }
+  header { display: flex; align-items: center; gap: 14px; }
+  header img { width: 56px; height: 56px; }
+  h1 { font-size: 30px; margin: 0; line-height: 1.2; }
+  .sub { color: var(--text2); margin: 4px 0 0; }
+  .lang { margin-inline-start: auto; font: inherit; font-size: 14px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .done { margin: 28px 0 8px; padding: 14px 18px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
+  .done b { color: var(--ok); }
+  ol { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; counter-reset: s; }
+  li { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 20px 22px 20px; position: relative; padding-inline-start: 72px; counter-increment: s; }
+  li::before { content: counter(s); position: absolute; inset-inline-start: 22px; top: 20px; width: 34px; height: 34px; border-radius: 50%; background: var(--plum); color: #fff; display: grid; place-items: center; font-weight: 700; }
+  @media (prefers-color-scheme: dark) { li::before { background: var(--coral); } }
+  h2 { font-size: 18px; margin: 4px 0 6px; }
+  p { margin: 0; color: var(--text2); }
+  .copy { display: flex; gap: 8px; margin-top: 12px; align-items: stretch; }
+  code { flex: 1; direction: ltr; text-align: left; unicode-bidi: isolate; font: 14px ui-monospace, Consolas, monospace; background: var(--sunken); color: var(--text); border-radius: 10px; padding: 10px 12px; overflow-wrap: anywhere; }
+  button.c { font: inherit; font-size: 14px; font-weight: 600; border: 0; border-radius: 10px; padding: 0 16px; background: var(--coral); color: #fff; cursor: pointer; white-space: nowrap; }
+  .note { margin-top: 18px; font-size: 14px; color: var(--text2); }
+  [data-l] { display: none; }
+  :root[lang="ar"] [data-l="ar"], :root[lang="en"] [data-l="en"] { display: revert; }
+  :root[lang="ar"] span[data-l="ar"], :root[lang="en"] span[data-l="en"] { display: inline; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="extension/assets/icon.svg" alt="">
+    <div>
+      <h1><span data-l="ar">فاضل خطوة واحدة</span><span data-l="en">One last step</span></h1>
+      <p class="sub"><span data-l="ar">المساعد اتسطّب. دلوقتي نضيف الإضافة للمتصفح.</span><span data-l="en">The helper is installed. Now let’s add the extension to your browser.</span></p>
+    </div>
+    <button class="lang" id="lang" type="button"><span data-l="ar">English</span><span data-l="en">عربي</span></button>
+  </header>
+
+  <ol>
+    <li>
+      <h2><span data-l="ar">افتح صفحة الإضافات</span><span data-l="en">Open the extensions page</span></h2>
+      <p><span data-l="ar">انسخ العنوان ده والصقه في شريط العنوان في كروم (أو <bdi>edge://extensions</bdi> في إيدج).</span><span data-l="en">Copy this address and paste it into Chrome’s address bar (or <bdi>edge://extensions</bdi> in Edge).</span></p>
+      <div class="copy"><code id="u">chrome://extensions</code><button class="c" data-copy="u" type="button"><span data-l="ar">انسخ</span><span data-l="en">Copy</span></button></div>
+    </li>
+    <li>
+      <h2><span data-l="ar">شغّل «وضع المطوّر»</span><span data-l="en">Turn on “Developer mode”</span></h2>
+      <p><span data-l="ar">المفتاح فوق على الجنب في كروم، وتحت في القايمة الجانبية في إيدج.</span><span data-l="en">The switch is at the top corner in Chrome, and at the bottom of the side menu in Edge.</span></p>
+    </li>
+    <li>
+      <h2><span data-l="ar">دوس «تحميل إضافة غير مضغوطة» واختار الفولدر ده</span><span data-l="en">Click “Load unpacked” and pick this folder</span></h2>
+      <p><span data-l="ar">في ويندوز تقدر تلصق المسار في الشريط اللي فوق في نافذة اختيار الفولدر.</span><span data-l="en">On Windows you can paste the path into the bar at the top of the folder window.</span></p>
+      <div class="copy"><code id="p">{{EXT_PATH}}</code><button class="c" data-copy="p" type="button"><span data-l="ar">انسخ</span><span data-l="en">Copy</span></button></div>
+    </li>
+    <li>
+      <h2><span data-l="ar">ثبّت الأيقونة</span><span data-l="en">Pin the icon</span></h2>
+      <p><span data-l="ar">دوس على أيقونة الإضافات 🧩 جنب شريط العنوان وثبّت هدهد. خلاص!</span><span data-l="en">Click the puzzle icon 🧩 next to the address bar and pin Hudhud. That’s it!</span></p>
+    </li>
+  </ol>
+  <p class="note">
+    <span data-l="ar">لو كنت مضيف هدهد قبل كده من فولدر تاني، شيله الأول من صفحة الإضافات. الإضافة اللي في الفولدر ده بتتحدّث لوحدها من زرار «حدّث» جوه هدهد.</span>
+    <span data-l="en">If you added Hudhud before from another folder, remove it first on the extensions page. The copy in this folder updates itself from the “Update” button inside Hudhud.</span>
+  </p>
+</main>
+<script>
+  var h = document.documentElement;
+  var lang = (navigator.language || 'en').toLowerCase().indexOf('ar') === 0 ? 'ar' : 'en';
+  function set(l) { h.lang = l; h.dir = l === 'ar' ? 'rtl' : 'ltr'; }
+  set(lang);
+  document.getElementById('lang').onclick = function () { set(h.lang === 'ar' ? 'en' : 'ar'); };
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.onclick = function () {
+      var text = document.getElementById(b.dataset.copy).textContent;
+      var done = function () { var o = b.innerHTML; b.textContent = '✓'; setTimeout(function () { b.innerHTML = o; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+      function fallback() { var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); done(); }
+    };
+  });
+</script>
+</body>
+</html>

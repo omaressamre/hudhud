@@ -1,0 +1,33 @@
+#!/usr/bin/env python3
+import sys, json, time, os
+a = sys.argv[1:]
+json.dump(a, open('/tmp/fake-args-%d.json' % int(time.time()*1000), 'w'))
+if '--version' in a: print('2026.11.01'); sys.exit(0)
+if '-U' in a: print('yt-dlp is up to date (2026.11.01)'); sys.exit(0)
+url = a[a.index('--')+1]
+if 'ytfail' in url:
+    if not any(x.startswith('deno:') for x in a):
+        print('WARNING: [youtube] No supported JavaScript runtime could be found.', file=sys.stderr)
+        print('ERROR: [youtube] SYm2jmVIQek: Requested format is not available. Use --list-formats for a list of available formats', file=sys.stderr); sys.exit(1)
+if 'fail' in url and 'ytfail' not in url: print('ERROR: [generic] Unsupported URL: ' + url, file=sys.stderr); sys.exit(1)
+if '-J' in a and '--yes-playlist' in a and 'list=' in url:
+    print(json.dumps({'_type': 'playlist', 'title': 'قايمة تجريبية', 'entries': [{}]*12})); sys.exit(0)
+if '-J' in a:
+    print(json.dumps({'title': 'Fake Page Title', 'thumbnail': 'https://example.invalid/t.jpg', 'duration': 125.0, 'extractor_key': 'Generic',
+      'formats': [{'height': 360, 'vcodec': 'avc1', 'acodec': 'none'}, {'height': 1080, 'vcodec': 'avc1', 'acodec': 'none'}, {'height': None, 'vcodec': 'none', 'acodec': 'mp4a'}]})); sys.exit(0)
+if 'playlist-test' in url and '--yes-playlist' in a:
+    tpl = a[a.index('-o')+1]
+    for it in range(1,4):
+        for i in range(5):
+            print('VS %5.1f%%|1MiB/s|00:01|%d|1000|NA|%d|3' % (i*25, i*250, it), file=sys.stderr, flush=True); time.sleep(0.1)
+        o = tpl.replace('%(playlist_index)03d', '%03d' % it).replace('%(title).120B', 'item%d' % it).replace('%(ext)s','mp4')
+        os.makedirs(os.path.dirname(o), exist_ok=True); open(o,'wb').write(b'x'); print('VSFILE ' + o, flush=True)
+    sys.exit(0)
+out = a[a.index('-o')+1].replace('%(ext)s', 'mp4').replace('%%', '%')
+steps = 60 if 'slow' in url else 8
+for i in range(steps+1):
+    p = i*100/steps
+    print('VS %5.1f%%| 2.50MiB/s|00:%02d|%d|%d|NA' % (p, steps-i, i*1000, steps*1000), file=sys.stderr, flush=True)
+    time.sleep(0.15)
+open(out, 'wb').write(b'fake')
+print('VSFILE ' + out, flush=True)

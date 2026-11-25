@@ -1,0 +1,39 @@
+name: Release
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch: # Actions → Release → Run workflow: tags v<manifest version> on the chosen branch
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: helper/go.mod
+      - name: Versions match the tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then TAG=$(node -p 'require("./extension/manifest.json").version'); fi
+          echo "TAG=v$TAG" >> "$GITHUB_ENV"
+          EXT=$(node -p 'require("./extension/manifest.json").version')
+          HELPER=$(grep -oP 'Version\s*=\s*"\K[^"]+' helper/main.go)
+          echo "tag=$TAG extension=$EXT helper=$HELPER"
+          [ "$TAG" = "$EXT" ] && [ "$TAG" = "$HELPER" ]
+      - name: Fonts tooling
+        run: pip install fonttools brotli
+      - run: tests/run-all.sh
+      - run: scripts/build.sh
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$TAG" dist/*.zip dist/SHA256SUMS.txt \
+            --target "$GITHUB_SHA" --title "Hudhud $TAG" --generate-notes

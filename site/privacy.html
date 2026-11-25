@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الخصوصية · Privacy — Hudhud</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<style>
+  :root[lang="ar"] [lang="en"], :root[lang="en"] [lang="ar"] { display: none; }
+</style>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search), s = {};
+    try { s = JSON.parse(localStorage.getItem('hh-site') || '{}'); } catch (e) {}
+    var lang = q.get('lang') || s.lang || ((navigator.language || 'ar').toLowerCase().startsWith('ar') ? 'ar' : 'en');
+    var h = document.documentElement;
+    h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    h.dataset.theme = s.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  })();
+</script>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="./">
+      <img class="light-only" src="assets/icon.svg" alt="" width="34" height="34">
+      <img class="dark-only" src="assets/icon-dark.svg" alt="" width="34" height="34">
+      <span lang="ar">هدهد</span><span lang="en">Hudhud</span>
+    </a>
+    <div class="tools">
+      <button class="chip" id="lang" type="button"><span lang="ar">English</span><span lang="en">عربي</span></button>
+    </div>
+  </div>
+</header>
+
+<main class="doc wrap narrow">
+  <article lang="ar">
+    <h1>الخصوصية</h1>
+    <p class="lead"><strong>باختصار: هدهد مش بيجمع أي بيانات.</strong></p>
+    <ul>
+      <li><strong>مفيش تحليلات ولا تتبّع ولا حسابات.</strong> لا الإضافة ولا المساعد بيبعتوا أي بيانات عنك أو عن استخدامك لينا أو لأي حد.</li>
+      <li><strong>الطلبات اللي هدهد بيعملها:</strong> الفيديو اللي انت بتختار تنزّله، من الموقع نفسه وبالكوكيز العادية بتاعة المتصفح للموقع ده. ومع المساعد: yt-dlp بيكلّم الموقع اللي طلبته، والمثبّت وزرار «حدّث yt-dlp» بينزّلوا yt-dlp وffmpeg وDeno من مصادرهم الرسمية.</li>
+      <li><strong>التحقق من التحديثات:</strong> لما المتصفح يفتح (مرة كل 12 ساعة على الأكثر) وبعد التثبيت على طول، الإضافة بتسأل GitHub عن رقم آخر إصدار. مفيش أي معلومة عنك بتتبعت غير طلب HTTP عادي.</li>
+      <li><strong>اللي بيتخزّن على جهازك بس:</strong> إعداداتك، قائمة التنزيلات الأخيرة، وعدّاد التنزيلات (عشان نعرض رسالة الدعم من وقت للتاني). كله بيتمسح لما تشيل الإضافة.</li>
+      <li><strong>الصلاحيات:</strong> هدهد بيقرأ طلبات الشبكة عشان يلاقي لينكات الفيديو، وبيقرأ الصفحة عشان يلاقي الفيديوهات فيها بس. مش بيقرأ أو يخزّن أي حاجة تانية من الصفحات اللي بتزورها.</li>
+      <li><strong>DRM:</strong> هدهد مش بيفك أو يتخطّى حماية المحتوى.</li>
+    </ul>
+    <p>عندك سؤال؟ افتح issue على <a href="https://github.com/omaressamre/hudhud/issues">GitHub</a>.</p>
+  </article>
+
+  <article lang="en" dir="ltr">
+    <h1>Privacy</h1>
+    <p class="lead"><strong>Short version: Hudhud collects nothing.</strong></p>
+    <ul>
+      <li><strong>No analytics, no telemetry, no accounts.</strong> Neither the extension nor the helper sends data about you or your usage to us or anyone else.</li>
+      <li><strong>Network requests Hudhud makes:</strong> the media you choose to download, fetched from the site that serves it with your browser’s normal cookies for that site. With the helper: yt-dlp contacts the site you asked for, and the installer and the “Update yt-dlp” button download yt-dlp, ffmpeg and Deno from their official releases.</li>
+      <li><strong>Update check:</strong> when the browser starts (at most every 12 hours) and right after install, the extension asks GitHub for the latest release number. Nothing about you is sent beyond a standard HTTP request.</li>
+      <li><strong>Stored on your computer only:</strong> your settings, your recent downloads list and a download counter (used to show the support message now and then). All of it is removed when you remove the extension.</li>
+      <li><strong>Permissions:</strong> Hudhud reads network requests to spot video URLs and reads pages only to find media on them. It doesn’t read or store anything else from the pages you visit.</li>
+      <li><strong>DRM:</strong> Hudhud does not decrypt or bypass protected content.</li>
+    </ul>
+    <p>Questions? Open an issue on <a href="https://github.com/omaressamre/hudhud/issues">GitHub</a>.</p>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand small" href="./">
+      <img class="light-only" src="assets/icon.svg" alt="" width="22" height="22">
+      <img class="dark-only" src="assets/icon-dark.svg" alt="" width="22" height="22">
+      <span lang="ar">هدهد</span><span lang="en">Hudhud</span>
+    </a>
+    <nav><a href="https://github.com/omaressamre/hudhud">GitHub</a></nav>
+  </div>
+</footer>
+<script>
+  document.getElementById('lang').addEventListener('click', function () {
+    var h = document.documentElement, next = h.lang === 'ar' ? 'en' : 'ar';
+    h.lang = next; h.dir = next === 'ar' ? 'rtl' : 'ltr';
+    try { var s = JSON.parse(localStorage.getItem('hh-site') || '{}'); s.lang = next; localStorage.setItem('hh-site', JSON.stringify(s)); } catch (e) {}
+  });
+</script>
+</body>
+</html>

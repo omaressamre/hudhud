@@ -1,0 +1,653 @@
+{
+  "extName": {
+    "message": "هدهد"
+  },
+  "extDesc": {
+    "message": "بيلاقي الفيديوهات في أي صفحة ويحمّلها بضغطة واحدة."
+  },
+  "cmdOpen": {
+    "message": "افتح هدهد"
+  },
+  "brand": {
+    "message": "هدهد"
+  },
+  "settings": {
+    "message": "الإعدادات"
+  },
+  "support": {
+    "message": "ادعم هدهد"
+  },
+  "download": {
+    "message": "حمّل"
+  },
+  "cancel": {
+    "message": "إلغاء"
+  },
+  "retry": {
+    "message": "جرّب تاني"
+  },
+  "remove": {
+    "message": "شيل"
+  },
+  "dismiss": {
+    "message": "قفل"
+  },
+  "gotIt": {
+    "message": "تمام"
+  },
+  "change": {
+    "message": "غيّر"
+  },
+  "save": {
+    "message": "حفظ"
+  },
+  "saved": {
+    "message": "اتحفظ ✓"
+  },
+  "helper": {
+    "message": "المساعد"
+  },
+  "browser": {
+    "message": "المتصفح"
+  },
+  "errGeneric": {
+    "message": "حصل خطأ"
+  },
+  "found_zero": {
+    "message": "مفيش فيديوهات في الصفحة دي"
+  },
+  "found_one": {
+    "message": "لقيت فيديو واحد في الصفحة دي"
+  },
+  "found_two": {
+    "message": "لقيت فيديوهين في الصفحة دي"
+  },
+  "found_few": {
+    "message": "لقيت $1 فيديوهات في الصفحة دي"
+  },
+  "found_many": {
+    "message": "لقيت $1 فيديو في الصفحة دي"
+  },
+  "found_other": {
+    "message": "لقيت $1 فيديو في الصفحة دي"
+  },
+  "pageReady": {
+    "message": "$1 · جاهز للتحميل"
+  },
+  "pageProbing": {
+    "message": "$1 · بيجيب الجودات…"
+  },
+  "running_one": {
+    "message": "تحميل واحد شغال"
+  },
+  "running_two": {
+    "message": "تحميلين شغالين"
+  },
+  "running_few": {
+    "message": "$1 تحميلات شغالة"
+  },
+  "running_many": {
+    "message": "$1 تحميل شغال"
+  },
+  "running_other": {
+    "message": "$1 تحميل شغال"
+  },
+  "emptyTitle": {
+    "message": "مفيش فيديوهات هنا لسه"
+  },
+  "emptyBody": {
+    "message": "شغّل الفيديو أو اعمل ريفرش للصفحة، وهدهد هيصحى أول ما يشوفه."
+  },
+  "emptyTip": {
+    "message": "الفيديوهات المحمية بـDRM (زي نتفليكس وشاهد) مش بتتحمّل."
+  },
+  "scanAgain": {
+    "message": "دوّر في الصفحة تاني"
+  },
+  "reloadPage": {
+    "message": "اعمل ريفرش للصفحة"
+  },
+  "scanning": {
+    "message": "بيدوّر… ممكن ياخد لحد دقيقة"
+  },
+  "notWebPage": {
+    "message": "هدهد بيشتغل على صفحات الويب بس"
+  },
+  "playlistAll": {
+    "message": "حمّل البلاي ليست كلها ($1 فيديو)"
+  },
+  "playlistInfoTitle": {
+    "message": "الفيديو ده جزء من بلاي ليست"
+  },
+  "playlistInfoBody": {
+    "message": "تقدر تحمّل الفيديو ده بس، أو الليست كلها مرة واحدة."
+  },
+  "playlistOnly": {
+    "message": "بلاي ليست · $1 فيديو"
+  },
+  "otherVideos": {
+    "message": "فيديوهات تانية في الصفحة ($1)"
+  },
+  "onThisPage": {
+    "message": "لقى في الصفحة"
+  },
+  "downloads": {
+    "message": "التحميلات"
+  },
+  "bestQuality": {
+    "message": "أعلى جودة"
+  },
+  "audioMp3": {
+    "message": "صوت بس · MP3"
+  },
+  "audioM4a": {
+    "message": "صوت بس · M4A"
+  },
+  "quality": {
+    "message": "الجودة"
+  },
+  "fileName": {
+    "message": "اسم الملف"
+  },
+  "fileNameHint": {
+    "message": "سيبه فاضي عشان يتسمّى بعنوان الفيديو"
+  },
+  "more": {
+    "message": "خيارات"
+  },
+  "engine": {
+    "message": "طريقة التحميل"
+  },
+  "copyLink": {
+    "message": "انسخ اللينك"
+  },
+  "copied": {
+    "message": "اتنسخ ✓"
+  },
+  "starting": {
+    "message": "بيبدأ…"
+  },
+  "started": {
+    "message": "بدأ التحميل ✓"
+  },
+  "live": {
+    "message": "مباشر"
+  },
+  "withAudio": {
+    "message": "صوت + صورة"
+  },
+  "audioOnly": {
+    "message": "صوت بس"
+  },
+  "drmBlocked": {
+    "message": "الفيديو ده محمي بـDRM ومش هيتحمّل"
+  },
+  "needsHelper": {
+    "message": "محتاج المساعد"
+  },
+  "mergeNote": {
+    "message": "الصوت والصورة هيتدمجوا في ملف MP4 واحد."
+  },
+  "tsNote": {
+    "message": "هيتحفظ TS (التحويل لـMP4 مقفول من الإعدادات)."
+  },
+  "liveNote": {
+    "message": "ده بث مباشر: هيتسجّل لحد ما تلغيه أو البث يخلص."
+  },
+  "shorts": {
+    "message": "شورتس"
+  },
+  "jobDownloading": {
+    "message": "بيحمّل"
+  },
+  "jobQueued": {
+    "message": "في الطابور"
+  },
+  "jobQueuedDetail": {
+    "message": "هيبدأ بعد اللي قبله"
+  },
+  "jobProcessing": {
+    "message": "بيجهّز الملف…"
+  },
+  "jobMerging": {
+    "message": "بيدمج الصوت والصورة…"
+  },
+  "jobDone": {
+    "message": "اتحمّل ✓"
+  },
+  "jobStopped": {
+    "message": "وقف"
+  },
+  "jobCanceled": {
+    "message": "اتلغى"
+  },
+  "jobPaused": {
+    "message": "متوقف مؤقتاً"
+  },
+  "timeLeft": {
+    "message": "فاضل $1"
+  },
+  "itemOf": {
+    "message": "فيديو $1/$2"
+  },
+  "partN": {
+    "message": "جزء $1"
+  },
+  "filesN": {
+    "message": "$1 ملف"
+  },
+  "noAudio": {
+    "message": "من غير صوت"
+  },
+  "showInFolder": {
+    "message": "افتح الفولدر"
+  },
+  "doneTitle": {
+    "message": "خلصنا! كل التحميلات جاهزة"
+  },
+  "openDownloads": {
+    "message": "افتح فولدر التحميلات"
+  },
+  "clearList": {
+    "message": "امسح القايمة"
+  },
+  "errorTitle": {
+    "message": "التحميل وقف"
+  },
+  "useHelper": {
+    "message": "حمّل بالمساعد"
+  },
+  "helperTitle": {
+    "message": "محتاج المساعد عشان $1"
+  },
+  "helperTitleGeneric": {
+    "message": "المساعد مش متسطب"
+  },
+  "helperBody": {
+    "message": "برنامج صغير على جهازك بيحمّل بجودة عالية ويدمج الصوت والصورة. التسطيب بياخد دقيقة."
+  },
+  "helperDownload": {
+    "message": "حمّل المساعد لـ$1"
+  },
+  "yourSystem": {
+    "message": "جهازك"
+  },
+  "helperStep1": {
+    "message": "١. افتح $1 من الملف اللي نزل"
+  },
+  "helperStep2": {
+    "message": "٢. استنى لحد ما يخلص (دقيقة تقريباً)"
+  },
+  "helperStep3": {
+    "message": "٣. ارجع هنا ودوس حمّل"
+  },
+  "supportTitle": {
+    "message": "هدهد حمّلك $1 فيديو"
+  },
+  "supportBody": {
+    "message": "لو عجبك، ساعدنا نكمّل ونفضل مجانيين للأبد."
+  },
+  "updateTitle": {
+    "message": "فيه إصدار جديد من هدهد ($1)"
+  },
+  "updateBody": {
+    "message": "حمّله وشغّل التسطيب. بعد كده هتقدر تحدّث من هنا بضغطة واحدة."
+  },
+  "updateBodyManaged": {
+    "message": "بياخد أقل من دقيقة، وإعداداتك وتحميلاتك مش هتتمسح."
+  },
+  "updateCta": {
+    "message": "حمّل التحديث"
+  },
+  "updateNow": {
+    "message": "حدّث دلوقتي"
+  },
+  "updating": {
+    "message": "بيحدّث…"
+  },
+  "updateBusy": {
+    "message": "استنى التحميلات تخلص الأول، وبعدين حدّث."
+  },
+  "updateNotManaged": {
+    "message": "الإضافة دي مش متسطّبة من فولدر هدهد، حمّل التحديث وشغّل التسطيب."
+  },
+  "updateFailed": {
+    "message": "التحديث ماكملش: $1"
+  },
+  "updatedTo": {
+    "message": "هدهد اتحدّث لـ $1"
+  },
+  "errQualities": {
+    "message": "ما قدرناش نقرأ الجودات"
+  },
+  "errEngineUnavailable": {
+    "message": "طريقة التحميل دي مش متاحة"
+  },
+  "errNeedsHelper": {
+    "message": "الفيديو ده محتاج المساعد (شغّل $1)"
+  },
+  "errEngineOffline": {
+    "message": "$1 مش متاح دلوقتي"
+  },
+  "errGone": {
+    "message": "الفيديو ده مش موجود تاني، اعمل ريفرش للصفحة"
+  },
+  "errNotWeb": {
+    "message": "الصفحة دي مش صفحة ويب"
+  },
+  "errMergeFailed": {
+    "message": "الدمج ما نفعش ($1)"
+  },
+  "errJobNotFound": {
+    "message": "مش لاقي التحميل ده"
+  },
+  "errContextNeedsHelper": {
+    "message": "محتاج المساعد (شغّل $1). أو شغّل الفيديو وحمّله من أيقونة هدهد."
+  },
+  "toastStarted": {
+    "message": "بدأ التحميل"
+  },
+  "notifDone": {
+    "message": "خلص التحميل ✓"
+  },
+  "notifFailed": {
+    "message": "التحميل وقف"
+  },
+  "notifOpen": {
+    "message": "افتح الفولدر"
+  },
+  "videoTitle": {
+    "message": "عنوان الفيديو"
+  },
+  "nativeMissing": {
+    "message": "المساعد مش متسطب (شغّل $1)"
+  },
+  "nativeForbidden": {
+    "message": "المساعد مش مسموح للإضافة دي (رقم الإضافة غلط في التسطيب)"
+  },
+  "nativeCrashed": {
+    "message": "المساعد قفل فجأة"
+  },
+  "nativeError": {
+    "message": "خطأ من المساعد"
+  },
+  "nativeDisconnected": {
+    "message": "انقطع الاتصال"
+  },
+  "nativeLost": {
+    "message": "انقطع الاتصال بالمساعد (الملف ممكن يكون كمّل في الفولدر)"
+  },
+  "nativeTimeout": {
+    "message": "المساعد ما ردّش"
+  },
+  "hlsBad": {
+    "message": "ملف m3u8 مش مفهوم"
+  },
+  "hlsNoVariants": {
+    "message": "مفيش جودات في الملف"
+  },
+  "hlsLive": {
+    "message": "ده بث مباشر؛ سجّله بالمساعد"
+  },
+  "hlsEmpty": {
+    "message": "مفيش أجزاء في الفيديو"
+  },
+  "hlsAudioUnsupported": {
+    "message": "الصوت المنفصل بصيغة مش مدعومة في المتصفح؛ حمّله بالمساعد"
+  },
+  "remuxFailed": {
+    "message": "التحويل لـMP4 فشل ($1)؛ حمّله بالمساعد"
+  },
+  "savedAsTs": {
+    "message": "اتحفظ TS لأن $1"
+  },
+  "ctxMedia": {
+    "message": "حمّل الفيديو ده بهدهد"
+  },
+  "ctxLink": {
+    "message": "حمّل اللينك ده بهدهد"
+  },
+  "ctxPage": {
+    "message": "حمّل فيديو الصفحة دي بهدهد"
+  },
+  "ctxPageMp3": {
+    "message": "حمّل الصوت بس (MP3)"
+  },
+  "optTitle": {
+    "message": "إعدادات هدهد"
+  },
+  "navSave": {
+    "message": "مكان الحفظ"
+  },
+  "navHelper": {
+    "message": "المساعد"
+  },
+  "navSubs": {
+    "message": "الترجمة والبيانات"
+  },
+  "navBrowser": {
+    "message": "التحميل من المتصفح"
+  },
+  "navNaming": {
+    "message": "تسمية الملفات"
+  },
+  "navLook": {
+    "message": "اللغة والشكل"
+  },
+  "navAbout": {
+    "message": "عن هدهد"
+  },
+  "saveDesc": {
+    "message": "كل التحميلات بتروح هنا، وتقدر تقسّمها في فولدرات حسب الموقع."
+  },
+  "optSubdir": {
+    "message": "فولدر جوه Downloads (للمتصفح)"
+  },
+  "optSubdirHint": {
+    "message": "مثلاً Hudhud. سيبه فاضي عشان يتحفظ في Downloads على طول."
+  },
+  "optNativeDir": {
+    "message": "فولدر المساعد"
+  },
+  "optNativeDirHint": {
+    "message": "سيبه فاضي عشان يستخدم Downloads."
+  },
+  "choose": {
+    "message": "اختار…"
+  },
+  "helperDesc": {
+    "message": "برنامج صغير على جهازك بيحمّل من يوتيوب والمواقع الصعبة ويدمج الصوت والصورة."
+  },
+  "status": {
+    "message": "الحالة"
+  },
+  "connected": {
+    "message": "متوصل · المساعد $1 · yt-dlp $2"
+  },
+  "notConnected": {
+    "message": "مش متوصل"
+  },
+  "updateYtdlp": {
+    "message": "حدّث yt-dlp"
+  },
+  "updated": {
+    "message": "اتحدّث: $1"
+  },
+  "optConcurrent": {
+    "message": "تحميلات في نفس الوقت"
+  },
+  "optRate": {
+    "message": "حد أقصى للسرعة"
+  },
+  "optRateHint": {
+    "message": "زي 2M أو 500K. سيبه فاضي لو مش عايز حد."
+  },
+  "noLimit": {
+    "message": "من غير حد"
+  },
+  "optAutoUpdate": {
+    "message": "حدّث yt-dlp تلقائي"
+  },
+  "optAutoUpdateHint": {
+    "message": "مرة كل أسبوع، عشان يوتيوب بيتغير كتير"
+  },
+  "optDefaultEngine": {
+    "message": "طريقة التحميل الافتراضية"
+  },
+  "optSubs": {
+    "message": "حمّل الترجمة لو موجودة"
+  },
+  "optSubLangs": {
+    "message": "لغات الترجمة"
+  },
+  "optEmbedMeta": {
+    "message": "ضمّن البيانات في الملف"
+  },
+  "optEmbedMetaHint": {
+    "message": "الاسم والقناة والتاريخ جوه الـMP4"
+  },
+  "optEmbedThumb": {
+    "message": "ضمّن صورة الغلاف"
+  },
+  "browserDesc": {
+    "message": "للفيديوهات اللي هدهد بيحمّلها من غير المساعد."
+  },
+  "optHls": {
+    "message": "حوّل البث (HLS) لـMP4"
+  },
+  "optHlsHint": {
+    "message": "بيحصل جوه المتصفح، من غير أي برامج"
+  },
+  "optMinSize": {
+    "message": "تجاهل الفيديوهات الأصغر من (ميجا)"
+  },
+  "optMinSizeHint": {
+    "message": "عشان الإعلانات والصور المتحركة"
+  },
+  "optNotifications": {
+    "message": "إشعار لما التحميل يخلص"
+  },
+  "optHistory": {
+    "message": "احفظ التحميلات في سجل المتصفح"
+  },
+  "optTemplate": {
+    "message": "شكل الاسم"
+  },
+  "optTemplateHint": {
+    "message": "المتاح: %title %hostname %quality %date %selector"
+  },
+  "optMaxLen": {
+    "message": "أقصى طول للاسم"
+  },
+  "optRules": {
+    "message": "قواعد لكل موقع (JSON)"
+  },
+  "optRulesHint": {
+    "message": "متقدم: قالب وفولدر مختلف لكل موقع."
+  },
+  "rulesInvalid": {
+    "message": "الـJSON فيه غلط: $1"
+  },
+  "optLang": {
+    "message": "لغة الواجهة"
+  },
+  "langAuto": {
+    "message": "زي المتصفح"
+  },
+  "optTheme": {
+    "message": "الشكل"
+  },
+  "themeAuto": {
+    "message": "زي الجهاز"
+  },
+  "themeLight": {
+    "message": "فاتح"
+  },
+  "themeDark": {
+    "message": "داكن"
+  },
+  "aboutTitle": {
+    "message": "هدهد مجاني ومفتوح المصدر"
+  },
+  "aboutBody": {
+    "message": "لو وفّر عليك وقت، ادعمنا بأي مبلغ عن طريق إنستاباي."
+  },
+  "version": {
+    "message": "النسخة $1"
+  },
+  "privacy": {
+    "message": "الخصوصية"
+  },
+  "sourceCode": {
+    "message": "الكود"
+  },
+  "shortcut": {
+    "message": "اختصار فتح هدهد: Alt+Shift+D"
+  },
+  "ruleNotArray": {
+    "message": "القواعد لازم تبقى array: [ {...}, {...} ]"
+  },
+  "ruleNotObject": {
+    "message": "القاعدة رقم $1 مش object"
+  },
+  "ruleNoMatch": {
+    "message": "القاعدة رقم $1 ناقصها \"match\""
+  },
+  "ruleReplace": {
+    "message": "\"replace\" في القاعدة رقم $1 لازم تبقى array"
+  },
+  "pathAbsolute": {
+    "message": "الفولدر لازم يبقى مسار كامل، زي /home/me/Videos أو C:\\Videos"
+  },
+  "missingTool": {
+    "message": "$1 مش موجود"
+  },
+  "helperNotInstalled": {
+    "message": "مش متسطب. شغّل $1 من ملف المساعد."
+  },
+  "helperOld": {
+    "message": "نسخة قديمة، شغّل $1 الجديد"
+  },
+  "defaultSuffix": {
+    "message": "(الافتراضي)"
+  },
+  "example": {
+    "message": "مثال"
+  },
+  "getHelper": {
+    "message": "حمّل المساعد"
+  },
+  "welcomeTitle": {
+    "message": "أهلاً بيك في هدهد"
+  },
+  "welcomeSub": {
+    "message": "٣ خطوات صغيرين وهدهد يبقى جاهز يلاقيلك أي فيديو في أي صفحة."
+  },
+  "step1Title": {
+    "message": "ثبّت الأيقونة جنب شريط العنوان"
+  },
+  "step1Body": {
+    "message": "دوس على علامة البازل في المتصفح واضغط الدبوس جنب هدهد، عشان تشوف التاج وهو بيقف."
+  },
+  "step2Title": {
+    "message": "سطّب المساعد (اختياري بس مهم ليوتيوب)"
+  },
+  "step2Body": {
+    "message": "برنامج صغير بيحمّل بأعلى جودة ويدمج الصوت والصورة. هتفتح $1 وتستنى دقيقة."
+  },
+  "step2Done": {
+    "message": "المساعد متوصل ✓"
+  },
+  "otherSystems": {
+    "message": "أنظمة تانية"
+  },
+  "step3Title": {
+    "message": "جرّب"
+  },
+  "step3Body": {
+    "message": "افتح أي فيديو ودوس على الهدهد. لو التاج واقف، يبقى لقى حاجة."
+  },
+  "tryVideo": {
+    "message": "افتح فيديو تجربة"
+  }
+}

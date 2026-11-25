@@ -1,0 +1,653 @@
+{
+  "extName": {
+    "message": "Hudhud"
+  },
+  "extDesc": {
+    "message": "Finds the videos on any page and saves them in one click."
+  },
+  "cmdOpen": {
+    "message": "Open Hudhud"
+  },
+  "brand": {
+    "message": "Hudhud"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "support": {
+    "message": "Support Hudhud"
+  },
+  "download": {
+    "message": "Download"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "retry": {
+    "message": "Try again"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "dismiss": {
+    "message": "Dismiss"
+  },
+  "gotIt": {
+    "message": "Got it"
+  },
+  "change": {
+    "message": "Change"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "saved": {
+    "message": "Saved ✓"
+  },
+  "helper": {
+    "message": "Helper"
+  },
+  "browser": {
+    "message": "Browser"
+  },
+  "errGeneric": {
+    "message": "Something went wrong"
+  },
+  "found_zero": {
+    "message": "No videos on this page"
+  },
+  "found_one": {
+    "message": "Found 1 video on this page"
+  },
+  "found_two": {
+    "message": "Found 2 videos on this page"
+  },
+  "found_few": {
+    "message": "Found $1 videos on this page"
+  },
+  "found_many": {
+    "message": "Found $1 videos on this page"
+  },
+  "found_other": {
+    "message": "Found $1 videos on this page"
+  },
+  "pageReady": {
+    "message": "$1 · ready to download"
+  },
+  "pageProbing": {
+    "message": "$1 · fetching qualities…"
+  },
+  "running_one": {
+    "message": "1 download running"
+  },
+  "running_two": {
+    "message": "2 downloads running"
+  },
+  "running_few": {
+    "message": "$1 downloads running"
+  },
+  "running_many": {
+    "message": "$1 downloads running"
+  },
+  "running_other": {
+    "message": "$1 downloads running"
+  },
+  "emptyTitle": {
+    "message": "No videos here yet"
+  },
+  "emptyBody": {
+    "message": "Play the video or refresh the page. Hudhud wakes up the moment it spots one."
+  },
+  "emptyTip": {
+    "message": "DRM-protected videos (Netflix and the like) can’t be downloaded."
+  },
+  "scanAgain": {
+    "message": "Scan the page again"
+  },
+  "reloadPage": {
+    "message": "Refresh the page"
+  },
+  "scanning": {
+    "message": "Scanning… this can take up to a minute"
+  },
+  "notWebPage": {
+    "message": "Hudhud only works on web pages"
+  },
+  "playlistAll": {
+    "message": "Download the whole playlist ($1 videos)"
+  },
+  "playlistInfoTitle": {
+    "message": "This video is part of a playlist"
+  },
+  "playlistInfoBody": {
+    "message": "Download just this one, or the whole list at once."
+  },
+  "playlistOnly": {
+    "message": "Playlist · $1 videos"
+  },
+  "otherVideos": {
+    "message": "Other videos on this page ($1)"
+  },
+  "onThisPage": {
+    "message": "On this page"
+  },
+  "downloads": {
+    "message": "Downloads"
+  },
+  "bestQuality": {
+    "message": "Best quality"
+  },
+  "audioMp3": {
+    "message": "Audio only · MP3"
+  },
+  "audioM4a": {
+    "message": "Audio only · M4A"
+  },
+  "quality": {
+    "message": "Quality"
+  },
+  "fileName": {
+    "message": "File name"
+  },
+  "fileNameHint": {
+    "message": "Leave empty to use the video title"
+  },
+  "more": {
+    "message": "Options"
+  },
+  "engine": {
+    "message": "Download with"
+  },
+  "copyLink": {
+    "message": "Copy link"
+  },
+  "copied": {
+    "message": "Copied ✓"
+  },
+  "starting": {
+    "message": "Starting…"
+  },
+  "started": {
+    "message": "Download started ✓"
+  },
+  "live": {
+    "message": "LIVE"
+  },
+  "withAudio": {
+    "message": "Video + audio"
+  },
+  "audioOnly": {
+    "message": "Audio only"
+  },
+  "drmBlocked": {
+    "message": "This video is DRM-protected and can’t be downloaded"
+  },
+  "needsHelper": {
+    "message": "Needs the helper"
+  },
+  "mergeNote": {
+    "message": "Video and audio will be merged into one MP4."
+  },
+  "tsNote": {
+    "message": "Will be saved as TS (MP4 conversion is off in settings)."
+  },
+  "liveNote": {
+    "message": "This is a live stream: it records until you cancel or it ends."
+  },
+  "shorts": {
+    "message": "Shorts"
+  },
+  "jobDownloading": {
+    "message": "Downloading"
+  },
+  "jobQueued": {
+    "message": "Queued"
+  },
+  "jobQueuedDetail": {
+    "message": "Starts after the current one"
+  },
+  "jobProcessing": {
+    "message": "Finishing up…"
+  },
+  "jobMerging": {
+    "message": "Merging video and audio…"
+  },
+  "jobDone": {
+    "message": "Saved ✓"
+  },
+  "jobStopped": {
+    "message": "Stopped"
+  },
+  "jobCanceled": {
+    "message": "Canceled"
+  },
+  "jobPaused": {
+    "message": "Paused"
+  },
+  "timeLeft": {
+    "message": "$1 left"
+  },
+  "itemOf": {
+    "message": "Video $1/$2"
+  },
+  "partN": {
+    "message": "Part $1"
+  },
+  "filesN": {
+    "message": "$1 files"
+  },
+  "noAudio": {
+    "message": "No audio"
+  },
+  "showInFolder": {
+    "message": "Show in folder"
+  },
+  "doneTitle": {
+    "message": "Done! Everything’s saved"
+  },
+  "openDownloads": {
+    "message": "Open downloads folder"
+  },
+  "clearList": {
+    "message": "Clear list"
+  },
+  "errorTitle": {
+    "message": "Download stopped"
+  },
+  "useHelper": {
+    "message": "Use the helper"
+  },
+  "helperTitle": {
+    "message": "The helper is needed for $1"
+  },
+  "helperTitleGeneric": {
+    "message": "The helper isn’t installed"
+  },
+  "helperBody": {
+    "message": "A small app on your computer that downloads in high quality and merges video and audio. Setup takes a minute."
+  },
+  "helperDownload": {
+    "message": "Download helper for $1"
+  },
+  "yourSystem": {
+    "message": "Your system"
+  },
+  "helperStep1": {
+    "message": "1. Open $1 from the download"
+  },
+  "helperStep2": {
+    "message": "2. Wait for it to finish (about a minute)"
+  },
+  "helperStep3": {
+    "message": "3. Come back and hit Download"
+  },
+  "supportTitle": {
+    "message": "Hudhud saved you $1 videos"
+  },
+  "supportBody": {
+    "message": "If it helps, chip in so we can keep it free forever."
+  },
+  "updateTitle": {
+    "message": "Hudhud $1 is out"
+  },
+  "updateBody": {
+    "message": "Download it and run the installer. After that you can update from here in one click."
+  },
+  "updateBodyManaged": {
+    "message": "Takes under a minute. Your settings and downloads stay."
+  },
+  "updateCta": {
+    "message": "Get the update"
+  },
+  "updateNow": {
+    "message": "Update now"
+  },
+  "updating": {
+    "message": "Updating…"
+  },
+  "updateBusy": {
+    "message": "Wait for the downloads to finish, then update."
+  },
+  "updateNotManaged": {
+    "message": "This copy isn’t installed from the Hudhud folder. Download the update and run the installer."
+  },
+  "updateFailed": {
+    "message": "Update failed: $1"
+  },
+  "updatedTo": {
+    "message": "Hudhud updated to $1"
+  },
+  "errQualities": {
+    "message": "Couldn’t read the qualities"
+  },
+  "errEngineUnavailable": {
+    "message": "This download method isn’t available"
+  },
+  "errNeedsHelper": {
+    "message": "This video needs the helper (run $1)"
+  },
+  "errEngineOffline": {
+    "message": "$1 isn’t available right now"
+  },
+  "errGone": {
+    "message": "This video is gone. Refresh the page."
+  },
+  "errNotWeb": {
+    "message": "This isn’t a web page"
+  },
+  "errMergeFailed": {
+    "message": "Merging failed ($1)"
+  },
+  "errJobNotFound": {
+    "message": "Can’t find this download"
+  },
+  "errContextNeedsHelper": {
+    "message": "Needs the helper (run $1). Or play the video and use the Hudhud icon."
+  },
+  "toastStarted": {
+    "message": "Download started"
+  },
+  "notifDone": {
+    "message": "Download complete ✓"
+  },
+  "notifFailed": {
+    "message": "Download stopped"
+  },
+  "notifOpen": {
+    "message": "Show in folder"
+  },
+  "videoTitle": {
+    "message": "Video title"
+  },
+  "nativeMissing": {
+    "message": "The helper isn’t installed (run $1)"
+  },
+  "nativeForbidden": {
+    "message": "The helper doesn’t allow this extension (wrong extension ID during install)"
+  },
+  "nativeCrashed": {
+    "message": "The helper closed unexpectedly"
+  },
+  "nativeError": {
+    "message": "Helper error"
+  },
+  "nativeDisconnected": {
+    "message": "Disconnected"
+  },
+  "nativeLost": {
+    "message": "Lost the helper connection (the file may still have finished in the folder)"
+  },
+  "nativeTimeout": {
+    "message": "The helper didn’t respond"
+  },
+  "hlsBad": {
+    "message": "Unreadable m3u8 playlist"
+  },
+  "hlsNoVariants": {
+    "message": "No qualities in the playlist"
+  },
+  "hlsLive": {
+    "message": "This is a live stream; record it with the helper"
+  },
+  "hlsEmpty": {
+    "message": "The video has no segments"
+  },
+  "hlsAudioUnsupported": {
+    "message": "The separate audio uses a format the browser can’t handle; use the helper"
+  },
+  "remuxFailed": {
+    "message": "MP4 conversion failed ($1); use the helper"
+  },
+  "savedAsTs": {
+    "message": "Saved as TS because $1"
+  },
+  "ctxMedia": {
+    "message": "Download this video with Hudhud"
+  },
+  "ctxLink": {
+    "message": "Download this link with Hudhud"
+  },
+  "ctxPage": {
+    "message": "Download this page’s video with Hudhud"
+  },
+  "ctxPageMp3": {
+    "message": "Download audio only (MP3)"
+  },
+  "optTitle": {
+    "message": "Hudhud settings"
+  },
+  "navSave": {
+    "message": "Save location"
+  },
+  "navHelper": {
+    "message": "Helper"
+  },
+  "navSubs": {
+    "message": "Subtitles & metadata"
+  },
+  "navBrowser": {
+    "message": "In-browser downloads"
+  },
+  "navNaming": {
+    "message": "File naming"
+  },
+  "navLook": {
+    "message": "Language & look"
+  },
+  "navAbout": {
+    "message": "About"
+  },
+  "saveDesc": {
+    "message": "All downloads go here, optionally sorted into a folder per site."
+  },
+  "optSubdir": {
+    "message": "Folder inside Downloads (browser)"
+  },
+  "optSubdirHint": {
+    "message": "For example Hudhud. Leave empty to save straight to Downloads."
+  },
+  "optNativeDir": {
+    "message": "Helper folder"
+  },
+  "optNativeDirHint": {
+    "message": "Leave empty to use Downloads."
+  },
+  "choose": {
+    "message": "Choose…"
+  },
+  "helperDesc": {
+    "message": "A small app on your computer that handles YouTube and tricky sites, and merges video with audio."
+  },
+  "status": {
+    "message": "Status"
+  },
+  "connected": {
+    "message": "Connected · helper $1 · yt-dlp $2"
+  },
+  "notConnected": {
+    "message": "Not connected"
+  },
+  "updateYtdlp": {
+    "message": "Update yt-dlp"
+  },
+  "updated": {
+    "message": "Updated: $1"
+  },
+  "optConcurrent": {
+    "message": "Simultaneous downloads"
+  },
+  "optRate": {
+    "message": "Speed limit"
+  },
+  "optRateHint": {
+    "message": "Like 2M or 500K. Leave empty for no limit."
+  },
+  "noLimit": {
+    "message": "No limit"
+  },
+  "optAutoUpdate": {
+    "message": "Auto-update yt-dlp"
+  },
+  "optAutoUpdateHint": {
+    "message": "Weekly, because YouTube changes often"
+  },
+  "optDefaultEngine": {
+    "message": "Default download method"
+  },
+  "optSubs": {
+    "message": "Download subtitles when available"
+  },
+  "optSubLangs": {
+    "message": "Subtitle languages"
+  },
+  "optEmbedMeta": {
+    "message": "Embed metadata"
+  },
+  "optEmbedMetaHint": {
+    "message": "Title, channel and date inside the MP4"
+  },
+  "optEmbedThumb": {
+    "message": "Embed the cover image"
+  },
+  "browserDesc": {
+    "message": "For videos Hudhud downloads without the helper."
+  },
+  "optHls": {
+    "message": "Convert streams (HLS) to MP4"
+  },
+  "optHlsHint": {
+    "message": "Runs right in the browser, no apps needed"
+  },
+  "optMinSize": {
+    "message": "Ignore videos smaller than (MB)"
+  },
+  "optMinSizeHint": {
+    "message": "Skips ads and animated GIFs"
+  },
+  "optNotifications": {
+    "message": "Notify when a download finishes"
+  },
+  "optHistory": {
+    "message": "Keep downloads in the browser history"
+  },
+  "optTemplate": {
+    "message": "Name pattern"
+  },
+  "optTemplateHint": {
+    "message": "Available: %title %hostname %quality %date %selector"
+  },
+  "optMaxLen": {
+    "message": "Maximum name length"
+  },
+  "optRules": {
+    "message": "Per-site rules (JSON)"
+  },
+  "optRulesHint": {
+    "message": "Advanced: a different pattern and folder per site."
+  },
+  "rulesInvalid": {
+    "message": "Invalid JSON: $1"
+  },
+  "optLang": {
+    "message": "Interface language"
+  },
+  "langAuto": {
+    "message": "Same as browser"
+  },
+  "optTheme": {
+    "message": "Appearance"
+  },
+  "themeAuto": {
+    "message": "Same as system"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "aboutTitle": {
+    "message": "Hudhud is free and open source"
+  },
+  "aboutBody": {
+    "message": "If it saves you time, chip in any amount via InstaPay."
+  },
+  "version": {
+    "message": "Version $1"
+  },
+  "privacy": {
+    "message": "Privacy"
+  },
+  "sourceCode": {
+    "message": "Source code"
+  },
+  "shortcut": {
+    "message": "Shortcut to open Hudhud: Alt+Shift+D"
+  },
+  "ruleNotArray": {
+    "message": "Rules must be an array: [ {...}, {...} ]"
+  },
+  "ruleNotObject": {
+    "message": "Rule $1 is not an object"
+  },
+  "ruleNoMatch": {
+    "message": "Rule $1 is missing \"match\""
+  },
+  "ruleReplace": {
+    "message": "\"replace\" in rule $1 must be an array"
+  },
+  "pathAbsolute": {
+    "message": "The folder must be a full path, like /home/me/Videos or C:\\Videos"
+  },
+  "missingTool": {
+    "message": "$1 missing"
+  },
+  "helperNotInstalled": {
+    "message": "Not installed. Run $1 from the helper download."
+  },
+  "helperOld": {
+    "message": "Old version, run the new $1"
+  },
+  "defaultSuffix": {
+    "message": "(default)"
+  },
+  "example": {
+    "message": "Example"
+  },
+  "getHelper": {
+    "message": "Get the helper"
+  },
+  "welcomeTitle": {
+    "message": "Welcome to Hudhud"
+  },
+  "welcomeSub": {
+    "message": "Three quick steps and Hudhud is ready to find any video on any page."
+  },
+  "step1Title": {
+    "message": "Pin the icon next to the address bar"
+  },
+  "step1Body": {
+    "message": "Click the puzzle icon in your browser and pin Hudhud, so you can watch the crest rise."
+  },
+  "step2Title": {
+    "message": "Install the helper (optional, needed for YouTube)"
+  },
+  "step2Body": {
+    "message": "A small app that downloads in top quality and merges video and audio. Open $1 and wait a minute."
+  },
+  "step2Done": {
+    "message": "The helper is connected ✓"
+  },
+  "otherSystems": {
+    "message": "Other systems"
+  },
+  "step3Title": {
+    "message": "Try it"
+  },
+  "step3Body": {
+    "message": "Open any video and click the hoopoe. Crest up means it found something."
+  },
+  "tryVideo": {
+    "message": "Open a test video"
+  }
+}

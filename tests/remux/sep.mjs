@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+const { TsToMp4 } = await import(new URL('../../extension/lib/ts2mp4.js', import.meta.url));
+const dir = process.argv[2];
+const list = (f) => fs.readFileSync(`${dir}/${f}`, 'utf8').split('\n').filter((l) => l.endsWith('.ts')).map((l) => `${dir}/${l}`);
+const fd = fs.openSync(`${dir}/ours.mp4`, 'w');
+let pos = 0;
+const mux = new TsToMp4({ write: async (b, p) => { if (p === undefined) { fs.writeSync(fd, b, 0, b.length, pos); pos += b.length; } else fs.writeSync(fd, b, 0, b.length, p); } }, { separateAudio: true });
+for (const s of list('p0.m3u8')) await mux.push(new Uint8Array(fs.readFileSync(s)));
+for (const s of list('p1.m3u8')) await mux.pushAudio(new Uint8Array(fs.readFileSync(s)));
+console.log(JSON.stringify(await mux.finish()));
+fs.closeSync(fd);

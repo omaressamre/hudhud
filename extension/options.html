@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>Hudhud</title>
+  <link rel="stylesheet" href="ui/theme.css">
+  <link rel="stylesheet" href="ui/options.css">
+</head>
+<body>
+  <header class="top">
+    <div class="logo">
+      <img class="light-only" src="assets/icon.svg" alt="" width="40" height="40">
+      <img class="dark-only" src="assets/icon-dark.svg" alt="" width="40" height="40">
+      <span class="brand" data-i18n="brand">هدهد</span>
+      <span class="muted" data-i18n="settings">الإعدادات</span>
+    </div>
+    <div class="top-acts">
+      <span id="toast" class="toast" aria-live="polite"></span>
+      <a class="btn btn-secondary" id="supportTop" target="_blank"><span data-i18n="support">ادعم هدهد</span></a>
+    </div>
+  </header>
+
+  <div class="body">
+    <nav class="nav">
+      <a href="#save" data-i18n="navSave"></a>
+      <a href="#helper" data-i18n="navHelper"></a>
+      <a href="#subs" data-i18n="navSubs"></a>
+      <a href="#browser" data-i18n="navBrowser"></a>
+      <a href="#naming" data-i18n="navNaming"></a>
+      <a href="#look" data-i18n="navLook"></a>
+      <a href="#about" data-i18n="navAbout"></a>
+    </nav>
+
+    <main class="main">
+      <section class="card" id="save">
+        <h2 data-i18n="navSave"></h2><p class="desc" data-i18n="saveDesc"></p>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optSubdir"></b><small data-i18n="optSubdirHint"></small></div>
+          <input class="input" id="subdir" dir="ltr" placeholder="Hudhud">
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optNativeDir"></b><small data-i18n="optNativeDirHint"></small></div>
+          <div class="ctl"><input class="input wide" id="nativeDir" dir="ltr"><button class="btn btn-secondary" id="btnChoose" data-i18n="choose"></button><button class="icon-btn" id="btnResetDir"></button></div>
+        </div>
+      </section>
+
+      <section class="card" id="helper">
+        <h2 data-i18n="navHelper"></h2><p class="desc" data-i18n="helperDesc"></p>
+        <div class="row">
+          <div class="lbl"><b data-i18n="status"></b><small id="updateStatus"></small></div>
+          <div class="ctl"><span id="nativeStatus" class="stat"></span><button class="btn btn-secondary" id="btnUpdate" data-i18n="updateYtdlp"></button><a class="btn btn-primary" id="btnGetHelper" target="_blank" hidden data-i18n="getHelper"></a></div>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optDefaultEngine"></b></div>
+          <select class="select" id="defaultEngine"><option value="browser" data-i18n="browser"></option><option value="native" data-i18n="helper"></option></select>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optConcurrent"></b></div>
+          <select class="select" id="maxConcurrent"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>8</option><option>10</option></select>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optRate"></b><small data-i18n="optRateHint"></small></div>
+          <input class="input short" id="rateLimit" dir="ltr" data-i18n-placeholder="noLimit">
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optAutoUpdate"></b><small data-i18n="optAutoUpdateHint"></small></div>
+          <label class="toggle"><input type="checkbox" id="autoUpdate"><span></span></label>
+        </div>
+      </section>
+
+      <section class="card" id="subs">
+        <h2 data-i18n="navSubs"></h2>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optSubs"></b></div>
+          <div class="ctl"><input class="input short" id="subLangs" dir="ltr" placeholder="ar,en"><label class="toggle"><input type="checkbox" id="subs"><span></span></label></div>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optEmbedMeta"></b><small data-i18n="optEmbedMetaHint"></small></div>
+          <label class="toggle"><input type="checkbox" id="embedMeta"><span></span></label>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optEmbedThumb"></b></div>
+          <label class="toggle"><input type="checkbox" id="embedThumb"><span></span></label>
+        </div>
+      </section>
+
+      <section class="card" id="browser">
+        <h2 data-i18n="navBrowser"></h2><p class="desc" data-i18n="browserDesc"></p>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optHls"></b><small data-i18n="optHlsHint"></small></div>
+          <label class="toggle"><input type="checkbox" id="hlsToMp4"><span></span></label>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optMinSize"></b><small data-i18n="optMinSizeHint"></small></div>
+          <input class="input short" id="minSizeMB" type="number" min="0" step="0.5" dir="ltr">
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optNotifications"></b></div>
+          <label class="toggle"><input type="checkbox" id="notifications"><span></span></label>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optHistory"></b></div>
+          <label class="toggle"><input type="checkbox" id="history"><span></span></label>
+        </div>
+      </section>
+
+      <section class="card" id="naming">
+        <h2 data-i18n="navNaming"></h2>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optTemplate"></b><small data-i18n="optTemplateHint"></small></div>
+          <input class="input mono" id="template" dir="ltr">
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optMaxLen"></b></div>
+          <input class="input short" id="maxLength" type="number" min="10" max="200" dir="ltr">
+        </div>
+        <div class="row col">
+          <div class="lbl"><b data-i18n="optRules"></b><small data-i18n="optRulesHint"></small></div>
+          <textarea class="input mono" id="rules" dir="ltr" rows="7" spellcheck="false"></textarea>
+          <div class="ctl"><button class="btn btn-ghost" id="btnExample" data-i18n="example"></button><span id="rulesErr" class="err"></span></div>
+        </div>
+      </section>
+
+      <section class="card" id="look">
+        <h2 data-i18n="navLook"></h2>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optLang"></b></div>
+          <select class="select" id="uiLang"><option value="auto" data-i18n="langAuto"></option><option value="ar">العربية</option><option value="en">English</option></select>
+        </div>
+        <div class="row">
+          <div class="lbl"><b data-i18n="optTheme"></b></div>
+          <select class="select" id="theme"><option value="auto" data-i18n="themeAuto"></option><option value="light" data-i18n="themeLight"></option><option value="dark" data-i18n="themeDark"></option></select>
+        </div>
+      </section>
+
+      <section class="support-card" id="about">
+        <span class="mascot-slot"></span>
+        <div class="txt">
+          <h2 class="brand" data-i18n="aboutTitle"></h2>
+          <p data-i18n="aboutBody"></p>
+          <p class="muted small"><span id="ver"></span> · <span data-i18n="shortcut"></span> · <a id="srcLink" target="_blank" data-i18n="sourceCode"></a> · <a id="privacyLink" target="_blank" data-i18n="privacy"></a></p>
+        </div>
+        <div class="acts"><a class="btn btn-primary" id="btnInstapay" target="_blank">InstaPay</a></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

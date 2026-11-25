@@ -1,0 +1,136 @@
+/* Hudhud design tokens — mirrors the "Hudhud / Theme" variables in Figma. */
+@font-face { font-family: 'Readex Pro'; src: url('../fonts/ReadexPro.woff2') format('woff2'), url('../fonts/ReadexPro.ttf') format('truetype'); font-weight: 160 700; font-display: swap; }
+@font-face { font-family: 'Baloo Bhaijaan 2'; src: url('../fonts/BalooBhaijaan2.woff2') format('woff2'), url('../fonts/BalooBhaijaan2.ttf') format('truetype'); font-weight: 400 800; font-display: swap; }
+
+:root {
+  --hh-apricot: #F5A25D; --hh-coral: #EE6A4D; --hh-plum: #2D1E3E; --hh-cream: #FFF6EC;
+  --hh-peach: #FFE2C4; --hh-mint: #7FD1B9; --hh-pebble: #A7A29C;
+
+  --hh-bg-page: #FFF6EC;
+  --hh-bg-surface: #FFFFFF;
+  --hh-bg-card: #FFF6EC;
+  --hh-bg-sunken: #FFE2C4;
+  --hh-bg-danger: #FFF0EC;
+  --hh-bg-warning: #FFF4E6;
+  --hh-bg-success: #EEF8F4;
+  --hh-bg-chip-stream: #F3E2F0;
+  --hh-bg-chip-story: #DDF3EC;
+  --hh-border-default: #EFE4D6;
+  --hh-border-strong: #CDBFB0;
+  --hh-control-off: #DCD2C6;
+  --hh-progress-danger-track: #F8D5CC;
+  --hh-text-primary: #2D1E3E;
+  --hh-text-secondary: #7D6E86;
+  --hh-text-success: #2F8F73;
+  --hh-text-danger: #C8442B;
+  --hh-text-on-accent: #FFFFFF;
+  --hh-accent-primary: #EE6A4D;
+  --hh-accent-warm: #F5A25D;
+  --hh-accent-success: #7FD1B9;
+  --hh-shadow: 0 18px 44px rgba(45, 30, 62, .18);
+
+  --hh-font: 'Readex Pro', 'Segoe UI', 'Noto Sans Arabic', Tahoma, system-ui, sans-serif;
+  --hh-font-brand: 'Baloo Bhaijaan 2', 'Readex Pro', 'Segoe UI', Tahoma, system-ui, sans-serif;
+  --hh-font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --hh-bg-page: #17111D;
+  --hh-bg-surface: #211A2A;
+  --hh-bg-card: #2C2335;
+  --hh-bg-sunken: #3A2D45;
+  --hh-bg-danger: #3B2430;
+  --hh-bg-warning: #3A2C22;
+  --hh-bg-success: #1E3631;
+  --hh-bg-chip-stream: #43304F;
+  --hh-bg-chip-story: #1F3F37;
+  --hh-border-default: #3A2F46;
+  --hh-border-strong: #5B4E68;
+  --hh-control-off: #4A3F58;
+  --hh-progress-danger-track: #5A2F33;
+  --hh-text-primary: #F4ECF6;
+  --hh-text-secondary: #A99BB4;
+  --hh-text-success: #7FD1B9;
+  --hh-text-danger: #FF8F75;
+  --hh-shadow: 0 18px 44px rgba(0, 0, 0, .45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--hh-font); color: var(--hh-text-primary); background: var(--hh-bg-page); -webkit-font-smoothing: antialiased; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: var(--hh-accent-primary); }
+[hidden] { display: none !important; }
+
+.brand { font-family: var(--hh-font-brand); font-weight: 800; line-height: 1.1; }
+.muted { color: var(--hh-text-secondary); }
+.mono { font-family: var(--hh-font-mono); }
+.dark-only { display: none; }
+:root[data-theme="dark"] .dark-only { display: revert; }
+:root[data-theme="dark"] .light-only { display: none; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1.5px solid transparent; border-radius: 999px;
+  padding: 8px 16px; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: filter .15s, background .15s; text-decoration: none; }
+.btn:disabled { opacity: .55; cursor: default; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+bdi { unicode-bidi: isolate; }
+.btn-primary { background: var(--hh-accent-primary); color: var(--hh-text-on-accent); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
+.btn-secondary { background: var(--hh-bg-surface); border-color: var(--hh-border-default); color: var(--hh-text-primary); }
+.btn-secondary:hover:not(:disabled) { border-color: var(--hh-border-strong); }
+.btn-ghost { background: transparent; color: var(--hh-text-primary); }
+.btn-ghost:hover:not(:disabled) { background: var(--hh-bg-card); }
+.btn-danger { background: var(--hh-bg-danger); color: var(--hh-text-danger); }
+.btn-lg { padding: 12px 22px; font-size: 15px; }
+.icon-btn { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 12px; border: 0; background: var(--hh-bg-card);
+  color: var(--hh-text-secondary); cursor: pointer; }
+.icon-btn:hover { color: var(--hh-text-primary); }
+.icon-btn svg { width: 18px; height: 18px; }
+
+/* Inputs */
+.input, .select { border: 1.5px solid var(--hh-border-default); background: var(--hh-bg-surface); border-radius: 10px; padding: 7px 10px; font-size: 13px; min-width: 0; }
+.input:focus, .select:focus { outline: 2px solid color-mix(in srgb, var(--hh-accent-primary) 40%, transparent); border-color: var(--hh-accent-primary); }
+.select { appearance: none; padding-inline-end: 28px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%237D6E86' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-size: 16px; background-position: left 8px center; }
+[dir="ltr"] .select { background-position: right 8px center; }
+
+/* Toggle */
+.toggle { position: relative; width: 38px; height: 22px; flex: none; }
+.toggle input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.toggle span { position: absolute; inset: 0; border-radius: 999px; background: var(--hh-control-off); transition: background .15s; pointer-events: none; }
+.toggle span::after { content: ''; position: absolute; top: 3px; inset-inline-start: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: inset-inline-start .15s; }
+.toggle input:checked + span { background: var(--hh-accent-primary); }
+.toggle input:checked + span::after { inset-inline-start: 19px; }
+
+/* Checkbox */
+.check { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.check input { appearance: none; width: 18px; height: 18px; margin: 0; border-radius: 5px; border: 1.5px solid var(--hh-border-strong); background: var(--hh-bg-surface); display: grid; place-items: center; cursor: pointer; }
+.check input:checked { background: var(--hh-accent-primary); border-color: var(--hh-accent-primary); }
+.check input:checked::after { content: ''; width: 9px; height: 5px; border: 2.4px solid #fff; border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+
+/* Progress */
+.track { position: relative; height: 6px; border-radius: 999px; background: var(--hh-bg-sunken); overflow: hidden; }
+.track > i { position: absolute; inset-block: 0; inset-inline-start: 0; border-radius: inherit; background: var(--hh-accent-primary); transition: width .4s; }
+.track.queued { background: none; border: 1px dashed var(--hh-border-strong); height: 6px; }
+.track.processing > i { width: 100% !important; background: var(--hh-accent-warm); animation: hh-pulse 1.2s ease-in-out infinite; }
+.track.done > i { background: var(--hh-accent-success); }
+.track.error { background: var(--hh-progress-danger-track); }
+@keyframes hh-pulse { 50% { opacity: .55; } }
+
+/* Banners */
+.banner { display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 18px; }
+.banner .ic { flex: none; width: 34px; height: 34px; border-radius: 12px; background: var(--hh-bg-surface); display: grid; place-items: center; }
+.banner .ic svg { width: 18px; height: 18px; }
+.banner .txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.banner b { font-size: 13px; font-weight: 600; }
+.banner p { margin: 0; font-size: 12px; line-height: 1.55; color: var(--hh-text-secondary); }
+.banner .btn { margin-top: 4px; padding: 6px 12px; font-size: 12px; }
+.banner.warning { background: var(--hh-bg-warning); } .banner.warning .ic { color: var(--hh-accent-warm); }
+.banner.support { background: var(--hh-bg-danger); } .banner.support .ic { color: var(--hh-accent-primary); }
+.banner.info { background: var(--hh-bg-success); flex-direction: row; gap: 10px; cursor: default; } .banner.info .ic { color: var(--hh-accent-success); }
+.banner .close { margin-inline-start: auto; border: 0; background: none; color: var(--hh-text-secondary); cursor: pointer; padding: 2px; }
+.banner .close svg { width: 16px; height: 16px; display: block; }
+.banner { position: relative; }

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>هدهد · Hudhud — نزّل أي فيديو من المتصفح</title>
+<meta name="description" content="Hudhud is a free Chrome and Edge extension that finds the videos on a page and downloads them. هدهد إضافة مجانية بتلاقي الفيديوهات وتنزّلها.">
+<meta property="og:title" content="Hudhud · هدهد">
+<meta property="og:description" content="A free extension that finds the videos on a page and downloads them.">
+<meta property="og:image" content="https://omaressamre.github.io/hudhud/assets/og.png">
+<meta name="theme-color" content="#FFF6EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17111D" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script>
+  // set language + theme before first paint
+  (function () {
+    var q = new URLSearchParams(location.search), s = {};
+    try { s = JSON.parse(localStorage.getItem('hh-site') || '{}'); } catch (e) {}
+    var lang = q.get('lang') || s.lang || ((navigator.language || 'ar').toLowerCase().startsWith('ar') ? 'ar' : 'en');
+    var theme = s.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var h = document.documentElement;
+    h.lang = lang; h.dir = lang === 'ar' ? 'rtl' : 'ltr'; h.dataset.theme = theme;
+  })();
+</script>
+<script src="site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">تخطَّ للمحتوى</a>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Hudhud">
+      <img class="light-only" src="assets/icon.svg" alt="" width="34" height="34">
+      <img class="dark-only" src="assets/icon-dark.svg" alt="" width="34" height="34">
+      <span data-i18n="name">هدهد</span>
+    </a>
+    <nav class="links" aria-label="sections">
+      <a href="#features" data-i18n="navFeatures">المميزات</a>
+      <a href="#how" data-i18n="navHow">إزاي يشتغل</a>
+      <a href="#download" data-i18n="navDownload">التحميل</a>
+      <a href="#faq" data-i18n="navFaq">أسئلة</a>
+    </nav>
+    <div class="tools">
+      <button class="chip" id="lang" type="button" data-i18n="otherLang">English</button>
+      <button class="chip icon-btn" id="theme" type="button" data-i18n-aria="toggleTheme" aria-label="الوضع الليلي">
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">مجاني · من غير إعلانات · لكروم وإيدج</span></p>
+        <h1 data-i18n="heroTitle">شُفت فيديو؟<br><em>هدهد</em> ينزّلهولك.</h1>
+        <p class="lead" data-i18n="heroLead">إضافة بتلاقي الفيديوهات في الصفحة وانت بتتفرّج، وتنزّلها بضغطة: يوتيوب والبلاي ليستات، ستوريز فيسبوك وإنستجرام، وفيديوهات البث HLS كملف MP4 عادي.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#download">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+            <span data-i18n="ctaGet">نزّل هدهد</span>
+          </a>
+          <a class="btn btn-secondary" href="#how" data-i18n="ctaHow">إزاي أثبّته؟</a>
+        </div>
+        <ul class="ticks">
+          <li data-i18n="tick1">عربي وإنجليزي</li>
+          <li data-i18n="tick2">وضع ليلي</li>
+          <li data-i18n="tick3">مش بيجمع أي بيانات</li>
+        </ul>
+      </div>
+      <div class="hero-art">
+        <div class="blob" aria-hidden="true"></div>
+        <picture class="shot">
+          <img data-shot alt="" data-i18n-alt="shotAlt" width="380" height="913" src="assets/popup-ar-light.webp">
+        </picture>
+        <img class="mascot light-only" src="assets/downloading.svg" alt="" width="150" height="150">
+        <img class="mascot dark-only" src="assets/downloading-dark.svg" alt="" width="150" height="150">
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <h2 data-i18n="featTitle">كل اللي محتاجه عشان تحتفظ بالفيديو</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></div>
+          <h3 data-i18n="f1t">بيلاقي لوحده</h3>
+          <p data-i18n="f1d">شغّل الفيديو والأيقونة هتنوّر. مش محتاج تدوّر على لينكات أو تفتح أدوات المطوّرين.</p>
+        </article>
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="4"/><path d="m10 9.5 4.5 2.5-4.5 2.5z"/></svg></div>
+          <h3 data-i18n="f2t">يوتيوب والبلاي ليستات</h3>
+          <p data-i18n="f2d">اختار الجودة لحد 4K، أو نزّل البلاي ليست كلها مرة واحدة. (بالمساعد)</p>
+        </article>
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="3"/><path d="M9 7h6"/></svg></div>
+          <h3 data-i18n="f3t">ستوريز بالصوت</h3>
+          <p data-i18n="f3d">ستوريز فيسبوك وإنستجرام بتيجي صورة وصوت منفصلين — هدهد بيدمجهم في ملف واحد جوه المتصفح.</p>
+        </article>
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h10M4 12h16M4 17h7"/><path d="m16 15 3 2-3 2"/></svg></div>
+          <h3 data-i18n="f4t">HLS لـ MP4</h3>
+          <p data-i18n="f4d">فيديوهات البث المقسّمة بتتجمّع وتتحوّل لـ MP4 على جهازك، من غير ما ترفع حاجة لأي سيرفر.</p>
+        </article>
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></div>
+          <h3 data-i18n="f5t">MP3 وترجمة</h3>
+          <p data-i18n="f5d">نزّل الصوت بس، واحفظ الترجمة والصورة المصغّرة والبيانات مع الفيديو لو عايز.</p>
+        </article>
+        <article class="card">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+          <h3 data-i18n="f6t">خصوصيتك محفوظة</h3>
+          <p data-i18n="f6d">مفيش حسابات ولا تتبّع ولا إعلانات. كل حاجة بتحصل على جهازك.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="how">
+    <div class="wrap">
+      <h2 data-i18n="howTitle">٣ خطوات وتبدأ</h2>
+      <ol class="steps">
+        <li>
+          <span class="num">1</span>
+          <h3 data-i18n="s1t">نزّل هدهد وشغّل التسطيب</h3>
+          <p data-i18n="s1d">ملف واحد فيه الإضافة والمساعد. فُكّه وشغّل ملف التسطيب، وهو هيجيب الباقي لوحده. مش محتاج صلاحيات أدمن.</p>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <h3 data-i18n="s2t">ضيف الإضافة للمتصفح</h3>
+          <p data-i18n="s2d">صفحة إرشادات هتفتح لوحدها: شغّل «وضع المطوّر» واختار فولدر هدهد. ده مرة واحدة بس، وبعد كده التحديثات بضغطة من جوه الإضافة.</p>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <h3 data-i18n="s3t">دوس حمّل</h3>
+          <p data-i18n="s3d">افتح أي فيديو، دوس على أيقونة هدهد واختار الجودة. الملف هيتحفظ في فولدر التنزيلات.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="download">
+    <div class="wrap">
+      <h2 data-i18n="dlTitle">التحميل</h2>
+      <p class="sub" data-i18n="dlSub">هدهد مش موجود في متجر كروم، بتنزّله من هنا مباشرة. آخر إصدار:</p>
+      <div class="dl">
+        <a class="dl-main" href="https://github.com/omaressamre/hudhud/releases/latest" data-bundle>
+          <img class="light-only" src="assets/icon.svg" alt="" width="56" height="56">
+          <img class="dark-only" src="assets/icon-dark.svg" alt="" width="56" height="56">
+          <span>
+            <strong><span data-i18n="dlMain">نزّل هدهد</span> <bdi data-osname></bdi></strong>
+            <small data-release data-i18n="dlMainSub">الإضافة + المساعد · Chrome · Edge · Brave</small>
+          </span>
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+        </a>
+        <div class="os">
+          <a class="os-card" data-os="windows" href="https://github.com/omaressamre/hudhud/releases/latest/download/hudhud-helper-windows.zip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.4v7.1H3zM12 4.2 21 3v8.5h-9zM3 12.5h7.5v7.1L3 18.5zM12 12.5h9V21l-9-1.2z" fill="currentColor" stroke="none"/></svg>
+            <strong>Windows</strong><small data-i18n="osWin">install.bat</small>
+          </a>
+          <a class="os-card" data-os="macos" href="https://github.com/omaressamre/hudhud/releases/latest/download/hudhud-helper-macos.zip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.8zM14.2 5.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.6-1.3z" fill="currentColor" stroke="none"/></svg>
+            <strong>macOS</strong><small data-i18n="osMac">install.command</small>
+          </a>
+          <a class="os-card" data-os="linux" href="https://github.com/omaressamre/hudhud/releases/latest/download/hudhud-helper-linux.zip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-2 0-3.2 1.7-3.2 4 0 1.4.2 2.2-.6 3.5C7 12.3 5.5 14.4 5.6 17c.6.4 1.4.4 2 .9.7.6.6 2.1 2 2.1h4.8c1.4 0 1.3-1.5 2-2.1.6-.5 1.4-.5 2-.9.1-2.6-1.4-4.7-2.6-6.5-.8-1.3-.6-2.1-.6-3.5C15.2 4.7 14 3 12 3z"/><circle cx="10.5" cy="7.5" r=".6" fill="currentColor"/><circle cx="13.5" cy="7.5" r=".6" fill="currentColor"/></svg>
+            <strong>Linux</strong><small data-i18n="osLinux">bash install.sh</small>
+          </a>
+        </div>
+        <p class="note"><a href="https://github.com/omaressamre/hudhud/releases/latest" data-extonly data-i18n="dlExtOnly">الإضافة لوحدها من غير المساعد (للمتقدمين)</a></p>
+        <p class="note" data-i18n="dlNote">المساعد بيستخدم yt-dlp وffmpeg وDeno وبينزّلهم من مصادرهم الرسمية أثناء التثبيت.</p>
+      </div>
+      <div class="drm">
+        <img class="light-only" src="assets/sleepy.svg" alt="" width="64" height="64">
+        <img class="dark-only" src="assets/sleepy-dark.svg" alt="" width="64" height="64">
+        <p data-i18n="drm"><strong>هدهد مش بيكسر حماية المحتوى.</strong> الفيديوهات المشفّرة (DRM) زي نتفليكس وشاهد بيتعرف عليها ومش بتتنزّل.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="support">
+    <div class="wrap support">
+      <div>
+        <h2 data-i18n="supTitle">هدهد مجاني، وهيفضل مجاني</h2>
+        <p class="sub" data-i18n="supSub">لو وفّر عليك وقت، تقدر تساعدنا نكمّل نطوّره. أي مبلغ بيفرق.</p>
+        <div class="cta">
+          <a class="btn btn-primary" data-donate="instapay" href="https://ipn.eg/S/omaressamre/instapay">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+            <span>InstaPay</span>
+          </a>
+        </div>
+      </div>
+      <img class="light-only" src="assets/done.svg" alt="" width="180" height="180">
+      <img class="dark-only" src="assets/done-dark.svg" alt="" width="180" height="180">
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap narrow">
+      <h2 data-i18n="faqTitle">أسئلة بتتسأل كتير</h2>
+      <details><summary data-i18n="q1">هو مجاني فعلًا؟</summary><p data-i18n="a1">أيوه، مجاني بالكامل ومن غير إعلانات. الكود مفتوح تحت رخصة GPL-3.0.</p></details>
+      <details><summary data-i18n="q2">ليه مش موجود في متجر كروم؟</summary><p data-i18n="a2">متجر كروم مش بيسمح بإضافات بتنزّل من يوتيوب، فبننشره هنا مباشرة. التثبيت بياخد دقيقة.</p></details>
+      <details><summary data-i18n="q3">محتاج المساعد؟</summary><p data-i18n="a3">التسطيب بيجيب الاتنين مع بعض وده الأسهل. الإضافة لوحدها بتنزّل الفيديوهات المباشرة والستوريز وHLS، والمساعد بيضيف يوتيوب والبلاي ليستات وMP3 والترجمة ومواقع تانية كتير.</p></details>
+      <details><summary data-i18n="q6">إزاي أحدّث هدهد؟</summary><p data-i18n="a6">لما يطلع إصدار جديد هتلاقي زرار «حدّث دلوقتي» جوه الإضافة. بيحدّث الإضافة والمساعد مع بعض في أقل من دقيقة.</p></details>
+      <details><summary data-i18n="q4">بيشتغل على إيدج وبرايف؟</summary><p data-i18n="a4">أيوه، على أي متصفح مبني على Chromium: كروم، إيدج، برايف، فيفالدي.</p></details>
+      <details><summary data-i18n="q5">آمن؟</summary><p data-i18n="a5">المساعد بيتثبّت لحسابك بس من غير صلاحيات أدمن، وبيكلّم الإضافة بتاعتنا بس. الكود كله متاح تراجعه.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span class="brand small">
+      <img class="light-only" src="assets/icon.svg" alt="" width="22" height="22">
+      <img class="dark-only" src="assets/icon-dark.svg" alt="" width="22" height="22">
+      <span data-i18n="name">هدهد</span>
+    </span>
+    <nav>
+      <a href="privacy.html" data-i18n="privacy">الخصوصية</a>
+      <a href="https://github.com/omaressamre/hudhud">GitHub</a>
+      <a href="https://github.com/omaressamre/hudhud/blob/main/LICENSE">GPL-3.0</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

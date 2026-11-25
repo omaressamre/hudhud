@@ -1,0 +1,18 @@
+# build output
+dist/
+helper/hudhud-helper
+helper/*.exe
+# secrets: the extension signing key never goes in the repo
+*.pem
+.env
+# local fixtures and test output
+tests/.fixtures/
+tests/shots/
+__pycache__/
+node_modules/
+# downloaded fonts (fetched by scripts/fetch-fonts.sh)
+extension/fonts/*.woff2
+extension/fonts/*.ttf
+site/fonts/*.woff2
+site/fonts/*.ttf
+.DS_Store

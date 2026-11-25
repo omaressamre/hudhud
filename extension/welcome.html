@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>Hudhud</title>
+  <link rel="stylesheet" href="ui/theme.css">
+  <link rel="stylesheet" href="ui/welcome.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="art"><span class="blob"></span><span id="hero"></span></div>
+    <main class="content">
+      <div class="logo">
+        <img class="light-only" src="assets/icon.svg" alt="" width="40" height="40">
+        <img class="dark-only" src="assets/icon-dark.svg" alt="" width="40" height="40">
+        <span class="brand" data-i18n="brand">هدهد</span>
+      </div>
+      <h1 class="brand" data-i18n="welcomeTitle"></h1>
+      <p class="sub" data-i18n="welcomeSub"></p>
+      <ol class="steps">
+        <li class="step done" id="s1"><span class="n">✓</span><div><b data-i18n="step1Title"></b><p data-i18n="step1Body"></p></div></li>
+        <li class="step now" id="s2"><span class="n">2</span><div><b data-i18n="step2Title"></b><p id="s2body"></p>
+          <div class="acts"><a class="btn btn-primary" id="btnHelper" target="_blank"></a><a class="btn btn-ghost" id="btnOther" target="_blank" data-i18n="otherSystems"></a></div>
+          <p class="ok" id="s2ok" hidden data-i18n="step2Done"></p></div></li>
+        <li class="step" id="s3"><span class="n">3</span><div><b data-i18n="step3Title"></b><p data-i18n="step3Body"></p>
+          <div class="acts"><a class="btn btn-secondary" id="btnTry" target="_blank" data-i18n="tryVideo"></a></div></div></li>
+      </ol>
+    </main>
+  </div>
+  <script type="module" src="welcome.js"></script>
+</body>
+</html>
