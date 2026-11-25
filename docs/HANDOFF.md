@@ -125,7 +125,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 ## 8. Status and open items
 
 **Waiting on the user**
-- [ ] Confirm the **one-click update 0.9.5 → 0.9.6** on Windows. He just reloaded Chrome from `%LOCALAPPDATA%\Hudhud\extension`; before that, Chrome loaded another folder, which caused "Get the update".
+- [x] **One-click update confirmed on Windows** (0.9.5 → 0.9.6, Chrome). The earlier "Get the update" was Chrome loading the extension from another folder; that is now in the site FAQ and the popup points to the right folder.
 - [ ] Check **Firefox** by hand: popup and options look, helper status after running the 0.9.5+ installer (registers Firefox), real YouTube, story and HLS downloads.
 - [ ] Test **macOS** at all (Gatekeeper may block the unsigned helper; document the bypass).
 

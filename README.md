@@ -33,6 +33,8 @@ Hudhud is not in the Chrome Web Store. Get it from the [latest release](https://
 
 `hudhud-vX.Y.Z-extension-only.zip` is the extension alone, for people who don't want the helper (it can't update itself). Uninstall with the matching `uninstall` script, then remove Hudhud from `chrome://extensions`.
 
+> **"Get the update" instead of "Update now"?** Chrome is loading Hudhud from another folder. Remove it in `chrome://extensions` and **Load unpacked** from the Hudhud folder above; the popup shows that path with a Copy button.
+
 ### Firefox
 
 Install the signed add-on from the [site](https://omaressamre.github.io/hudhud/#download) (Firefox 140 or newer). It updates itself through Firefox. For YouTube and playlists also run the installer for your system above — it registers the helper with Firefox too, and the add-on updates the helper with one click.

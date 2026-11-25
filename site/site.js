@@ -39,6 +39,8 @@ const EN = {
   q1: 'Is it really free?', a1: 'Yes — completely free and ad-free. The code is open under the GPL-3.0 license.',
   q2: 'Why isn’t it in the Chrome Web Store?', a2: 'The Chrome Web Store doesn’t allow extensions that download from YouTube, so we publish it here. Installing takes a minute.',
   q3: 'Do I need the helper?', a3: 'The installer sets up both, which is the easiest way. The extension alone downloads direct videos, stories and HLS; the helper adds YouTube, playlists, MP3, subtitles and many more sites.',
+  q7: 'The update button says “Get the update”, not “Update now”?',
+  a7: 'That means Chrome loads Hudhud from another folder (usually the one you unzipped) instead of the Hudhud folder, and one-click updates only work from the Hudhud folder. Open <code>chrome://extensions</code>, remove Hudhud, click “Load unpacked” and pick: on Windows <code>%LOCALAPPDATA%\\Hudhud\\extension</code>, on macOS <code>~/Library/Application Support/Hudhud/extension</code>, on Linux <code>~/.local/share/hudhud/extension</code>. Hudhud also shows this path inside the extension with a “Copy path” button. You only do this once; after that every update is one click.',
   q6: 'How do I update Hudhud?', a6: 'When a new version is out, an “Update now” button appears inside the extension. It updates the extension and the helper together in under a minute.',
   q4: 'Does it work on Edge and Brave?', a4: 'Yes, on any Chromium browser: Chrome, Edge, Brave, Vivaldi.',
   q5: 'Is it safe?', a5: 'The helper installs for your user only, without admin rights, and only talks to our extension. All the code is open for you to review.',
