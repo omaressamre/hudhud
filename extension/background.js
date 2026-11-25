@@ -5,8 +5,8 @@ import { parseM3U8, qualityLabel } from './lib/hls.js';
 import { DEFAULT_SETTINGS, findRule, buildBaseName, buildPath, buildRelDir, sanitizeSegment } from './lib/naming.js';
 import { getEngine, engineStatus } from './engines/index.js';
 import { removeHeaderRule, addHeaderRule, ensureOffscreen } from './engines/browser.js';
-import { onNativeEvent, nativeInfo, request as nativeRequest, cookiesFor, setNativeConfig } from './engines/native.js';
-import { installer } from './lib/platform.js';
+import { onNativeEvent, nativeInfo, request as nativeRequest, cookiesFor, setNativeConfig, disconnectNative } from './engines/native.js';
+import { installer, IS_FIREFOX } from './lib/platform.js';
 import { initI18n, t, resolveLang } from './lib/i18n.js';
 import { latestReleaseApi } from './lib/config.js';
 
@@ -432,7 +432,7 @@ function notify(j) {
     iconUrl: ok ? 'icons/notify-done.png' : 'icons/notify-error.png',
     title: ok ? t('notifDone') : t('notifFailed'),
     message: ok ? (j.files > 1 ? `${name} (${t('filesN', j.files)})` : name) : `${name}\n${j.error || ''}`.slice(0, 250),
-    buttons: ok ? [{ title: t('notifOpen') }] : undefined,
+    buttons: ok && !IS_FIREFOX ? [{ title: t('notifOpen') }] : undefined, // Firefox has no notification buttons
     priority: 0,
   }).catch(() => {});
 }
@@ -445,7 +445,7 @@ async function bumpStats() {
 function toast(title, message) {
   chrome.notifications.create('', { type: 'basic', iconUrl: 'icons/notify-downloading.png', title, message, priority: 0 }).catch(() => {});
 }
-chrome.notifications.onButtonClicked.addListener((id) => {
+chrome.notifications.onButtonClicked?.addListener((id) => {
   revealJob({ jobId: id }).catch(() => {});
   chrome.notifications.clear(id);
 });
@@ -722,15 +722,17 @@ async function checkHelperUpdate(force = false) {
     // the first ping after the browser starts can be slow (yt-dlp/antivirus); try once more
     if (!info) { await new Promise((r) => setTimeout(r, 4000)); info = await nativeInfo(true); }
     await chrome.storage.local.set({ helperUpdateAt: Date.now() });
-    // the older of the extension and the helper decides (they ship together with one version)
+    // the older of the extension and the helper decides (they ship together with one version).
+    // Firefox updates the extension itself, so there only the helper counts.
     const ext = chrome.runtime.getManifest().version;
-    const current = info?.version && cmpVer(info.version, ext) < 0 ? info.version : ext;
+    if (IS_FIREFOX && !info?.version) return null;
+    const current = IS_FIREFOX ? info.version : info?.version && cmpVer(info.version, ext) < 0 ? info.version : ext;
     const r = await fetch(latestReleaseApi(), { headers: { Accept: 'application/vnd.github+json' } });
     if (!r.ok) return null;
     const latest = String((await r.json()).tag_name || '').replace(/^v/, '');
     const newer = latest && cmpVer(latest, current) > 0;
-    const managed = newer && (await isManagedInstall(info));
-    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed, extDir: info?.extDir || '' } : null });
+    const managed = newer && (IS_FIREFOX || (await isManagedInstall(info)));
+    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed, helperOnly: IS_FIREFOX, extDir: info?.extDir || '' } : null });
     return newer ? latest : ''; // '' = up to date, null = couldn't check
   } catch { return null; }
 }
@@ -740,7 +742,7 @@ async function refreshManaged() {
   const { helperUpdate: up } = await chrome.storage.local.get('helperUpdate');
   if (!up || up.managed) return up;
   const info = (await nativeInfo()) || (await nativeInfo(true));
-  const next = { ...up, managed: await isManagedInstall(info), extDir: info?.extDir || '' };
+  const next = { ...up, managed: IS_FIREFOX ? !!info : await isManagedInstall(info), extDir: info?.extDir || '' };
   await chrome.storage.local.set({ helperUpdate: next });
   return next;
 }
@@ -750,6 +752,13 @@ async function selfUpdate() {
   const { jobs = [] } = await chrome.storage.local.get('jobs');
   if (jobs.some((j) => j.state === 'in_progress')) throw new Error(t('updateBusy'));
   const info = await nativeInfo(true);
+  if (IS_FIREFOX) {
+    // Firefox keeps the extension up to date; the helper replaces only itself
+    const res = await nativeRequest('selfUpdate', { helperOnly: true }, 15 * 60_000);
+    disconnectNative(); // the next request starts the new helper
+    await chrome.storage.local.set({ helperUpdate: null });
+    return { ...res, helperOnly: true };
+  }
   if (!(await isManagedInstall(info))) throw new Error(t('updateNotManaged'));
   const res = await nativeRequest('selfUpdate', {}, 15 * 60_000);
   await chrome.storage.local.set({ helperUpdate: null, justUpdated: res?.version || '' });

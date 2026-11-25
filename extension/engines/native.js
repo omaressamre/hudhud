@@ -86,6 +86,13 @@ function scheduleIdle() {
   }, 30_000);
 }
 
+/** close the helper connection (after the helper updated itself) */
+export function disconnectNative() {
+  if (port) { try { port.disconnect(); } catch {} }
+  port = null;
+  infoCache = { at: 0, info: null };
+}
+
 export function request(cmd, payload = {}, timeoutMs = 15_000) {
   return new Promise((resolve, reject) => {
     let p;

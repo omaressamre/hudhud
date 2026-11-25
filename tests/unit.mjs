@@ -61,3 +61,12 @@ for (const k of Object.keys(ar)) {
 const manifest = JSON.parse(fs.readFileSync(HERE + '../extension/manifest.json', 'utf8'));
 for (const m of JSON.stringify(manifest).match(/__MSG_(\w+)__/g)) assert.ok(en[m.slice(6, -2)], m);
 console.log('locale tests passed');
+
+// ── Firefox manifest
+const { firefoxManifest, GECKO_ID } = await import('../scripts/firefox-manifest.mjs');
+const ff = firefoxManifest(manifest);
+assert.equal(ff.browser_specific_settings.gecko.id, GECKO_ID);
+assert.deepEqual(ff.background, { scripts: ['background.js'], type: 'module' });
+assert.ok(!ff.key && !ff.minimum_chrome_version && !ff.permissions.includes('offscreen'));
+assert.ok(ff.permissions.includes('nativeMessaging') && ff.version === manifest.version);
+console.log('firefox manifest tests passed');

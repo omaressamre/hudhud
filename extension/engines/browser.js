@@ -7,7 +7,24 @@ import { t } from '../lib/i18n.js';
 
 let creating = null;
 
+// Firefox has no offscreen API, but its background is a page with a DOM:
+// the same offscreen.html runs in a hidden iframe there and gets the same messages.
+async function ensureFrame() {
+  if (document.getElementById('hh-offscreen')) return;
+  if (!creating) {
+    creating = new Promise((resolve) => {
+      const f = document.createElement('iframe');
+      f.id = 'hh-offscreen';
+      f.src = chrome.runtime.getURL('offscreen.html');
+      f.addEventListener('load', () => setTimeout(resolve, 50), { once: true });
+      document.body.appendChild(f);
+    }).finally(() => { creating = null; });
+  }
+  await creating;
+}
+
 export async function ensureOffscreen() {
+  if (!chrome.offscreen) return ensureFrame();
   if (await chrome.offscreen.hasDocument()) return;
   if (!creating) {
     creating = chrome.offscreen.createDocument({
@@ -42,7 +59,7 @@ export async function addHeaderRule(jobId, pageUrl) {
             { header: 'origin', operation: 'set', value: new URL(pageUrl).origin },
           ],
         },
-        condition: { initiatorDomains: [chrome.runtime.id], resourceTypes: ['xmlhttprequest', 'other'] },
+        condition: { initiatorDomains: [new URL(chrome.runtime.getURL('')).hostname], resourceTypes: ['xmlhttprequest', 'other'] },
       }],
     });
   } catch (e) { console.warn('[Hudhud] header rule', e); }

@@ -8,7 +8,7 @@ Get-Process -Name 'hudhud-helper', 'yt-dlp', 'ffmpeg', 'deno' -ErrorAction Silen
     Stop-Process -Force -ErrorAction SilentlyContinue
 Start-Sleep -Milliseconds 300
 
-foreach ($root in 'HKCU:\Software\Google\Chrome\NativeMessagingHosts', 'HKCU:\Software\Microsoft\Edge\NativeMessagingHosts', 'HKCU:\Software\BraveSoftware\Brave-Browser\NativeMessagingHosts') {
+foreach ($root in 'HKCU:\Software\Google\Chrome\NativeMessagingHosts', 'HKCU:\Software\Microsoft\Edge\NativeMessagingHosts', 'HKCU:\Software\BraveSoftware\Brave-Browser\NativeMessagingHosts', 'HKCU:\Software\Mozilla\NativeMessagingHosts') {
     $key = Join-Path $root $HostName
     if (Test-Path $key) { Remove-Item $key -Recurse -Force; Write-Host "removed $key" }
 }

@@ -323,6 +323,12 @@
   "updatedTo": {
     "message": "Hudhud updated to $1"
   },
+  "helperUpdatedTo": {
+    "message": "Helper updated to $1"
+  },
+  "updateHelperTitle": {
+    "message": "Helper $1 is out"
+  },
   "errQualities": {
     "message": "Couldn’t read the qualities"
   },

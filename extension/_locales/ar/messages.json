@@ -323,6 +323,12 @@
   "updatedTo": {
     "message": "هدهد اتحدّث لـ $1"
   },
+  "helperUpdatedTo": {
+    "message": "المساعد اتحدّث لـ $1"
+  },
+  "updateHelperTitle": {
+    "message": "فيه نسخة جديدة من المساعد ($1)"
+  },
   "errQualities": {
     "message": "ما قدرناش نقرأ الجودات"
   },

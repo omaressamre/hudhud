@@ -48,5 +48,8 @@ chmod +x "$stage"/mac/*.sh "$stage"/mac/*.command "$stage"/linux/*.sh "$stage"/m
 ( zip -qj "$DIST/hudhud-v$VERSION-extension-only.zip" LICENSE TRADEMARKS.md )
 for os in windows macos linux; do cp "$DIST/hudhud-v$VERSION-$os.zip" "$DIST/hudhud-helper-$os.zip"; done
 rm -rf "$stage"
+# Firefox build (unsigned folder; the release workflow signs it into hudhud-vX.Y.Z-firefox.xpi)
+node scripts/firefox-manifest.mjs "$DIST/firefox" >/dev/null
+cp LICENSE TRADEMARKS.md "$DIST/firefox/"
 ( cd "$DIST" && sha256sum *.zip > SHA256SUMS.txt )
 ls -la "$DIST"

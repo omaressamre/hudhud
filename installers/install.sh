@@ -9,6 +9,7 @@
 set -u
 
 EXT_ID="${HUDHUD_EXTENSION_ID:-gdcallopdofegjbibhflneideofehmpk}"
+GECKO_ID="${HUDHUD_GECKO_ID:-hudhud@omaressamre.github.io}"
 HOST_NAME="com.hudhud.helper"
 SRC="$(cd "$(dirname "$0")" && pwd)"
 MIRROR="${HUDHUD_MIRROR:-}"     # للاختبار: بديل لـhttps:// (سيرفر محلي)
@@ -248,6 +249,16 @@ if [ $registered -eq 0 ]; then
   OLDIFS="$IFS"; IFS='|'; set -- $DEFAULTS; IFS="$OLDIFS"
   for b in "$@"; do register "$b"; done
 fi
+# Firefox: same helper, its own manifest format (allowed_extensions) and folder
+FF_MANIFEST="{
+  \"name\": \"$HOST_NAME\",
+  \"description\": \"Hudhud Helper (yt-dlp + ffmpeg)\",
+  \"path\": \"$DEST/hudhud-helper\",
+  \"type\": \"stdio\",
+  \"allowed_extensions\": [\"$GECKO_ID\"]
+}"
+if [ "$OSN" = darwin ]; then FF_DIR="$HOME/Library/Application Support/Mozilla/NativeMessagingHosts"; else FF_DIR="$HOME/.mozilla/native-messaging-hosts"; fi
+mkdir -p "$FF_DIR" && printf '%s\n' "$FF_MANIFEST" > "$FF_DIR/$HOST_NAME.json" && ok "Firefox"
 if [ "$OSN" = linux ] && { [ -d "$HOME/snap/chromium" ] || [ -d "$HOME/.var/app/com.google.Chrome" ] || [ -d "$HOME/.var/app/org.chromium.Chromium" ]; }; then
   warn "Note: Snap/Flatpak browsers may block the helper. If it says 'not connected', use the normal .deb/.rpm Chrome or Edge."
 fi

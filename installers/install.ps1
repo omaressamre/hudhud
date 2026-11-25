@@ -4,7 +4,8 @@
 # Downloads show live progress (size, %, speed, time left) and RESUME if interrupted:
 # you can close this window at any time and run install.bat again - it continues where it stopped.
 param(
-    [string]$ExtensionId = 'gdcallopdofegjbibhflneideofehmpk'
+    [string]$ExtensionId = 'gdcallopdofegjbibhflneideofehmpk',
+    [string]$GeckoId = 'hudhud@omaressamre.github.io'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -269,7 +270,7 @@ try {
         Info 'no extension folder in this package, skipping'
     }
 
-    Step 'Registering with Chrome and Edge'
+    Step 'Registering with Chrome, Edge, Brave and Firefox'
     $manifestPath = Join-Path $Dest "$HostName.json"
     $manifest = [ordered]@{
         name            = $HostName
@@ -290,6 +291,19 @@ try {
         New-Item -Path $key -Value $manifestPath -Force | Out-Null   # (Default) value = manifest path
         Ok $key
     }
+    # Firefox: its own manifest format (allowed_extensions)
+    $ffManifestPath = Join-Path $Dest "$HostName.firefox.json"
+    $ffManifest = [ordered]@{
+        name               = $HostName
+        description        = 'Hudhud Helper (yt-dlp + ffmpeg)'
+        path               = $exe
+        type               = 'stdio'
+        allowed_extensions = @($GeckoId)
+    } | ConvertTo-Json
+    [IO.File]::WriteAllText($ffManifestPath, $ffManifest, (New-Object Text.UTF8Encoding $false))
+    $ffKey = Join-Path 'HKCU:\Software\Mozilla\NativeMessagingHosts' $HostName
+    New-Item -Path $ffKey -Value $ffManifestPath -Force | Out-Null
+    Ok $ffKey
     Remove-Item $Cache -Recurse -Force -ErrorAction SilentlyContinue
 
     Set-Title 'done'

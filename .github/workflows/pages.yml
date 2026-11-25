@@ -25,6 +25,15 @@ jobs:
       - uses: actions/checkout@v5
       - name: Fonts (optional, falls back to system fonts)
         run: pip install fonttools brotli && scripts/fetch-fonts.sh || echo "::warning::fonts not fetched"
+      - name: Firefox add-on from the latest release (Pages serves .xpi as application/x-xpinstall)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p site/firefox
+          gh release download --repo "$GITHUB_REPOSITORY" --pattern '*-firefox.xpi' --pattern 'updates.json' -D /tmp/ff 2>/dev/null || true
+          if ls /tmp/ff/*.xpi >/dev/null 2>&1; then
+            cp /tmp/ff/*.xpi site/firefox/hudhud.xpi && cp /tmp/ff/updates.json site/firefox/updates.json && ls -la site/firefox
+          else echo "no signed Firefox add-on yet"; fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

@@ -11,3 +11,6 @@ export function installer() {
   if (os === 'win') return 'install.bat';
   return 'install.sh';
 }
+
+// Which browser we run in. Firefox has runtime.getBrowserInfo; Chrome/Edge/Brave don't.
+export const IS_FIREFOX = typeof globalThis.browser !== 'undefined' && typeof globalThis.browser.runtime?.getBrowserInfo === 'function';

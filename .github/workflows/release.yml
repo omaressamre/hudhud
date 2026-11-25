@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # start the site deploy so it serves the new Firefox add-on
 
 jobs:
   release:
@@ -31,9 +32,23 @@ jobs:
         run: pip install fonttools brotli
       - run: tests/run-all.sh
       - run: scripts/build.sh
+      - name: Sign the Firefox add-on (unlisted, needs AMO_JWT_ISSUER / AMO_JWT_SECRET)
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          if [ -z "$AMO_JWT_ISSUER" ]; then echo "::warning::No AMO keys: Firefox add-on not signed"; exit 0; fi
+          npx --yes web-ext@8 sign --channel=unlisted --source-dir dist/firefox --artifacts-dir dist/ff \
+            --api-key "$AMO_JWT_ISSUER" --api-secret "$AMO_JWT_SECRET"
+          mv dist/ff/*.xpi "dist/hudhud-$TAG-firefox.xpi"
+          node scripts/firefox-updates.mjs "$TAG" > dist/updates.json
+          ( cd dist && sha256sum "hudhud-$TAG-firefox.xpi" >> SHA256SUMS.txt )
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$TAG" dist/*.zip dist/SHA256SUMS.txt \
+          shopt -s nullglob
+          extra=(dist/*.xpi); [ -f dist/updates.json ] && extra+=(dist/updates.json)
+          gh release create "$TAG" dist/*.zip "${extra[@]}" dist/SHA256SUMS.txt \
             --target "$GITHUB_SHA" --title "Hudhud $TAG" --generate-notes
+          gh workflow run pages.yml --ref main

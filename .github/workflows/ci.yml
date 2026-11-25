@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [main]
+    branches: ['**']
   pull_request:
 
 permissions:
@@ -24,3 +24,31 @@ jobs:
         run: tests/run-all.sh
       - name: Build release zips (smoke)
         run: scripts/build.sh --no-fonts
+
+  firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: helper/go.mod
+      - name: Tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install selenium
+          firefox --version; geckodriver --version | head -1
+      - name: Build Firefox extension
+        run: node scripts/firefox-manifest.mjs /tmp/hh-firefox
+      - name: Lint with web-ext
+        run: npx --yes web-ext@8 lint --source-dir /tmp/hh-firefox --self-hosted
+      - name: Helper
+        run: cd helper && go build -o /tmp/hhhost/hudhud-helper .
+      - name: End-to-end in Firefox
+        run: |
+          tests/fixtures/gen.sh /tmp/hh-site
+          python3 tests/serve.py /tmp/hh-site 8765 &
+          sleep 1
+          HH_FF_EXT=/tmp/hh-firefox HH_HOST=/tmp/hhhost/hudhud-helper python3 tests/firefox_e2e.py

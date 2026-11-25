@@ -56,6 +56,7 @@ type Req struct {
 	RateLimit   string `json:"rateLimit"`
 
 	MaxConcurrent int    `json:"maxConcurrent"`
+	HelperOnly    bool   `json:"helperOnly"` // selfUpdate: replace only the helper (Firefox updates the extension itself)
 	Lang          string `json:"lang"`
 	AutoUpdate    bool   `json:"autoUpdate"`
 }
@@ -289,7 +290,7 @@ func handle(q *Req) {
 			replyErr(q.ID, errors.New(tr("استنى التحميلات تخلص الأول", "wait for the downloads to finish first")))
 			return
 		}
-		res, err := selfUpdate()
+		res, err := selfUpdate(q.HelperOnly)
 		if err != nil {
 			log.Println("self-update:", err)
 			replyErr(q.ID, err)

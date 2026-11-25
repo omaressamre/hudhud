@@ -10,6 +10,9 @@ else
 fi
 pkill -f "$DEST/" 2>/dev/null || true
 find "$AS" -maxdepth 4 -path "*NativeMessagingHosts/$HOST_NAME.json" -print -delete 2>/dev/null | sed 's/^/removed /'
+for f in "$HOME/.mozilla/native-messaging-hosts/$HOST_NAME.json" "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts/$HOST_NAME.json"; do
+  [ -f "$f" ] && rm -f "$f" && echo "removed $f"
+done
 rm -rf "$DEST" && echo "removed $DEST"
 echo "Hudhud Helper uninstalled."
 echo "Also remove Hudhud from chrome://extensions (or edge://extensions)."

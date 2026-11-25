@@ -66,7 +66,7 @@ function renderBanners() {
       btn('primary', t('support'), () => openSupport()),
       () => chrome.storage.local.set({ stats: { ...st, nextSupportAt: doneCount + 50 } })));
   }
-  if (justUpdated) out.push(banner('info', 'check', t('updatedTo', justUpdated), null, null, () => { justUpdated = ''; renderBanners(); }));
+  if (justUpdated) out.push(banner('info', 'check', t(justUpdatedHelper ? 'helperUpdatedTo' : 'updatedTo', justUpdated), null, null, () => { justUpdated = ''; renderBanners(); }));
   const up = local.helperUpdate;
   if (up && up.latest && !up.managed && !managedChecked) {
     managedChecked = true;
@@ -83,7 +83,7 @@ function renderBanners() {
     const action = up.managed
       ? btn('primary', updating ? t('updating') : t('updateNow'), (e) => runSelfUpdate(e.currentTarget), updating ? { class: 'btn btn-primary', disabled: true } : undefined)
       : btn('primary', t('updateCta'), () => openReleaseAsset(currentOs()));
-    out.push(banner('info', 'refresh', t('updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'), action,
+    out.push(banner('info', 'refresh', t(up.helperOnly ? 'updateHelperTitle' : 'updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'), action,
       updating ? null : () => chrome.storage.local.set({ dismissedUpdate: up.latest })));
     }
   }
@@ -121,11 +121,14 @@ function helperBanner() {
 let updating = false;
 let justUpdated = '';
 let managedChecked = false;
+let justUpdatedHelper = false;
 async function runSelfUpdate() {
   updating = true; renderBanners();
   try {
-    await send({ type: 'selfUpdate' });
-    // the extension reloads itself in a moment, which closes this popup
+    const res = await send({ type: 'selfUpdate' });
+    // Chrome: the extension reloads itself in a moment, which closes this popup.
+    // Firefox: only the helper was replaced; show the result here.
+    if (res?.helperOnly) { updating = false; justUpdated = res.version; justUpdatedHelper = true; renderBanners(); }
   } catch (e) {
     updating = false; renderBanners();
     flash(t('updateFailed', e.message), true);

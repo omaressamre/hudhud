@@ -90,7 +90,7 @@ func TestSelfUpdate(t *testing.T) {
 	if info()["installId"] != "abc123" || info()["extVersion"] != "0.8.1" {
 		t.Fatalf("info before: %v", info())
 	}
-	res, err := selfUpdate()
+	res, err := selfUpdate(false)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -122,7 +122,7 @@ func TestSelfUpdate(t *testing.T) {
 func TestSelfUpdateBadChecksum(t *testing.T) {
 	dir := setupInstall(t)
 	serveRelease(t, makeZip(t, map[string]string{helperEntry(): "new", "extension/manifest.json": `{"version":"9.9.9"}`}), true)
-	if _, err := selfUpdate(); err == nil || !strings.Contains(err.Error(), "checksum") {
+	if _, err := selfUpdate(false); err == nil || !strings.Contains(err.Error(), "checksum") {
 		t.Fatalf("want checksum error, got %v", err)
 	}
 	b, _ := os.ReadFile(exePath())
@@ -135,7 +135,7 @@ func TestSelfUpdateBadChecksum(t *testing.T) {
 func TestSelfUpdateNeedsManagedInstall(t *testing.T) {
 	dir := setupInstall(t)
 	os.Remove(filepath.Join(dir, "install-id"))
-	if _, err := selfUpdate(); err == nil {
+	if _, err := selfUpdate(false); err == nil {
 		t.Fatal("want error without install-id")
 	}
 }
@@ -143,7 +143,7 @@ func TestSelfUpdateNeedsManagedInstall(t *testing.T) {
 func TestSelfUpdateIncompletePackage(t *testing.T) {
 	setupInstall(t)
 	serveRelease(t, makeZip(t, map[string]string{"extension/manifest.json": `{"version":"9.9.9"}`}), false)
-	if _, err := selfUpdate(); err == nil {
+	if _, err := selfUpdate(false); err == nil {
 		t.Fatal("want error for a package without the helper")
 	}
 	if managedExtensionVersion() != "0.8.1" {
@@ -154,10 +154,23 @@ func TestSelfUpdateIncompletePackage(t *testing.T) {
 func TestSelfUpdateLegacyAssetName(t *testing.T) {
 	setupInstall(t)
 	serveReleaseAs(t, legacyAssetName(), makeZip(t, map[string]string{helperEntry(): "new-helper", "extension/manifest.json": `{"version":"9.9.9"}`}), false)
-	if _, err := selfUpdate(); err != nil {
+	if _, err := selfUpdate(false); err != nil {
 		t.Fatal(err)
 	}
 	if managedExtensionVersion() != "9.9.9" {
 		t.Fatal("not updated from a legacy-named package")
+	}
+}
+
+func TestSelfUpdateHelperOnly(t *testing.T) {
+	dir := setupInstall(t)
+	os.Remove(filepath.Join(dir, "install-id")) // Firefox installs don't need the managed extension
+	serveRelease(t, makeZip(t, map[string]string{helperEntry(): "new-helper"}), false)
+	if _, err := selfUpdate(true); err != nil {
+		t.Fatal(err)
+	}
+	b, _ := os.ReadFile(exePath())
+	if string(b) != "new-helper" || managedExtensionVersion() != "0.8.1" {
+		t.Fatalf("helper %q ext %s", b, managedExtensionVersion())
 	}
 }

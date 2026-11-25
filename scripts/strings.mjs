@@ -119,6 +119,8 @@ export default {
   updateNotManaged: ['الإضافة دي مش متسطّبة من فولدر هدهد، حمّل التحديث وشغّل التسطيب.', 'This copy isn’t installed from the Hudhud folder. Download the update and run the installer.'],
   updateFailed: ['التحديث ماكملش: $1', 'Update failed: $1'],
   updatedTo: ['هدهد اتحدّث لـ $1', 'Hudhud updated to $1'],
+  helperUpdatedTo: ['المساعد اتحدّث لـ $1', 'Helper updated to $1'],
+  updateHelperTitle: ['فيه نسخة جديدة من المساعد ($1)', 'Helper $1 is out'],
 
   // ── background / engines
   errQualities: ['ما قدرناش نقرأ الجودات', 'Couldn’t read the qualities'],

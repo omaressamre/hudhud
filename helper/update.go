@@ -184,7 +184,7 @@ func expectedSum(sumsFile, name string) string {
 }
 
 // unzipUpdate extracts extension/** into extDir and the helper binary into binPath.
-func unzipUpdate(zipPath, extDir, binPath string) error {
+func unzipUpdate(zipPath, extDir, binPath string, needExt bool) error {
 	zr, err := zip.OpenReader(zipPath)
 	if err != nil {
 		return err
@@ -230,7 +230,7 @@ func unzipUpdate(zipPath, extDir, binPath string) error {
 			return err
 		}
 	}
-	if !gotBin || !gotManifest {
+	if !gotBin || (needExt && !gotManifest) {
 		return errors.New(tr("ملف التحديث ناقص", "the update package is incomplete"))
 	}
 	return nil
@@ -266,7 +266,8 @@ func cleanupOldUpdate() {
 
 var selfUpdateMu = make(chan struct{}, 1)
 
-func selfUpdate() (map[string]any, error) {
+// selfUpdate replaces the helper and, unless helperOnly, the managed extension folder.
+func selfUpdate(helperOnly bool) (map[string]any, error) {
 	select {
 	case selfUpdateMu <- struct{}{}:
 		defer func() { <-selfUpdateMu }()
@@ -274,7 +275,7 @@ func selfUpdate() (map[string]any, error) {
 		return nil, errors.New(tr("التحديث شغال بالفعل", "an update is already running"))
 	}
 	id := installID()
-	if id == "" || managedExtensionVersion() == "" {
+	if !helperOnly && (id == "" || managedExtensionVersion() == "") {
 		return nil, errors.New(tr("التحديث التلقائي محتاج الإضافة تكون متسطّبة من فولدر هدهد", "automatic update needs the extension installed from the Hudhud folder"))
 	}
 	rel, err := latestRelease()
@@ -310,29 +311,41 @@ func selfUpdate() (map[string]any, error) {
 
 	newExt := filepath.Join(work, "extension")
 	newBin := filepath.Join(work, "helper.new")
-	if err := unzipUpdate(zipPath, newExt, newBin); err != nil {
+	if err := unzipUpdate(zipPath, newExt, newBin, !helperOnly); err != nil {
 		return nil, err
 	}
+	if !helperOnly {
+		if err := swapExtension(dir, newExt, id); err != nil {
+			return nil, err
+		}
+	}
+	return swapHelper(newBin, latest)
+}
+
+// swapExtension replaces <dir>/extension with newExt (stamped with the install id).
+func swapExtension(dir, newExt, id string) error {
 	stamp, _ := json.Marshal(map[string]string{"id": id})
 	if err := os.WriteFile(filepath.Join(newExt, "hudhud-install.json"), stamp, 0o644); err != nil {
-		return nil, err
+		return err
 	}
-
-	// 1) extension folder: rename swap, or copy over in place if Windows holds a handle on it
+	// rename swap, or copy over in place if Windows holds a handle on the folder: rename swap, or copy over in place if Windows holds a handle on it
 	ext := filepath.Join(dir, "extension")
 	old := filepath.Join(dir, "extension.old")
 	os.RemoveAll(old)
 	if err := os.Rename(ext, old); err == nil {
 		if err := os.Rename(newExt, ext); err != nil {
 			os.Rename(old, ext)
-			return nil, err
+			return err
 		}
 		os.RemoveAll(old)
 	} else if err := copyTree(newExt, ext); err != nil {
-		return nil, err
+		return err
 	}
+	return nil
+}
 
-	// 2) helper binary: a running exe can be renamed (also on Windows), then the new one takes its place
+// swapHelper puts newBin in place of the running helper (a running exe can be renamed, also on Windows).
+func swapHelper(newBin, latest string) (map[string]any, error) {
 	exe := exePath()
 	os.Remove(exe + ".old")
 	if err := os.Rename(exe, exe+".old"); err != nil {
