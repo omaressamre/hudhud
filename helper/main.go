@@ -29,7 +29,7 @@ import (
 	"time"
 )
 
-const Version = "0.9.6"
+const Version = "0.9.7"
 
 type Req struct {
 	ID        string `json:"id"`

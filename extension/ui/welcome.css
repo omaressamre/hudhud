@@ -19,4 +19,5 @@ h1 { margin: 0; font-size: 52px; }
 .step p { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--hh-text-secondary); }
 .step .acts { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .step .ok { color: var(--hh-text-success); font-weight: 500; }
+.legal { margin: 6px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--hh-text-tertiary, var(--hh-text-secondary)); }
 @media (max-width: 900px) { .art { display: none; } .wrap { padding: 24px; } h1 { font-size: 38px; } }

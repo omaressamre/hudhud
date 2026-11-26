@@ -1,5 +1,5 @@
 import { platformReady, currentOs, installer } from './lib/platform.js';
-import { initI18n, applyI18n, applyTheme, t, tn, fmtNum } from './lib/i18n.js';
+import { initI18n, applyI18n, applyTheme, t, tn, fmtNum, getLang } from './lib/i18n.js';
 import { CONFIG, openReleaseAsset, bugReportUrl } from './lib/config.js';
 import { icon, iconEl, mascot } from './ui/icons.js';
 import { friendlyError } from './lib/errors.js';
@@ -67,7 +67,7 @@ function renderBanners() {
       btn('primary', t('support'), () => openSupport()),
       () => chrome.storage.local.set({ stats: { ...st, nextSupportAt: doneCount + 50 } })));
   }
-  if (justUpdated) out.push(banner('info', 'check', t(justUpdatedHelper ? 'helperUpdatedTo' : 'updatedTo', justUpdated), null, null, () => { justUpdated = ''; renderBanners(); }));
+  if (justUpdated) out.push(banner('info', 'check', t(justUpdatedHelper ? 'helperUpdatedTo' : 'updatedTo', justUpdated), null, whatsNew(justUpdatedNotes), () => { justUpdated = ''; renderBanners(); }));
   const up = local.helperUpdate;
   if (up && up.latest && !up.managed && !managedChecked) {
     managedChecked = true;
@@ -92,7 +92,8 @@ function renderBanners() {
     const action = up.managed
       ? btn('primary', updating ? t('updating') : t('updateNow'), (e) => runSelfUpdate(e.currentTarget), updating ? { class: 'btn btn-primary', disabled: true } : undefined)
       : btn('primary', t('updateCta'), () => openReleaseAsset(currentOs()));
-    out.push(banner('info', 'refresh', t(up.helperOnly ? 'updateHelperTitle' : 'updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'), action,
+    out.push(banner('info', 'refresh', t(up.helperOnly ? 'updateHelperTitle' : 'updateTitle', up.latest), t(up.managed ? 'updateBodyManaged' : 'updateBody'),
+      el('div', { class: 'with-notes' }, [whatsNew(up.notes), action]),
       updating ? null : () => chrome.storage.local.set({ dismissedUpdate: up.latest })));
     }
   }
@@ -102,6 +103,16 @@ function renderBanners() {
   if (k === keys.banners) return;
   keys.banners = k;
   $('#banners').replaceChildren(...out);
+}
+/** "What's new" points from the release notes (Arabic UI → Arabic, otherwise English) + a link */
+function whatsNew(notes) {
+  const list = notes ? (getLang() === 'ar' ? notes.ar : notes.en) || [] : [];
+  if (!list.length) return null;
+  return el('div', { class: 'notes' }, [
+    el('b', { text: t('whatsNew') }),
+    el('ul', {}, list.map((n) => el('li', { text: n, dir: 'auto' }))),
+    notes.url ? el('a', { href: notes.url, target: '_blank', text: t('releaseNotes') }) : null,
+  ]);
 }
 function banner(kind, ic, title, body, action, onClose) {
   return el('div', { class: `banner ${kind}` }, [
@@ -129,6 +140,7 @@ function helperBanner() {
 }
 let updating = false;
 let justUpdated = '';
+let justUpdatedNotes = null;
 let managedChecked = false;
 let install = null; // { managed, extDir } from the background, once per popup
 send({ type: 'installStatus' }).then((s) => { install = s; renderBanners(); }).catch(() => {});
@@ -139,7 +151,7 @@ async function runSelfUpdate() {
     const res = await send({ type: 'selfUpdate' });
     // Chrome: the extension reloads itself in a moment, which closes this popup.
     // Firefox: only the helper was replaced; show the result here.
-    if (res?.helperOnly) { updating = false; justUpdated = res.version; justUpdatedHelper = true; renderBanners(); }
+    if (res?.helperOnly) { updating = false; justUpdated = res.version; justUpdatedHelper = true; justUpdatedNotes = local.helperUpdate?.notes || null; renderBanners(); }
   } catch (e) {
     updating = false; renderBanners();
     flash(t('updateFailed', e.message), true);
@@ -511,7 +523,8 @@ async function loadJobs() {
   // only the new version shows it (the old popup also sees the key just before the reload)
   if (r.justUpdated && r.justUpdated === chrome.runtime.getManifest().version) {
     justUpdated = r.justUpdated;
-    chrome.storage.local.remove('justUpdated');
+    justUpdatedNotes = (await chrome.storage.local.get('justUpdatedNotes')).justUpdatedNotes || null;
+    chrome.storage.local.remove(['justUpdated', 'justUpdatedNotes']);
   }
   jobs = r.jobs || [];
   local = r;

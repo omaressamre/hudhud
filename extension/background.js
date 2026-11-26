@@ -11,6 +11,7 @@ import { initI18n, t, resolveLang } from './lib/i18n.js';
 import { latestReleaseApi } from './lib/config.js';
 import { formatDiagnostics, browserName } from './lib/diagnostics.js';
 import { friendlyError } from './lib/errors.js';
+import { notesFor } from './lib/changelog.js';
 
 let i18nReady = initI18n();
 async function tt(key, ...a) { await i18nReady; return t(key, ...a); }
@@ -758,10 +759,13 @@ async function checkHelperUpdate(force = false) {
     const current = IS_FIREFOX ? info.version : info?.version && cmpVer(info.version, ext) < 0 ? info.version : ext;
     const r = await fetch(latestReleaseApi(), { headers: { Accept: 'application/vnd.github+json' } });
     if (!r.ok) return null;
-    const latest = String((await r.json()).tag_name || '').replace(/^v/, '');
+    const rel = await r.json();
+    const latest = String(rel.tag_name || '').replace(/^v/, '');
     const newer = latest && cmpVer(latest, current) > 0;
     const managed = newer && (IS_FIREFOX || (await isManagedInstall(info)));
-    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed, helperOnly: IS_FIREFOX, extDir: info?.extDir || '' } : null });
+    // what's new: the release notes (CHANGELOG section) in Arabic and English
+    const notes = { ar: notesFor(rel.body, 'ar'), en: notesFor(rel.body, 'en'), url: rel.html_url || '' };
+    await chrome.storage.local.set({ helperUpdate: newer ? { latest, current, managed, helperOnly: IS_FIREFOX, extDir: info?.extDir || '', notes } : null });
     return newer ? latest : ''; // '' = up to date, null = couldn't check
   } catch { return null; }
 }
@@ -826,7 +830,8 @@ async function selfUpdate() {
   }
   if (!(await isManagedInstall(info))) throw new Error(t('updateNotManaged'));
   const res = await nativeRequest('selfUpdate', {}, 15 * 60_000);
-  await chrome.storage.local.set({ helperUpdate: null, justUpdated: res?.version || '' });
+  const { helperUpdate: was } = await chrome.storage.local.get('helperUpdate');
+  await chrome.storage.local.set({ helperUpdate: null, justUpdated: res?.version || '', justUpdatedNotes: was?.notes || null });
   setTimeout(() => chrome.runtime.reload(), 400);
   return res;
 }

@@ -100,6 +100,8 @@ export default {
   updateCta: 'Baixar a atualização',
   updateNow: 'Atualizar agora',
   updateMoveBody: 'Para atualizar com um clique: remova o Hudhud na página de extensões e carregue de novo a partir desta pasta (só uma vez).',
+  whatsNew: 'Novidades',
+  releaseNotes: 'Notas completas da versão',
   copyPath: 'Copiar caminho',
   moveTitle: 'Atualize com um clique',
   moveBody: 'Remova o Hudhud na página de extensões e carregue de novo a partir desta pasta. Só uma vez.',
@@ -256,5 +258,6 @@ export default {
   otherSystems: 'Outros sistemas',
   step3Title: 'Experimente',
   step3Body: 'Abra qualquer vídeo e clique na poupa. Crista levantada quer dizer que ela encontrou algo.',
+  legalNote: 'O Hudhud é só uma ferramenta. Você é responsável pelo que baixa e por respeitar os direitos dos donos e os termos de cada site.',
   tryVideo: 'Abrir um vídeo de teste',
 };

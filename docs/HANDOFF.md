@@ -1,6 +1,6 @@
 # Hudhud — handoff
 
-Snapshot: **2026-11-25, v0.9.6**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
+Snapshot: **2026-11-26, v0.9.7**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
 
 > **ملخص للمستخدم:** الملف ده بيشرح لأي محادثة جديدة مع Claude كل حاجة عن هدهد: الكود، والقرارات اللي خدناها، وإزاي بنطلّع إصدار، وإيه اللي فاضل. ابدأ المحادثة الجديدة بإنك تديها لينك الريبو وتقولها تقرا `docs/HANDOFF.md`.
 
@@ -85,7 +85,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 
 ## 5. Releasing
 
-1. Bump `version` in `extension/manifest.json` **and** `Version` in `helper/main.go`.
+1. Bump `version` in `extension/manifest.json` **and** `Version` in `helper/main.go`, and add a `## X.Y.Z — date` section to `CHANGELOG.md` with `### English` and `### العربية` points (short, for users). The release fails without it, and `tests/unit.mjs` checks it.
 2. `tests/run-all.sh` must pass. Commit and push to `main`.
 3. Start **Actions → Release → Run workflow** on `main`. From a Claude session: `gh api -X POST repos/omaressamre/hudhud/actions/workflows/release.yml/dispatches -f ref=main`.
 4. The workflow:
@@ -136,8 +136,8 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [ ] Real-site **QA matrix** (YouTube, FB, IG, TikTok, X, HLS sites × Windows/macOS × Chrome/Edge/Firefox).
 - [ ] **SmartScreen / antivirus:** check builds on VirusTotal, submit false positives to Microsoft, and add a "how to get past SmartScreen" note to the site.
 - [x] **Friendly error messages** (`lib/errors.js`) in the popup, job list and notifications, in the UI language. Unknown technical errors show `errUnknown`; the raw text stays for diagnostics.
-- [ ] Legal line on the site and welcome page: users are responsible for what they download.
-- [ ] `CHANGELOG.md`, with the update banner showing what's new.
+- [x] Legal line on the site footer and the welcome page (`legalNote`).
+- [x] `CHANGELOG.md` (English + Arabic per version). The release workflow publishes the version's section as the release notes; the update banner and the "updated to" banner show its points (`lib/changelog.js`).
 - [ ] Bump GitHub Actions versions in `ci.yml` and `release.yml` (Node 20 deprecation warnings). `pages.yml` already uses `deploy-pages@v5`.
 - [ ] Recreate story/remux fixtures in `tests/fixtures/gen.sh` so `--full` works anywhere.
 - [ ] At **1.0**: stop publishing the legacy `hudhud-helper-{os}.zip` copies.

@@ -287,6 +287,12 @@
   "updateMoveBody": {
     "message": "Para atualizar com um clique: remova o Hudhud na página de extensões e carregue de novo a partir desta pasta (só uma vez)."
   },
+  "whatsNew": {
+    "message": "Novidades"
+  },
+  "releaseNotes": {
+    "message": "Notas completas da versão"
+  },
   "copyPath": {
     "message": "Copiar caminho"
   },
@@ -742,6 +748,9 @@
   },
   "step3Body": {
     "message": "Abra qualquer vídeo e clique na poupa. Crista levantada quer dizer que ela encontrou algo."
+  },
+  "legalNote": {
+    "message": "O Hudhud é só uma ferramenta. Você é responsável pelo que baixa e por respeitar os direitos dos donos e os termos de cada site."
   },
   "tryVideo": {
     "message": "Abrir um vídeo de teste"

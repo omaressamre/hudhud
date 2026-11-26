@@ -287,6 +287,12 @@
   "updateMoveBody": {
     "message": "Pour les mises à jour en un clic : retirez Hudhud dans la page des extensions et chargez-le à nouveau depuis ce dossier (une seule fois)."
   },
+  "whatsNew": {
+    "message": "Nouveautés"
+  },
+  "releaseNotes": {
+    "message": "Notes de version complètes"
+  },
   "copyPath": {
     "message": "Copier le chemin"
   },
@@ -742,6 +748,9 @@
   },
   "step3Body": {
     "message": "Ouvrez une vidéo et cliquez sur la huppe. Huppe dressée : elle a trouvé quelque chose."
+  },
+  "legalNote": {
+    "message": "Hudhud n’est qu’un outil. Vous êtes responsable de ce que vous téléchargez, et du respect des droits de leurs auteurs et des conditions de chaque site."
   },
   "tryVideo": {
     "message": "Ouvrir une vidéo de test"

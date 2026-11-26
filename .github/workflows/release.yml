@@ -28,6 +28,8 @@ jobs:
           HELPER=$(grep -oP 'Version\s*=\s*"\K[^"]+' helper/main.go)
           echo "tag=$TAG extension=$EXT helper=$HELPER"
           [ "$TAG" = "$EXT" ] && [ "$TAG" = "$HELPER" ]
+      - name: Release notes from CHANGELOG.md (fails when the version has no section)
+        run: node scripts/changelog.mjs "$TAG" > "$RUNNER_TEMP/notes.md"
       - name: Fonts tooling
         run: pip install fonttools brotli
       - run: tests/run-all.sh
@@ -50,5 +52,5 @@ jobs:
           shopt -s nullglob
           extra=(dist/*.xpi); [ -f dist/updates.json ] && extra+=(dist/updates.json)
           gh release create "$TAG" dist/*.zip "${extra[@]}" dist/SHA256SUMS.txt \
-            --target "$GITHUB_SHA" --title "Hudhud $TAG" --generate-notes
+            --target "$GITHUB_SHA" --title "Hudhud $TAG" --notes-file "$RUNNER_TEMP/notes.md"
           gh workflow run pages.yml --ref main

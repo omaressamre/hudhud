@@ -305,6 +305,12 @@
   "updateMoveBody": {
     "message": "For one-click updates: remove Hudhud on the extensions page and load it again from this folder (only once)."
   },
+  "whatsNew": {
+    "message": "What’s new"
+  },
+  "releaseNotes": {
+    "message": "Full release notes"
+  },
   "copyPath": {
     "message": "Copy path"
   },
@@ -760,6 +766,9 @@
   },
   "step3Body": {
     "message": "Open any video and click the hoopoe. Crest up means it found something."
+  },
+  "legalNote": {
+    "message": "Hudhud is just a tool. You’re responsible for what you download, and for respecting its owners’ rights and each site’s terms."
   },
   "tryVideo": {
     "message": "Open a test video"

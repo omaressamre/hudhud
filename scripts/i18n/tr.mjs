@@ -101,6 +101,8 @@ export default {
   updateCta: 'Güncellemeyi indir',
   updateNow: 'Şimdi güncelle',
   updateMoveBody: 'Tek tıkla güncelleme için: Hudhud’u uzantılar sayfasından kaldırın ve bu klasörden yeniden yükleyin (yalnızca bir kez).',
+  whatsNew: 'Yenilikler',
+  releaseNotes: 'Tüm sürüm notları',
   copyPath: 'Yolu kopyala',
   moveTitle: 'Tek tıkla güncelleme',
   moveBody: 'Hudhud’u uzantılar sayfasından kaldırın ve bu klasörden yeniden yükleyin. Yalnızca bir kez.',
@@ -257,5 +259,6 @@ export default {
   otherSystems: 'Diğer sistemler',
   step3Title: 'Deneyin',
   step3Body: 'Herhangi bir videoyu açıp ibibiğe tıklayın. Tepelik kalktıysa bir şey bulmuş demektir.',
+  legalNote: 'Hudhud yalnızca bir araçtır. İndirdiklerinizden, sahiplerinin haklarına ve her sitenin koşullarına uymaktan siz sorumlusunuz.',
   tryVideo: 'Deneme videosu aç',
 };

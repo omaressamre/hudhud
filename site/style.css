@@ -132,6 +132,7 @@ details p { color: var(--text-2); margin: 10px 0 0; }
 .foot nav { display: flex; gap: 22px; }
 .foot nav a { color: var(--text-2); text-decoration: none; font-size: 15px; }
 .foot nav a:hover { color: var(--text); }
+.foot .legal { margin-top: 18px; font-size: 13px; line-height: 1.6; color: var(--text-2); }
 
 /* legal page */
 .doc { padding: 56px 0 88px; }

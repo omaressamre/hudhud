@@ -287,6 +287,12 @@
   "updateMoveBody": {
     "message": "Tek tıkla güncelleme için: Hudhud’u uzantılar sayfasından kaldırın ve bu klasörden yeniden yükleyin (yalnızca bir kez)."
   },
+  "whatsNew": {
+    "message": "Yenilikler"
+  },
+  "releaseNotes": {
+    "message": "Tüm sürüm notları"
+  },
   "copyPath": {
     "message": "Yolu kopyala"
   },
@@ -742,6 +748,9 @@
   },
   "step3Body": {
     "message": "Herhangi bir videoyu açıp ibibiğe tıklayın. Tepelik kalktıysa bir şey bulmuş demektir."
+  },
+  "legalNote": {
+    "message": "Hudhud yalnızca bir araçtır. İndirdiklerinizden, sahiplerinin haklarına ve her sitenin koşullarına uymaktan siz sorumlusunuz."
   },
   "tryVideo": {
     "message": "Deneme videosu aç"

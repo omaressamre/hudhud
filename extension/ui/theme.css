@@ -131,6 +131,13 @@ bdi { unicode-bidi: isolate; }
 .banner.warning { background: var(--hh-bg-warning); } .banner.warning .ic { color: var(--hh-accent-warm); }
 .banner.support { background: var(--hh-bg-danger); } .banner.support .ic { color: var(--hh-accent-primary); }
 .banner.info { background: var(--hh-bg-success); flex-direction: row; gap: 10px; cursor: default; } .banner.info .ic { color: var(--hh-accent-success); }
+.banner .with-notes { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; align-self: stretch; }
+.banner .notes { align-self: stretch; margin-top: 2px; padding: 8px 10px; border-radius: 12px; background: var(--hh-bg-surface); font-size: 12px; line-height: 1.55; color: var(--hh-text-secondary); }
+.banner .notes b { display: block; margin-bottom: 2px; font-size: 12px; color: var(--hh-text-primary); }
+.banner .notes ul { margin: 0; padding-inline-start: 16px; }
+.banner .notes li + li { margin-top: 2px; }
+.banner .notes a { display: inline-block; margin-top: 4px; color: var(--hh-accent-primary); font-weight: 500; text-decoration: none; }
+.banner .notes a:hover { text-decoration: underline; }
 .banner .close { margin-inline-start: auto; border: 0; background: none; color: var(--hh-text-secondary); cursor: pointer; padding: 2px; }
 .banner .close svg { width: 16px; height: 16px; display: block; }
 .banner { position: relative; }

@@ -45,6 +45,7 @@ const EN = {
   q4: 'Does it work on Edge and Brave?', a4: 'Yes, on any Chromium browser: Chrome, Edge, Brave, Vivaldi.',
   q5: 'Is it safe?', a5: 'The helper installs for your user only, without admin rights, and only talks to our extension. All the code is open for you to review.',
   privacy: 'Privacy',
+  legal: 'Hudhud is just a tool. You’re responsible for what you download, and for respecting its owners’ rights and each site’s terms.',
   version: (v) => `Version ${v}`,
   title: 'Hudhud — download any video from your browser',
 };

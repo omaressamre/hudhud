@@ -146,3 +146,17 @@ assert.equal(friendlyError('انقطع الاتصال بالمساعد', tt), '�
 assert.equal(friendlyError('yt-dlp مش موجود', tt, 'install.bat'), '<errToolMissing:install.bat>');
 assert.equal(friendlyError('', tt), '<jobStopped>');
 console.log('error tests passed');
+
+// ── changelog → release notes → update banner
+const { notesFor, changelogSection } = await import(L + 'changelog.js');
+const cl = fs.readFileSync(HERE + '../CHANGELOG.md', 'utf8');
+const ver = manifest.version;
+const sec = changelogSection(cl, ver);
+assert.ok(sec, `CHANGELOG.md needs a section for ${ver}`);
+assert.ok(notesFor(sec, 'ar').length && notesFor(sec, 'en').length, `CHANGELOG ${ver} needs English and Arabic points`);
+assert.ok(/[؀-ۿ]/.test(notesFor(sec, 'ar')[0]) && !/[؀-ۿ]/.test(notesFor(sec, 'en')[0]));
+assert.deepEqual(notesFor('### English\n- a\n- **b**\n### العربية\n- ج', 'fr'), ['a', 'b']);
+assert.deepEqual(notesFor('## What changed\n* x', 'ar'), []);
+assert.equal(changelogSection('## 1.0.0\nx\n## 0.9.0\ny', '0.9.0'), 'y');
+assert.equal(changelogSection('## 1.0.10\nx', '1.0.1'), '');
+console.log('changelog tests passed');

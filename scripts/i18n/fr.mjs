@@ -100,6 +100,8 @@ export default {
   updateCta: 'Obtenir la mise à jour',
   updateNow: 'Mettre à jour',
   updateMoveBody: 'Pour les mises à jour en un clic : retirez Hudhud dans la page des extensions et chargez-le à nouveau depuis ce dossier (une seule fois).',
+  whatsNew: 'Nouveautés',
+  releaseNotes: 'Notes de version complètes',
   copyPath: 'Copier le chemin',
   moveTitle: 'Mises à jour en un clic',
   moveBody: 'Retirez Hudhud dans la page des extensions et chargez-le à nouveau depuis ce dossier. Une seule fois.',
@@ -256,5 +258,6 @@ export default {
   otherSystems: 'Autres systèmes',
   step3Title: 'Essayez',
   step3Body: 'Ouvrez une vidéo et cliquez sur la huppe. Huppe dressée : elle a trouvé quelque chose.',
+  legalNote: 'Hudhud n’est qu’un outil. Vous êtes responsable de ce que vous téléchargez, et du respect des droits de leurs auteurs et des conditions de chaque site.',
   tryVideo: 'Ouvrir une vidéo de test',
 };

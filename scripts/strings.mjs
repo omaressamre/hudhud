@@ -113,6 +113,8 @@ export default {
   updateCta: ['حمّل التحديث', 'Get the update'],
   updateNow: ['حدّث دلوقتي', 'Update now'],
   updateMoveBody: ['عشان التحديث يبقى بضغطة: شيل هدهد من صفحة الإضافات وحمّله تاني من الفولدر ده (مرة واحدة بس).', 'For one-click updates: remove Hudhud on the extensions page and load it again from this folder (only once).'],
+  whatsNew: ['الجديد', 'What’s new'],
+  releaseNotes: ['كل التفاصيل', 'Full release notes'],
   copyPath: ['انسخ المسار', 'Copy path'],
   moveTitle: ['خلّي هدهد يتحدّث بضغطة', 'Get one-click updates'],
   moveBody: ['شيل هدهد من صفحة الإضافات وحمّله تاني من الفولدر ده. مرة واحدة بس.', 'Remove Hudhud on the extensions page and load it again from this folder. Only once.'],
@@ -275,5 +277,6 @@ export default {
   otherSystems: ['أنظمة تانية', 'Other systems'],
   step3Title: ['جرّب', 'Try it'],
   step3Body: ['افتح أي فيديو ودوس على الهدهد. لو التاج واقف، يبقى لقى حاجة.', 'Open any video and click the hoopoe. Crest up means it found something.'],
+  legalNote: ['هدهد أداة للتحميل وبس. إنت مسؤول عن اللي بتحمّله، وإنك تحترم حقوق أصحابه وشروط كل موقع.', 'Hudhud is just a tool. You’re responsible for what you download, and for respecting its owners’ rights and each site’s terms.'],
   tryVideo: ['افتح فيديو تجربة', 'Open a test video'],
 };
