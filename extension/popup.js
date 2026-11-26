@@ -1,6 +1,6 @@
 import { platformReady, currentOs, installer } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t, tn, fmtNum } from './lib/i18n.js';
-import { CONFIG, openReleaseAsset } from './lib/config.js';
+import { CONFIG, openReleaseAsset, bugReportUrl } from './lib/config.js';
 import { icon, iconEl, mascot } from './ui/icons.js';
 
 const $ = (s) => document.querySelector(s);
@@ -166,6 +166,7 @@ function renderOutcome() {
     const acts = [];
     if (last.req) acts.push(btn('primary', t('retry'), () => retry(last.jobId)));
     if (last.req && last.engine === 'browser' && hasNative()) acts.push(btn('secondary', t('useHelper'), () => retry(last.jobId, 'native')));
+    acts.push(btn('ghost', t('reportProblem'), reportProblem));
     node = el('div', { class: 'block error' }, [
       mascot('error', 104), el('h3', { text: t('errorTitle') }), el('p', { text: jobError(last) }),
       acts.length ? el('div', { class: 'acts' }, acts) : null,
@@ -183,6 +184,12 @@ async function clearFinished() {
 async function retry(jobId, engine) {
   try { await send({ type: 'retryJob', jobId, engine }); } catch (e) { flash(e.message, true); }
   await loadJobs();
+}
+/** copy the diagnostics (backup) and open a GitHub bug report with them filled in */
+async function reportProblem() {
+  let text = '';
+  try { text = await send({ type: 'diagnostics' }); await navigator.clipboard.writeText(text); } catch {}
+  chrome.tabs.create({ url: bugReportUrl(text) });
 }
 function jobError(j) {
   if (j.error === 'CANCELED') return t('jobCanceled');

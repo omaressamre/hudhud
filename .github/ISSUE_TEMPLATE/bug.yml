@@ -1,0 +1,37 @@
+name: مشكلة / Bug report
+description: حاجة مش شغالة زي ما المفروض · Something doesn't work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        شكرًا إنك بتبلّغ. أسهل طريقة: من هدهد دوس **بلّغ عن مشكلة** (في رسالة الخطأ أو الإعدادات ← عن هدهد)، وهيملا خانة المعلومات لوحده.
+        Thanks for reporting. Easiest way: in Hudhud press **Report a problem** (in the error message or Settings → About) and the diagnostics box fills itself in.
+
+        ⚠️ ماتحطش لينكات خاصة أو بيانات شخصية · Don't paste private links or personal data.
+  - type: textarea
+    id: what
+    attributes:
+      label: حصل إيه؟ · What happened?
+      description: إيه اللي عملته، وإيه اللي كنت متوقعه، وإيه اللي حصل فعلًا · What you did, what you expected, what happened instead
+    validations:
+      required: true
+  - type: input
+    id: site
+    attributes:
+      label: الموقع · Site
+      description: اسم الموقع بس، زي youtube.com · Just the site name, e.g. youtube.com
+      placeholder: youtube.com
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: معلومات المشكلة · Diagnostics
+      description: من الإعدادات ← عن هدهد ← «انسخ معلومات المشكلة» · From Settings → About → “Copy diagnostics”
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: صور الشاشة · Screenshots
+      description: اسحب الصور هنا لو عندك · Drag images here if you have any

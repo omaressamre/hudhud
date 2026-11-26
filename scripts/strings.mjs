@@ -221,6 +221,10 @@ export default {
   updateCheckFailed: ['مقدرتش أوصل لـGitHub دلوقتي', 'Couldn’t reach GitHub right now'],
   privacy: ['الخصوصية', 'Privacy'],
   sourceCode: ['الكود', 'Source code'],
+  copyDiagnostics: ['انسخ معلومات المشكلة', 'Copy diagnostics'],
+  reportProblem: ['بلّغ عن مشكلة', 'Report a problem'],
+  diagCopied: ['اتنسخت ✓ الزقها في البلاغ على GitHub', 'Copied ✓ Paste it into your GitHub report'],
+  diagHint: ['نسخة الإضافة والمساعد والمتصفح والنظام وآخر خطأ. من غير لينكات ولا أسماء ملفات.', 'Extension, helper, browser and OS versions and the last error. No links or file names.'],
   shortcut: ['اختصار فتح هدهد: Alt+Shift+D', 'Shortcut to open Hudhud: Alt+Shift+D'],
 
   // ── options: validation & status

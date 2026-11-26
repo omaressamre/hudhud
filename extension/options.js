@@ -1,7 +1,7 @@
 import { DEFAULT_SETTINGS } from './lib/naming.js';
 import { installer, platformReady, currentOs } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t } from './lib/i18n.js';
-import { CONFIG, releaseAsset, releasesPage } from './lib/config.js';
+import { CONFIG, releaseAsset, releasesPage, bugReportUrl } from './lib/config.js';
 import { icon, mascot } from './ui/icons.js';
 
 const $ = (s) => document.querySelector(s);
@@ -144,6 +144,19 @@ function wire() {
     } finally {
       $('#btnUpdate').disabled = false;
     }
+  });
+  $('#btnDiag').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(await send({ type: 'diagnostics' }));
+      $('#diagStatus').textContent = t('diagCopied');
+    } catch (e) { $('#diagStatus').textContent = e.message || t('errGeneric'); }
+  });
+  $('#btnReport').href = bugReportUrl();
+  $('#btnReport').addEventListener('click', async (e) => {
+    e.preventDefault();
+    let text = '';
+    try { text = await send({ type: 'diagnostics' }); await navigator.clipboard.writeText(text); } catch {}
+    chrome.tabs.create({ url: bugReportUrl(text) });
   });
   $('#btnExample').addEventListener('click', () => { $('#rules').value = JSON.stringify(EXAMPLE, null, 2); save(); });
   // nav highlight

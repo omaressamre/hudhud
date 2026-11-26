@@ -1,0 +1,20 @@
+name: اقتراح / Feature request
+description: فكرة لحاجة جديدة أو تحسين · An idea for something new or better
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: الفكرة · The idea
+      description: عايز هدهد يعمل إيه؟ · What would you like Hudhud to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: ليه؟ · Why?
+      description: هتفيدك في إيه، أو بتعمل إيه دلوقتي بدالها · How it would help, or what you do today instead
+  - type: markdown
+    attributes:
+      value: |
+        هدهد مش هيكسر حماية DRM، ومفيهوش إعلانات ولا تتبّع. · Hudhud won't bypass DRM, and has no ads or tracking.

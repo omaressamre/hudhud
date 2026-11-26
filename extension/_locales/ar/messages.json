@@ -614,6 +614,18 @@
   "sourceCode": {
     "message": "الكود"
   },
+  "copyDiagnostics": {
+    "message": "انسخ معلومات المشكلة"
+  },
+  "reportProblem": {
+    "message": "بلّغ عن مشكلة"
+  },
+  "diagCopied": {
+    "message": "اتنسخت ✓ الزقها في البلاغ على GitHub"
+  },
+  "diagHint": {
+    "message": "نسخة الإضافة والمساعد والمتصفح والنظام وآخر خطأ. من غير لينكات ولا أسماء ملفات."
+  },
   "shortcut": {
     "message": "اختصار فتح هدهد: Alt+Shift+D"
   },

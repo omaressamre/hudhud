@@ -13,6 +13,9 @@ export const CONFIG = {
 };
 
 
+/** New bug report on GitHub, with the diagnostics field filled in (issue form: .github/ISSUE_TEMPLATE/bug.yml). */
+export const bugReportUrl = (diagnostics = '') =>
+  `https://github.com/${CONFIG.repo}/issues/new?template=bug.yml` + (diagnostics ? '&diagnostics=' + encodeURIComponent(diagnostics) : '');
 export const releasesPage = () => `https://github.com/${CONFIG.repo}/releases/latest`;
 export const latestReleaseApi = () => `https://api.github.com/repos/${CONFIG.repo}/releases/latest`;
 

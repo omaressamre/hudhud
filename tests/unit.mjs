@@ -70,3 +70,24 @@ assert.deepEqual(ff.background, { scripts: ['background.js'], type: 'module' });
 assert.ok(!ff.key && !ff.minimum_chrome_version && !ff.permissions.includes('offscreen'));
 assert.ok(ff.permissions.includes('nativeMessaging') && ff.version === manifest.version);
 console.log('firefox manifest tests passed');
+
+// ── diagnostics: no personal data
+const { scrubError, browserName, formatDiagnostics } = await import(L + 'diagnostics.js');
+const scrubbed = scrubError('ERROR: https://www.youtube.com/watch?v=abc123 failed writing C:\\Users\\Omar\\Videos\\my clip.mp4 and /home/omar/x.mp4 for a@b.com');
+assert.ok(!/abc123|Omar|omar|a@b\.com|watch/.test(scrubbed), scrubbed);
+assert.ok(scrubbed.includes('<url www.youtube.com>') && scrubbed.includes('<path>') && scrubbed.includes('<email>'), scrubbed);
+assert.equal(scrubError(''), '');
+assert.equal(browserName({ ua: 'Mozilla/5.0 Chrome/131.0.0.0 Safari/537.36 Edg/131.0.2903.70' }), 'Edge 131.0.2903.70');
+assert.equal(browserName({ brands: [{ brand: 'Google Chrome', version: '131' }] }), 'Chrome 131');
+assert.equal(browserName({ ua: 'Chrome/131.0.0.0', isBrave: true }), 'Brave (Chromium 131.0.0.0)');
+assert.equal(browserName({ firefox: '133.0' }), 'Firefox 133.0');
+const diag = formatDiagnostics({
+  extVersion: '0.9.6', browser: 'Chrome 131', os: 'win', arch: 'x86-64', uiLang: 'ar', managed: true, firefox: false,
+  helper: { version: '0.9.6', ytdlp: '2026.11.01', ffmpeg: true, deno: false, os: 'windows', defaultDir: 'C:\\Users\\Omar\\Downloads', extDir: 'C:\\Users\\Omar\\AppData\\Local\\Hudhud\\extension', installId: 'secret-id' },
+  settings: { defaultEngine: 'native', maxConcurrent: 3, hlsToMp4: true },
+  lastError: { error: 'HTTP 403 on https://x.com/a/b', engine: 'native', kind: 'page', host: 'x.com', at: 0 },
+});
+assert.ok(diag.includes('Helper: 0.9.6') && diag.includes('Deno: no') && diag.includes('One-click updates: yes') && diag.includes('<url x.com>'), diag);
+assert.ok(!/Omar|secret-id|AppData/.test(diag), diag);
+assert.ok(formatDiagnostics({ extVersion: '1', browser: 'x', os: 'mac', helper: null }).includes('Helper: not connected'));
+console.log('diagnostics tests passed');

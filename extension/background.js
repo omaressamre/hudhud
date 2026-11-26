@@ -9,6 +9,7 @@ import { onNativeEvent, nativeInfo, request as nativeRequest, cookiesFor, setNat
 import { installer, IS_FIREFOX } from './lib/platform.js';
 import { initI18n, t, resolveLang } from './lib/i18n.js';
 import { latestReleaseApi } from './lib/config.js';
+import { formatDiagnostics, browserName } from './lib/diagnostics.js';
 
 let i18nReady = initI18n();
 async function tt(key, ...a) { await i18nReady; return t(key, ...a); }
@@ -781,6 +782,35 @@ async function refreshManaged() {
   return next;
 }
 
+/** "Copy diagnostics": versions, OS, browser, managed or not, last error. No URLs, titles or paths. */
+async function diagnostics() {
+  const [settings, plat, info, { jobs = [] }] = await Promise.all([
+    getSettings(),
+    chrome.runtime.getPlatformInfo().catch(() => ({})),
+    nativeInfo(true).catch(() => null),
+    chrome.storage.local.get('jobs'),
+  ]);
+  let firefox = null;
+  if (IS_FIREFOX) firefox = (await browser.runtime.getBrowserInfo().catch(() => ({}))).version || '?';
+  const isBrave = !!(navigator.brave && (await navigator.brave.isBrave?.().catch(() => false)));
+  const brands = navigator.userAgentData?.brands || [];
+  const last = jobs.filter((j) => j.state === 'interrupted' && j.error && j.error !== 'CANCELED' && j.error !== 'USER_CANCELED')
+    .sort((a, b) => (b.endedAt || 0) - (a.endedAt || 0))[0];
+  let host = '';
+  try { host = new URL(last?.pageUrl || last?.url || '').hostname; } catch {}
+  return formatDiagnostics({
+    extVersion: chrome.runtime.getManifest().version,
+    browser: browserName({ ua: navigator.userAgent, brands, isBrave, firefox }),
+    os: plat.os || '?', arch: plat.arch || '',
+    uiLang: settings.uiLang,
+    helper: info,
+    managed: IS_FIREFOX ? true : await isManagedInstall(info),
+    firefox: IS_FIREFOX,
+    settings: { defaultEngine: settings.defaultEngine, maxConcurrent: settings.maxConcurrent, hlsToMp4: settings.hlsToMp4 },
+    lastError: last ? { error: last.error, engine: last.engine, kind: last.kind, host, at: last.endedAt } : null,
+  });
+}
+
 /** one-click update: the helper replaces itself and the extension folder, then we reload */
 async function selfUpdate() {
   const { jobs = [] } = await chrome.storage.local.get('jobs');
@@ -866,6 +896,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     case 'selfUpdate': reply(selfUpdate()); return true;
     case 'refreshManaged': reply(refreshManaged()); return true;
     case 'installStatus': reply(installStatus()); return true;
+    case 'diagnostics': reply(diagnostics()); return true;
   }
   return false;
 });

@@ -614,6 +614,18 @@
   "sourceCode": {
     "message": "Source code"
   },
+  "copyDiagnostics": {
+    "message": "Copy diagnostics"
+  },
+  "reportProblem": {
+    "message": "Report a problem"
+  },
+  "diagCopied": {
+    "message": "Copied ✓ Paste it into your GitHub report"
+  },
+  "diagHint": {
+    "message": "Extension, helper, browser and OS versions and the last error. No links or file names."
+  },
   "shortcut": {
     "message": "Shortcut to open Hudhud: Alt+Shift+D"
   },
