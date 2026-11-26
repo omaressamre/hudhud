@@ -362,6 +362,75 @@
   "errContextNeedsHelper": {
     "message": "Needs the helper (run $1). Or play the video and use the Hudhud icon."
   },
+  "errSignIn": {
+    "message": "The site wants you to sign in. Open it in your browser, sign in, then try again."
+  },
+  "errAge": {
+    "message": "This video is age-restricted. Sign in to the site in your browser, then try again."
+  },
+  "errPrivate": {
+    "message": "This video is private. Only its owner can watch it."
+  },
+  "errMembers": {
+    "message": "This video is for channel members only. If you’re a member, sign in in your browser and try again."
+  },
+  "errGeo": {
+    "message": "This video isn’t available in your country."
+  },
+  "errUnavailable": {
+    "message": "This video was removed or is no longer available."
+  },
+  "errLiveNotStarted": {
+    "message": "The live stream hasn’t started yet. Try again once it does."
+  },
+  "errDrm": {
+    "message": "This video is DRM-protected and can’t be downloaded."
+  },
+  "errNeedDeno": {
+    "message": "YouTube needs a part of the helper that’s missing. Run $1 again."
+  },
+  "errUpdateYtdlp": {
+    "message": "The site changed. Update yt-dlp in Settings → Helper, then try again."
+  },
+  "errUnsupported": {
+    "message": "The helper doesn’t support this site. Play the video and download it from the Hudhud icon."
+  },
+  "errToolMissing": {
+    "message": "Part of the helper is missing. Run $1 again."
+  },
+  "errForbidden": {
+    "message": "The site refused the download. Refresh the page and try again, or use the helper."
+  },
+  "errTooMany": {
+    "message": "The site is seeing too many downloads. Wait a few minutes and try again."
+  },
+  "errServer": {
+    "message": "The site is having trouble right now. Try again later."
+  },
+  "errNetwork": {
+    "message": "The connection dropped or the site isn’t responding. Check your internet and try again."
+  },
+  "errDiskFull": {
+    "message": "There’s not enough disk space. Free some up and try again."
+  },
+  "errAccess": {
+    "message": "Can’t save to this folder. Pick another one in Settings."
+  },
+  "errNameLong": {
+    "message": "The file name is too long. Lower “Maximum name length” in Settings."
+  },
+  "errBlocked": {
+    "message": "Your browser or antivirus blocked the file."
+  },
+  "errFileFailed": {
+    "message": "The file couldn’t be saved. Check your downloads folder and try again."
+  },
+  "errBrowserClosed": {
+    "message": "The browser closed before the download finished. Try again."
+  },
+  "errUnknown": {
+    "message": "Something unexpected went wrong. Try again, and if it keeps happening press “Report a problem”."
+  },
   "toastStarted": {
     "message": "Download started"
   },

@@ -40,6 +40,7 @@ A free video-downloader browser extension (Arabic name هدهد, "hoopoe"), a pr
 - **No Chrome Web Store** (it doesn't allow YouTube downloaders). Chrome users load the unpacked extension from the Hudhud folder with Developer mode on.
 - **Firefox: unlisted signing** through AMO, self-hosted. We could submit to the AMO listing later; that needs the user's go-ahead.
 - **Arabic first, English second.** UI copy is in Egyptian Arabic. Layout is RTL-first (logical CSS properties, `<bdi>` for mixed-direction values).
+- **Extension languages:** ar, en, es, fr, pt_BR, tr (added 2026-11-26 at the user's request). ar+en live in `scripts/strings.mjs`; the others in `scripts/i18n/<lang>.mjs`, translated by Claude from the English. Every new string needs all six. Site, installers, `setup.html` and helper messages stay Arabic/English.
 - **Release file names carry the version**: `hudhud-vX.Y.Z-{windows,macos,linux}.zip`, `hudhud-vX.Y.Z-extension-only.zip`, `hudhud-vX.Y.Z-firefox.xpi`. The old fixed names `hudhud-helper-{os}.zip` are still published as **copies** so helpers 0.9.0–0.9.3 can self-update. Drop them at **1.0**.
 - **One version everywhere**: `extension/manifest.json` `version` must equal `helper/main.go` `Version`. The release workflow refuses a mismatch.
 
@@ -73,7 +74,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 
 ## 4. How things work (the non-obvious parts)
 
-- **Strings:** add `key: ['عربي', 'English']` to `scripts/strings.mjs` and run `node scripts/gen-locales.mjs`. Plurals use `_one/_two/_few/_many/_other`. Helper messages use `tr(ar, en)`.
+- **Strings:** add `key: ['عربي', 'English']` to `scripts/strings.mjs`, the same key to every `scripts/i18n/*.mjs`, and run `node scripts/gen-locales.mjs` (it fails on a missing key). Plurals use `_one/_two/_few/_many/_other`. Helper messages use `tr(ar, en)`.
 - **Managed install (Chrome):** the installer writes the same random id to `<install>/install-id` and `<install>/extension/hudhud-install.json`. The extension fetches its own `hudhud-install.json` and compares it with `info().installId` from the helper. If they match, Chrome runs the copy in the Hudhud folder, so **Update now** works. If they don't, the popup shows **Get one-click updates** with the right folder path (`info().extDir`).
 - **Install folders:** `%LOCALAPPDATA%\Hudhud`, `~/Library/Application Support/Hudhud`, `~/.local/share/hudhud`. Each holds the helper, tools, `install-id`, `extension/` and `setup.html`.
 - **Update check:** at browser start (at most every 12 h), on install or reload, and from **Settings → About → Check for updates**. It reads GitHub `releases/latest`. On Chrome it compares the older of extension and helper; on Firefox only the helper.
@@ -134,6 +135,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] **GitHub issue templates**: `.github/ISSUE_TEMPLATE/{bug,feature,config}.yml` (bilingual issue forms; blank issues off, FAQ link).
 - [ ] Real-site **QA matrix** (YouTube, FB, IG, TikTok, X, HLS sites × Windows/macOS × Chrome/Edge/Firefox).
 - [ ] **SmartScreen / antivirus:** check builds on VirusTotal, submit false positives to Microsoft, and add a "how to get past SmartScreen" note to the site.
+- [x] **Friendly error messages** (`lib/errors.js`) in the popup, job list and notifications, in the UI language. Unknown technical errors show `errUnknown`; the raw text stays for diagnostics.
 - [ ] Legal line on the site and welcome page: users are responsible for what they download.
 - [ ] `CHANGELOG.md`, with the update banner showing what's new.
 - [ ] Bump GitHub Actions versions in `ci.yml` and `release.yml` (Node 20 deprecation warnings). `pages.yml` already uses `deploy-pages@v5`.

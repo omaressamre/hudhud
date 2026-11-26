@@ -58,6 +58,25 @@ for (const k of Object.keys(ar)) {
   const ph = (s) => (s.match(/\$\d/g) || []).sort().join();
   assert.equal(ph(ar[k].message), ph(en[k].message), `placeholders differ in ${k}`);
 }
+// other languages: every key except Arabic-only plural forms, same placeholders as English, listed in LANGS
+const { LANGS, resolveLang } = await import(L + 'i18n.js');
+const dirs = fs.readdirSync(HERE + '../extension/_locales').sort();
+assert.deepEqual(dirs, Object.keys(LANGS).sort(), 'LANGS and _locales folders differ');
+for (const l of dirs.filter((d) => d !== 'ar' && d !== 'en')) {
+  const m = loc(l);
+  assert.deepEqual(Object.keys(m).sort(), Object.keys(en).filter((k) => !/_(two|few|many)$/.test(k)).sort(), `${l} keys`);
+  for (const k of Object.keys(m)) {
+    const ph = (s) => (s.match(/\$\d/g) || []).sort().join();
+    assert.equal(ph(m[k].message), ph(en[k].message), `${l}: placeholders differ in ${k}`);
+    assert.ok(m[k].message.trim(), `${l}: empty ${k}`);
+  }
+}
+assert.equal(resolveLang('fr', 'ar-EG'), 'fr');
+assert.equal(resolveLang('auto', 'ar-EG'), 'ar');
+assert.equal(resolveLang('auto', 'pt-PT'), 'pt_BR');
+assert.equal(resolveLang('auto', 'es-419'), 'es');
+assert.equal(resolveLang('auto', 'de-DE'), 'en');
+assert.equal(resolveLang('xx', 'tr'), 'tr');
 const manifest = JSON.parse(fs.readFileSync(HERE + '../extension/manifest.json', 'utf8'));
 for (const m of JSON.stringify(manifest).match(/__MSG_(\w+)__/g)) assert.ok(en[m.slice(6, -2)], m);
 console.log('locale tests passed');
@@ -94,3 +113,36 @@ assert.equal(scrubError('ERROR: [youtube] dQw4w9WgXcQ: Sign in to confirm'), 'ER
 assert.equal(scrubError('ERROR: unable to write C:\\Users\\Aly\\My Videos\\lecture 3.mp4: No space left on device'), 'ERROR: unable to write <path>: No space left on device');
 assert.equal(scrubError("can't open /home/aly/my clips/part two.mkv: denied"), "can't open <path>: denied");
 console.log('diagnostics tests passed');
+
+// ── friendly errors
+const { classifyError, friendlyError } = await import(L + 'errors.js');
+const K = (e) => classifyError(e).key;
+assert.equal(K('ERROR: [youtube] abc: Sign in to confirm you’re not a bot\n← افتح الموقع في المتصفح وسجّل دخول'), 'errSignIn');
+assert.equal(K('ERROR: [youtube] abc: Sign in to confirm your age. This video may be inappropriate for some users.'), 'errAge');
+assert.equal(K('ERROR: [youtube] abc: Private video. Sign in if you\'ve been granted access'), 'errPrivate');
+assert.equal(K('ERROR: [youtube] abc: Video unavailable. This video has been removed by the uploader'), 'errUnavailable');
+assert.equal(K('ERROR: [youtube] abc: The uploader has not made this video available in your country'), 'errGeo');
+assert.equal(K('ERROR: [youtube] abc: This live event will begin in 3 hours.'), 'errLiveNotStarted');
+assert.equal(K('ERROR: [youtube] abc: Join this channel to get access to members-only content'), 'errMembers');
+assert.equal(K('WARNING: n challenge solving failed: JavaScript runtime\n→ YouTube needs Deno: run install.bat again.'), 'errNeedDeno');
+assert.equal(K('ERROR: [youtube] abc: Requested format is not available'), 'errUpdateYtdlp');
+assert.equal(K('ERROR: Unsupported URL: https://x.com'), 'errUnsupported');
+assert.equal(K('ffmpeg is missing, run install.sh again'), 'errToolMissing');
+assert.equal(K('ERROR: unable to download video data: HTTP Error 403: Forbidden'), 'errForbidden');
+assert.equal(K('ERROR: HTTP Error 429: Too Many Requests'), 'errTooMany');
+assert.equal(K('SERVER_FORBIDDEN'), 'errForbidden');
+assert.equal(K('NETWORK_FAILED'), 'errNetwork');
+assert.equal(K('FILE_NO_SPACE'), 'errDiskFull');
+assert.equal(K('ERROR: unable to write <x>: [Errno 28] No space left on device'), 'errDiskFull');
+assert.equal(K('FILE_ACCESS_DENIED'), 'errAccess');
+assert.equal(K('FILE_NAME_TOO_LONG'), 'errNameLong');
+assert.equal(K('FILE_VIRUS_INFECTED'), 'errBlocked');
+assert.equal(K('CRASH'), 'errBrowserClosed');
+assert.equal(K('ERROR: something weird happened'), null);
+const tt = (k, a) => `<${k}${a ? ':' + a : ''}>`;
+assert.equal(friendlyError('ERROR: something weird', tt), '<errUnknown>');
+assert.equal(friendlyError('Lost the helper connection (the file may still have finished)', tt), 'Lost the helper connection (the file may still have finished)');
+assert.equal(friendlyError('انقطع الاتصال بالمساعد', tt), 'انقطع الاتصال بالمساعد');
+assert.equal(friendlyError('yt-dlp مش موجود', tt, 'install.bat'), '<errToolMissing:install.bat>');
+assert.equal(friendlyError('', tt), '<jobStopped>');
+console.log('error tests passed');

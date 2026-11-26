@@ -1,6 +1,6 @@
 import { DEFAULT_SETTINGS } from './lib/naming.js';
 import { installer, platformReady, currentOs } from './lib/platform.js';
-import { initI18n, applyI18n, applyTheme, t } from './lib/i18n.js';
+import { initI18n, applyI18n, applyTheme, t, LANGS } from './lib/i18n.js';
 import { CONFIG, releaseAsset, releasesPage, bugReportUrl } from './lib/config.js';
 import { icon, mascot } from './ui/icons.js';
 
@@ -174,6 +174,9 @@ function wire() {
 }
 
 async function init() {
+  // language list comes from LANGS, each shown in its own language
+  for (const [code, name] of Object.entries(LANGS)) $('#uiLang').append(new Option(name, code));
+  $('#uiLang').querySelectorAll('option:not([value="auto"])').forEach((o) => { o.lang = o.value.replace('_', '-'); o.dir = 'auto'; });
   const { settings } = await chrome.storage.local.get('settings');
   current = { ...DEFAULT_SETTINGS, ...(settings || {}) };
   await Promise.all([initI18n(current.uiLang), applyTheme(current.theme)]);

@@ -10,6 +10,7 @@ import { installer, IS_FIREFOX } from './lib/platform.js';
 import { initI18n, t, resolveLang } from './lib/i18n.js';
 import { latestReleaseApi } from './lib/config.js';
 import { formatDiagnostics, browserName } from './lib/diagnostics.js';
+import { friendlyError } from './lib/errors.js';
 
 let i18nReady = initI18n();
 async function tt(key, ...a) { await i18nReady; return t(key, ...a); }
@@ -432,7 +433,7 @@ function notify(j) {
     type: 'basic',
     iconUrl: ok ? 'icons/notify-done.png' : 'icons/notify-error.png',
     title: ok ? t('notifDone') : t('notifFailed'),
-    message: ok ? (j.files > 1 ? `${name} (${t('filesN', j.files)})` : name) : `${name}\n${j.error || ''}`.slice(0, 250),
+    message: ok ? (j.files > 1 ? `${name} (${t('filesN', j.files)})` : name) : `${name}\n${friendlyError(j.error, t, installer())}`.slice(0, 250),
     priority: 0,
   };
   // Firefox rejects the buttons key (even when undefined), and throws synchronously

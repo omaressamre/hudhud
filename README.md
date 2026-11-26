@@ -12,7 +12,8 @@
 - Finds videos as they play (direct files, HLS and DASH streams) and lists them in the popup.
 - Downloads them **in the browser** — HLS is converted to a real MP4 locally, and Facebook / Instagram stories are merged (video + audio) without any upload.
 - With the optional **Hudhud Helper** (a small native app running yt-dlp, ffmpeg and Deno) it also handles YouTube and other sites yt-dlp supports, playlists, audio-only MP3, subtitles and metadata.
-- Arabic and English UI (switchable without restarting), light and dark themes.
+- Interface in Arabic, English, Spanish, French, Portuguese and Turkish (switchable without restarting), light and dark themes.
+- Clear error messages in your language ("the site wants you to sign in", "the disk is full"…), with **Report a problem** to open a GitHub issue with the diagnostics filled in.
 - No accounts, no tracking, no ads. See [PRIVACY.md](PRIVACY.md).
 
 Hudhud does **not** circumvent DRM. Encrypted streams (Netflix, Shahid, etc.) are detected and skipped.
@@ -63,7 +64,7 @@ tests/run-all.sh --full          # + Chrome end-to-end tests (see docs/TESTING.m
 scripts/build.sh                 # release zips in dist/
 ```
 
-UI strings live only in `scripts/strings.mjs` as `key: [arabic, english]`. Don't edit `_locales/*/messages.json` by hand.
+UI strings live in `scripts/strings.mjs` as `key: [arabic, english]` (the source of truth) and in `scripts/i18n/<lang>.mjs` for the other languages. Don't edit `_locales/*/messages.json` by hand.
 
 ## Releasing
 

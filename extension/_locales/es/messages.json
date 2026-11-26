@@ -1,0 +1,749 @@
+{
+  "extName": {
+    "message": "Hudhud"
+  },
+  "extDesc": {
+    "message": "Encuentra los videos de cualquier página y los guarda con un clic."
+  },
+  "cmdOpen": {
+    "message": "Abrir Hudhud"
+  },
+  "brand": {
+    "message": "Hudhud"
+  },
+  "settings": {
+    "message": "Ajustes"
+  },
+  "support": {
+    "message": "Apoya a Hudhud"
+  },
+  "download": {
+    "message": "Descargar"
+  },
+  "cancel": {
+    "message": "Cancelar"
+  },
+  "retry": {
+    "message": "Reintentar"
+  },
+  "remove": {
+    "message": "Quitar"
+  },
+  "dismiss": {
+    "message": "Cerrar"
+  },
+  "gotIt": {
+    "message": "Entendido"
+  },
+  "change": {
+    "message": "Cambiar"
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "saved": {
+    "message": "Guardado ✓"
+  },
+  "helper": {
+    "message": "Asistente"
+  },
+  "browser": {
+    "message": "Navegador"
+  },
+  "errGeneric": {
+    "message": "Algo salió mal"
+  },
+  "found_zero": {
+    "message": "No hay videos en esta página"
+  },
+  "found_one": {
+    "message": "Encontré 1 video en esta página"
+  },
+  "found_other": {
+    "message": "Encontré $1 videos en esta página"
+  },
+  "pageReady": {
+    "message": "$1 · listo para descargar"
+  },
+  "pageProbing": {
+    "message": "$1 · buscando calidades…"
+  },
+  "running_one": {
+    "message": "1 descarga en curso"
+  },
+  "running_other": {
+    "message": "$1 descargas en curso"
+  },
+  "emptyTitle": {
+    "message": "Todavía no hay videos aquí"
+  },
+  "emptyBody": {
+    "message": "Reproduce el video o recarga la página. Hudhud se activa en cuanto detecta uno."
+  },
+  "emptyTip": {
+    "message": "Los videos con DRM (Netflix y similares) no se pueden descargar."
+  },
+  "scanAgain": {
+    "message": "Volver a buscar en la página"
+  },
+  "reloadPage": {
+    "message": "Recargar la página"
+  },
+  "scanning": {
+    "message": "Buscando… puede tardar hasta un minuto"
+  },
+  "notWebPage": {
+    "message": "Hudhud solo funciona en páginas web"
+  },
+  "playlistAll": {
+    "message": "Descargar toda la lista ($1 videos)"
+  },
+  "playlistInfoTitle": {
+    "message": "Este video es parte de una lista"
+  },
+  "playlistInfoBody": {
+    "message": "Descarga solo este o la lista completa de una vez."
+  },
+  "playlistOnly": {
+    "message": "Lista · $1 videos"
+  },
+  "otherVideos": {
+    "message": "Otros videos en esta página ($1)"
+  },
+  "onThisPage": {
+    "message": "En esta página"
+  },
+  "downloads": {
+    "message": "Descargas"
+  },
+  "bestQuality": {
+    "message": "Mejor calidad"
+  },
+  "audioMp3": {
+    "message": "Solo audio · MP3"
+  },
+  "audioM4a": {
+    "message": "Solo audio · M4A"
+  },
+  "quality": {
+    "message": "Calidad"
+  },
+  "fileName": {
+    "message": "Nombre del archivo"
+  },
+  "fileNameHint": {
+    "message": "Déjalo vacío para usar el título del video"
+  },
+  "more": {
+    "message": "Opciones"
+  },
+  "engine": {
+    "message": "Descargar con"
+  },
+  "copyLink": {
+    "message": "Copiar enlace"
+  },
+  "copied": {
+    "message": "Copiado ✓"
+  },
+  "starting": {
+    "message": "Iniciando…"
+  },
+  "started": {
+    "message": "Descarga iniciada ✓"
+  },
+  "live": {
+    "message": "EN VIVO"
+  },
+  "withAudio": {
+    "message": "Video + audio"
+  },
+  "audioOnly": {
+    "message": "Solo audio"
+  },
+  "drmBlocked": {
+    "message": "Este video tiene DRM y no se puede descargar"
+  },
+  "needsHelper": {
+    "message": "Necesita el asistente"
+  },
+  "mergeNote": {
+    "message": "El video y el audio se unirán en un solo MP4."
+  },
+  "tsNote": {
+    "message": "Se guardará como TS (la conversión a MP4 está desactivada en los ajustes)."
+  },
+  "liveNote": {
+    "message": "Es una transmisión en vivo: se graba hasta que la canceles o termine."
+  },
+  "shorts": {
+    "message": "Shorts"
+  },
+  "jobDownloading": {
+    "message": "Descargando"
+  },
+  "jobQueued": {
+    "message": "En cola"
+  },
+  "jobQueuedDetail": {
+    "message": "Empieza después de la actual"
+  },
+  "jobProcessing": {
+    "message": "Terminando…"
+  },
+  "jobMerging": {
+    "message": "Uniendo video y audio…"
+  },
+  "jobDone": {
+    "message": "Guardado ✓"
+  },
+  "jobStopped": {
+    "message": "Detenida"
+  },
+  "jobCanceled": {
+    "message": "Cancelada"
+  },
+  "jobPaused": {
+    "message": "En pausa"
+  },
+  "timeLeft": {
+    "message": "Faltan $1"
+  },
+  "itemOf": {
+    "message": "Video $1/$2"
+  },
+  "partN": {
+    "message": "Parte $1"
+  },
+  "filesN": {
+    "message": "$1 archivos"
+  },
+  "noAudio": {
+    "message": "Sin audio"
+  },
+  "showInFolder": {
+    "message": "Mostrar en la carpeta"
+  },
+  "doneTitle": {
+    "message": "¡Listo! Todo está guardado"
+  },
+  "openDownloads": {
+    "message": "Abrir la carpeta de descargas"
+  },
+  "clearList": {
+    "message": "Limpiar la lista"
+  },
+  "errorTitle": {
+    "message": "La descarga se detuvo"
+  },
+  "useHelper": {
+    "message": "Usar el asistente"
+  },
+  "helperTitle": {
+    "message": "Se necesita el asistente para $1"
+  },
+  "helperTitleGeneric": {
+    "message": "El asistente no está instalado"
+  },
+  "helperBody": {
+    "message": "Una pequeña app en tu computadora que descarga en alta calidad y une video y audio. Se instala en un minuto."
+  },
+  "helperDownload": {
+    "message": "Descargar el asistente para $1"
+  },
+  "yourSystem": {
+    "message": "Tu sistema"
+  },
+  "helperStep1": {
+    "message": "1. Abre $1 desde la descarga"
+  },
+  "helperStep2": {
+    "message": "2. Espera a que termine (un minuto aprox.)"
+  },
+  "helperStep3": {
+    "message": "3. Vuelve aquí y pulsa Descargar"
+  },
+  "supportTitle": {
+    "message": "Hudhud ya te guardó $1 videos"
+  },
+  "supportBody": {
+    "message": "Si te sirve, aporta algo para que siga siendo gratis para siempre."
+  },
+  "updateTitle": {
+    "message": "Salió Hudhud $1"
+  },
+  "updateBody": {
+    "message": "Descárgalo y ejecuta el instalador. Después podrás actualizar desde aquí con un clic."
+  },
+  "updateBodyManaged": {
+    "message": "Tarda menos de un minuto. Tus ajustes y descargas se conservan."
+  },
+  "updateCta": {
+    "message": "Obtener la actualización"
+  },
+  "updateNow": {
+    "message": "Actualizar ahora"
+  },
+  "updateMoveBody": {
+    "message": "Para actualizar con un clic: quita Hudhud en la página de extensiones y cárgalo de nuevo desde esta carpeta (solo una vez)."
+  },
+  "copyPath": {
+    "message": "Copiar ruta"
+  },
+  "moveTitle": {
+    "message": "Actualiza con un clic"
+  },
+  "moveBody": {
+    "message": "Quita Hudhud en la página de extensiones y cárgalo de nuevo desde esta carpeta. Solo una vez."
+  },
+  "updating": {
+    "message": "Actualizando…"
+  },
+  "updateBusy": {
+    "message": "Espera a que terminen las descargas y luego actualiza."
+  },
+  "updateNotManaged": {
+    "message": "Esta copia no está instalada desde la carpeta de Hudhud. Descarga la actualización y ejecuta el instalador."
+  },
+  "updateFailed": {
+    "message": "La actualización falló: $1"
+  },
+  "updatedTo": {
+    "message": "Hudhud se actualizó a $1"
+  },
+  "helperUpdatedTo": {
+    "message": "El asistente se actualizó a $1"
+  },
+  "updateHelperTitle": {
+    "message": "Salió el asistente $1"
+  },
+  "errQualities": {
+    "message": "No se pudieron leer las calidades"
+  },
+  "errEngineUnavailable": {
+    "message": "Este método de descarga no está disponible"
+  },
+  "errNeedsHelper": {
+    "message": "Este video necesita el asistente (ejecuta $1)"
+  },
+  "errEngineOffline": {
+    "message": "$1 no está disponible ahora"
+  },
+  "errGone": {
+    "message": "Este video ya no está. Recarga la página."
+  },
+  "errNotWeb": {
+    "message": "Esta no es una página web"
+  },
+  "errMergeFailed": {
+    "message": "No se pudo unir ($1)"
+  },
+  "errJobNotFound": {
+    "message": "No encuentro esta descarga"
+  },
+  "errContextNeedsHelper": {
+    "message": "Necesita el asistente (ejecuta $1). O reproduce el video y usa el ícono de Hudhud."
+  },
+  "errSignIn": {
+    "message": "El sitio te pide iniciar sesión. Ábrelo en tu navegador, inicia sesión y vuelve a intentarlo."
+  },
+  "errAge": {
+    "message": "Este video tiene restricción de edad. Inicia sesión en el sitio desde tu navegador y vuelve a intentarlo."
+  },
+  "errPrivate": {
+    "message": "Este video es privado. Solo su dueño puede verlo."
+  },
+  "errMembers": {
+    "message": "Este video es solo para miembros del canal. Si eres miembro, inicia sesión en tu navegador y vuelve a intentarlo."
+  },
+  "errGeo": {
+    "message": "Este video no está disponible en tu país."
+  },
+  "errUnavailable": {
+    "message": "Este video fue eliminado o ya no está disponible."
+  },
+  "errLiveNotStarted": {
+    "message": "La transmisión todavía no empieza. Vuelve a intentarlo cuando comience."
+  },
+  "errDrm": {
+    "message": "Este video tiene DRM y no se puede descargar."
+  },
+  "errNeedDeno": {
+    "message": "YouTube necesita una parte del asistente que falta. Ejecuta $1 de nuevo."
+  },
+  "errUpdateYtdlp": {
+    "message": "El sitio cambió. Actualiza yt-dlp en Ajustes → Asistente y vuelve a intentarlo."
+  },
+  "errUnsupported": {
+    "message": "El asistente no es compatible con este sitio. Reproduce el video y descárgalo desde el ícono de Hudhud."
+  },
+  "errToolMissing": {
+    "message": "Falta una parte del asistente. Ejecuta $1 de nuevo."
+  },
+  "errForbidden": {
+    "message": "El sitio rechazó la descarga. Recarga la página y vuelve a intentarlo, o usa el asistente."
+  },
+  "errTooMany": {
+    "message": "El sitio está recibiendo demasiadas descargas. Espera unos minutos y vuelve a intentarlo."
+  },
+  "errServer": {
+    "message": "El sitio tiene problemas ahora. Inténtalo más tarde."
+  },
+  "errNetwork": {
+    "message": "Se cortó la conexión o el sitio no responde. Revisa tu internet y vuelve a intentarlo."
+  },
+  "errDiskFull": {
+    "message": "No hay suficiente espacio en el disco. Libera espacio y vuelve a intentarlo."
+  },
+  "errAccess": {
+    "message": "No se puede guardar en esta carpeta. Elige otra en Ajustes."
+  },
+  "errNameLong": {
+    "message": "El nombre del archivo es demasiado largo. Baja «Largo máximo del nombre» en Ajustes."
+  },
+  "errBlocked": {
+    "message": "Tu navegador o antivirus bloqueó el archivo."
+  },
+  "errFileFailed": {
+    "message": "No se pudo guardar el archivo. Revisa tu carpeta de descargas y vuelve a intentarlo."
+  },
+  "errBrowserClosed": {
+    "message": "El navegador se cerró antes de que terminara la descarga. Vuelve a intentarlo."
+  },
+  "errUnknown": {
+    "message": "Pasó algo inesperado. Vuelve a intentarlo y, si se repite, pulsa «Reportar un problema»."
+  },
+  "toastStarted": {
+    "message": "Descarga iniciada"
+  },
+  "notifDone": {
+    "message": "Descarga completa ✓"
+  },
+  "notifFailed": {
+    "message": "La descarga se detuvo"
+  },
+  "notifOpen": {
+    "message": "Mostrar en la carpeta"
+  },
+  "videoTitle": {
+    "message": "Título del video"
+  },
+  "nativeMissing": {
+    "message": "El asistente no está instalado (ejecuta $1)"
+  },
+  "nativeForbidden": {
+    "message": "El asistente no permite esta extensión (ID de extensión incorrecto al instalar)"
+  },
+  "nativeCrashed": {
+    "message": "El asistente se cerró de forma inesperada"
+  },
+  "nativeError": {
+    "message": "Error del asistente"
+  },
+  "nativeDisconnected": {
+    "message": "Desconectado"
+  },
+  "nativeLost": {
+    "message": "Se perdió la conexión con el asistente (puede que el archivo igual se haya guardado en la carpeta)"
+  },
+  "nativeTimeout": {
+    "message": "El asistente no respondió"
+  },
+  "hlsBad": {
+    "message": "Lista m3u8 ilegible"
+  },
+  "hlsNoVariants": {
+    "message": "No hay calidades en la lista"
+  },
+  "hlsLive": {
+    "message": "Es una transmisión en vivo; grábala con el asistente"
+  },
+  "hlsEmpty": {
+    "message": "El video no tiene segmentos"
+  },
+  "hlsAudioUnsupported": {
+    "message": "El audio separado usa un formato que el navegador no soporta; usa el asistente"
+  },
+  "remuxFailed": {
+    "message": "Falló la conversión a MP4 ($1); usa el asistente"
+  },
+  "savedAsTs": {
+    "message": "Se guardó como TS porque $1"
+  },
+  "ctxMedia": {
+    "message": "Descargar este video con Hudhud"
+  },
+  "ctxLink": {
+    "message": "Descargar este enlace con Hudhud"
+  },
+  "ctxPage": {
+    "message": "Descargar el video de esta página con Hudhud"
+  },
+  "ctxPageMp3": {
+    "message": "Descargar solo el audio (MP3)"
+  },
+  "optTitle": {
+    "message": "Ajustes de Hudhud"
+  },
+  "navSave": {
+    "message": "Dónde guardar"
+  },
+  "navHelper": {
+    "message": "Asistente"
+  },
+  "navSubs": {
+    "message": "Subtítulos y metadatos"
+  },
+  "navBrowser": {
+    "message": "Descargas en el navegador"
+  },
+  "navNaming": {
+    "message": "Nombres de archivo"
+  },
+  "navLook": {
+    "message": "Idioma y apariencia"
+  },
+  "navAbout": {
+    "message": "Acerca de"
+  },
+  "saveDesc": {
+    "message": "Todas las descargas van aquí, y si quieres, en una carpeta por sitio."
+  },
+  "optSubdir": {
+    "message": "Carpeta dentro de Descargas (navegador)"
+  },
+  "optSubdirHint": {
+    "message": "Por ejemplo Hudhud. Déjalo vacío para guardar directo en Descargas."
+  },
+  "optNativeDir": {
+    "message": "Carpeta del asistente"
+  },
+  "optNativeDirHint": {
+    "message": "Déjalo vacío para usar Descargas."
+  },
+  "choose": {
+    "message": "Elegir…"
+  },
+  "helperDesc": {
+    "message": "Una pequeña app en tu computadora que se encarga de YouTube y sitios difíciles, y une video con audio."
+  },
+  "status": {
+    "message": "Estado"
+  },
+  "connected": {
+    "message": "Conectado · asistente $1 · yt-dlp $2"
+  },
+  "notConnected": {
+    "message": "No conectado"
+  },
+  "updateYtdlp": {
+    "message": "Actualizar yt-dlp"
+  },
+  "updated": {
+    "message": "Actualizado: $1"
+  },
+  "optConcurrent": {
+    "message": "Descargas simultáneas"
+  },
+  "optRate": {
+    "message": "Límite de velocidad"
+  },
+  "optRateHint": {
+    "message": "Como 2M o 500K. Déjalo vacío para no limitar."
+  },
+  "noLimit": {
+    "message": "Sin límite"
+  },
+  "optAutoUpdate": {
+    "message": "Actualizar yt-dlp automáticamente"
+  },
+  "optAutoUpdateHint": {
+    "message": "Cada semana, porque YouTube cambia seguido"
+  },
+  "optDefaultEngine": {
+    "message": "Método de descarga predeterminado"
+  },
+  "optSubs": {
+    "message": "Descargar subtítulos si hay"
+  },
+  "optSubLangs": {
+    "message": "Idiomas de subtítulos"
+  },
+  "optEmbedMeta": {
+    "message": "Incrustar metadatos"
+  },
+  "optEmbedMetaHint": {
+    "message": "Título, canal y fecha dentro del MP4"
+  },
+  "optEmbedThumb": {
+    "message": "Incrustar la portada"
+  },
+  "browserDesc": {
+    "message": "Para los videos que Hudhud descarga sin el asistente."
+  },
+  "optHls": {
+    "message": "Convertir transmisiones (HLS) a MP4"
+  },
+  "optHlsHint": {
+    "message": "Se hace en el navegador, sin instalar nada"
+  },
+  "optMinSize": {
+    "message": "Ignorar videos de menos de (MB)"
+  },
+  "optMinSizeHint": {
+    "message": "Evita anuncios y GIF animados"
+  },
+  "optNotifications": {
+    "message": "Avisar cuando termine una descarga"
+  },
+  "optHistory": {
+    "message": "Guardar las descargas en el historial del navegador"
+  },
+  "optTemplate": {
+    "message": "Patrón del nombre"
+  },
+  "optTemplateHint": {
+    "message": "Disponibles: %title %hostname %quality %date %selector"
+  },
+  "optMaxLen": {
+    "message": "Largo máximo del nombre"
+  },
+  "optRules": {
+    "message": "Reglas por sitio (JSON)"
+  },
+  "optRulesHint": {
+    "message": "Avanzado: otro patrón y otra carpeta para cada sitio."
+  },
+  "rulesInvalid": {
+    "message": "JSON no válido: $1"
+  },
+  "optLang": {
+    "message": "Idioma de la interfaz"
+  },
+  "langAuto": {
+    "message": "Igual que el navegador"
+  },
+  "optTheme": {
+    "message": "Apariencia"
+  },
+  "themeAuto": {
+    "message": "Igual que el sistema"
+  },
+  "themeLight": {
+    "message": "Claro"
+  },
+  "themeDark": {
+    "message": "Oscuro"
+  },
+  "aboutTitle": {
+    "message": "Hudhud es gratis y de código abierto"
+  },
+  "aboutBody": {
+    "message": "Si te ahorra tiempo, aporta lo que quieras por InstaPay."
+  },
+  "version": {
+    "message": "Versión $1"
+  },
+  "checkUpdates": {
+    "message": "Buscar actualizaciones"
+  },
+  "checking": {
+    "message": "Buscando…"
+  },
+  "upToDate": {
+    "message": "Tienes la última versión"
+  },
+  "updateFound": {
+    "message": "Salió la versión $1. Abre Hudhud y pulsa «Actualizar»."
+  },
+  "updateCheckFailed": {
+    "message": "No pude conectar con GitHub ahora"
+  },
+  "privacy": {
+    "message": "Privacidad"
+  },
+  "sourceCode": {
+    "message": "Código fuente"
+  },
+  "copyDiagnostics": {
+    "message": "Copiar diagnóstico"
+  },
+  "reportProblem": {
+    "message": "Reportar un problema"
+  },
+  "diagCopied": {
+    "message": "Copiado ✓ Pégalo en tu reporte de GitHub"
+  },
+  "diagHint": {
+    "message": "Versiones de la extensión, el asistente, el navegador y el sistema, y el último error. Sin enlaces ni nombres de archivo."
+  },
+  "shortcut": {
+    "message": "Atajo para abrir Hudhud: Alt+Shift+D"
+  },
+  "ruleNotArray": {
+    "message": "Las reglas deben ser un array: [ {...}, {...} ]"
+  },
+  "ruleNotObject": {
+    "message": "La regla $1 no es un objeto"
+  },
+  "ruleNoMatch": {
+    "message": "A la regla $1 le falta \"match\""
+  },
+  "ruleReplace": {
+    "message": "\"replace\" en la regla $1 debe ser un array"
+  },
+  "pathAbsolute": {
+    "message": "La carpeta debe ser una ruta completa, como /home/me/Videos o C:\\Videos"
+  },
+  "missingTool": {
+    "message": "Falta $1"
+  },
+  "helperNotInstalled": {
+    "message": "No instalado. Ejecuta $1 desde la descarga del asistente."
+  },
+  "helperOld": {
+    "message": "Versión antigua, ejecuta el nuevo $1"
+  },
+  "defaultSuffix": {
+    "message": "(predeterminado)"
+  },
+  "example": {
+    "message": "Ejemplo"
+  },
+  "getHelper": {
+    "message": "Obtener el asistente"
+  },
+  "welcomeTitle": {
+    "message": "Te damos la bienvenida a Hudhud"
+  },
+  "welcomeSub": {
+    "message": "Tres pasos rápidos y Hudhud estará listo para encontrar cualquier video en cualquier página."
+  },
+  "step1Title": {
+    "message": "Fija el ícono junto a la barra de direcciones"
+  },
+  "step1Body": {
+    "message": "Haz clic en el ícono de la pieza de rompecabezas y fija Hudhud, así verás cómo se levanta la cresta."
+  },
+  "step2Title": {
+    "message": "Instala el asistente (opcional, necesario para YouTube)"
+  },
+  "step2Body": {
+    "message": "Una pequeña app que descarga en la mejor calidad y une video y audio. Abre $1 y espera un minuto."
+  },
+  "step2Done": {
+    "message": "El asistente está conectado ✓"
+  },
+  "otherSystems": {
+    "message": "Otros sistemas"
+  },
+  "step3Title": {
+    "message": "Pruébalo"
+  },
+  "step3Body": {
+    "message": "Abre cualquier video y haz clic en la abubilla. Si levanta la cresta, encontró algo."
+  },
+  "tryVideo": {
+    "message": "Abrir un video de prueba"
+  }
+}

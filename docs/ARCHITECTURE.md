@@ -15,7 +15,9 @@
 - **background.js** — detects media from `webRequest`, keeps per-tab item lists, runs the job queue, picks an engine per item, owns notifications, the context menu, the toolbar icon (idle/active × light/dark) and the update check. Strings via `lib/i18n.js`.
 - **engines/browser.js + offscreen.js** — in-browser downloads. HLS segments are fetched and remuxed to MP4 by `lib/ts2mp4.js`; separate video/audio (FB/IG stories) are paired by `lib/pair.js` and merged by `lib/mp4merge.js`. Data is staged in OPFS, then saved with `chrome.downloads`.
 - **engines/native.js** — talks to the helper over Native Messaging (`com.hudhud.helper`): `info`, `probe`, `download`, `cancel`, `reveal`, `chooseFolder`, `update`, `config`.
-- **lib/i18n.js** — runtime i18n: loads `_locales/<lang>/messages.json` with `fetch` so the language can change without a browser restart; plural keys `key_one/_two/_few/_many/_other` via `Intl.PluralRules`; sets `dir`.
+- **lib/errors.js** — maps raw errors (Chrome interrupt reasons, yt-dlp output, helper messages) to friendly keys (`errSignIn`, `errDiskFull`…); the raw text stays on the job for diagnostics.
+- **lib/diagnostics.js** — the "Copy diagnostics" report; scrubs URLs to the host and removes paths, emails and yt-dlp video ids.
+- **lib/i18n.js** — runtime i18n (`LANGS` lists the languages): loads `_locales/<lang>/messages.json` with `fetch` so the language can change without a browser restart; plural keys `key_one/_two/_few/_many/_other` via `Intl.PluralRules`; sets `dir`.
 - **ui/theme.css** — design tokens matching the Figma variables; dark mode with `:root[data-theme=dark]`.
 - **lib/config.js** — repo, site and donation links in one place.
 

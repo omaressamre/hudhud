@@ -2,6 +2,7 @@ import { platformReady, currentOs, installer } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t, tn, fmtNum } from './lib/i18n.js';
 import { CONFIG, openReleaseAsset, bugReportUrl } from './lib/config.js';
 import { icon, iconEl, mascot } from './ui/icons.js';
+import { friendlyError } from './lib/errors.js';
 
 const $ = (s) => document.querySelector(s);
 function el(tag, props = {}, children = []) {
@@ -168,7 +169,7 @@ function renderOutcome() {
     if (last.req && last.engine === 'browser' && hasNative()) acts.push(btn('secondary', t('useHelper'), () => retry(last.jobId, 'native')));
     acts.push(btn('ghost', t('reportProblem'), reportProblem));
     node = el('div', { class: 'block error' }, [
-      mascot('error', 104), el('h3', { text: t('errorTitle') }), el('p', { text: jobError(last) }),
+      mascot('error', 104), el('h3', { text: t('errorTitle') }), el('p', { text: jobError(last), title: last.error || '' }),
       acts.length ? el('div', { class: 'acts' }, acts) : null,
     ]);
   }
@@ -193,7 +194,7 @@ async function reportProblem() {
 }
 function jobError(j) {
   if (j.error === 'CANCELED') return t('jobCanceled');
-  return j.error || t('jobStopped');
+  return friendlyError(j.error, t, installer());
 }
 
 // ───────── status line ─────────
@@ -443,7 +444,7 @@ async function jobView(j) {
     detail = [j.quality === 'AUDIO' ? t('audioOnly') : j.quality, j.files > 1 ? t('filesN', fmtNum(j.files)) : '', j.noAudio ? t('noAudio') : '', j.note].filter(Boolean).join(' · ');
   } else if (j.state === 'interrupted') {
     status = j.error === 'CANCELED' ? t('jobCanceled') : t('jobStopped'); track = 'error'; cls = 'err';
-    detail = j.error === 'CANCELED' ? '' : (j.error || '');
+    detail = j.error === 'CANCELED' ? '' : jobError(j);
   } else if (j.queued) {
     status = t('jobQueued'); detail = t('jobQueuedDetail'); track = 'queued';
   } else if (j.engine === 'browser' && j.downloadId != null) {

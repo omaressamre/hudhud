@@ -1,0 +1,749 @@
+{
+  "extName": {
+    "message": "Hudhud"
+  },
+  "extDesc": {
+    "message": "Her sayfadaki videoları bulur ve tek tıkla kaydeder."
+  },
+  "cmdOpen": {
+    "message": "Hudhud’u aç"
+  },
+  "brand": {
+    "message": "Hudhud"
+  },
+  "settings": {
+    "message": "Ayarlar"
+  },
+  "support": {
+    "message": "Hudhud’a destek ol"
+  },
+  "download": {
+    "message": "İndir"
+  },
+  "cancel": {
+    "message": "İptal"
+  },
+  "retry": {
+    "message": "Tekrar dene"
+  },
+  "remove": {
+    "message": "Kaldır"
+  },
+  "dismiss": {
+    "message": "Kapat"
+  },
+  "gotIt": {
+    "message": "Tamam"
+  },
+  "change": {
+    "message": "Değiştir"
+  },
+  "save": {
+    "message": "Kaydet"
+  },
+  "saved": {
+    "message": "Kaydedildi ✓"
+  },
+  "helper": {
+    "message": "Yardımcı"
+  },
+  "browser": {
+    "message": "Tarayıcı"
+  },
+  "errGeneric": {
+    "message": "Bir şeyler ters gitti"
+  },
+  "found_zero": {
+    "message": "Bu sayfada video yok"
+  },
+  "found_one": {
+    "message": "Bu sayfada 1 video bulundu"
+  },
+  "found_other": {
+    "message": "Bu sayfada $1 video bulundu"
+  },
+  "pageReady": {
+    "message": "$1 · indirmeye hazır"
+  },
+  "pageProbing": {
+    "message": "$1 · kaliteler alınıyor…"
+  },
+  "running_one": {
+    "message": "1 indirme sürüyor"
+  },
+  "running_other": {
+    "message": "$1 indirme sürüyor"
+  },
+  "emptyTitle": {
+    "message": "Burada henüz video yok"
+  },
+  "emptyBody": {
+    "message": "Videoyu oynatın ya da sayfayı yenileyin. Hudhud bir video görür görmez uyanır."
+  },
+  "emptyTip": {
+    "message": "DRM korumalı videolar (Netflix vb.) indirilemez."
+  },
+  "scanAgain": {
+    "message": "Sayfayı yeniden tara"
+  },
+  "reloadPage": {
+    "message": "Sayfayı yenile"
+  },
+  "scanning": {
+    "message": "Taranıyor… bir dakika kadar sürebilir"
+  },
+  "notWebPage": {
+    "message": "Hudhud yalnızca web sayfalarında çalışır"
+  },
+  "playlistAll": {
+    "message": "Tüm oynatma listesini indir ($1 video)"
+  },
+  "playlistInfoTitle": {
+    "message": "Bu video bir oynatma listesinin parçası"
+  },
+  "playlistInfoBody": {
+    "message": "Sadece bu videoyu ya da listenin tamamını tek seferde indirebilirsiniz."
+  },
+  "playlistOnly": {
+    "message": "Oynatma listesi · $1 video"
+  },
+  "otherVideos": {
+    "message": "Bu sayfadaki diğer videolar ($1)"
+  },
+  "onThisPage": {
+    "message": "Bu sayfada"
+  },
+  "downloads": {
+    "message": "İndirmeler"
+  },
+  "bestQuality": {
+    "message": "En iyi kalite"
+  },
+  "audioMp3": {
+    "message": "Yalnızca ses · MP3"
+  },
+  "audioM4a": {
+    "message": "Yalnızca ses · M4A"
+  },
+  "quality": {
+    "message": "Kalite"
+  },
+  "fileName": {
+    "message": "Dosya adı"
+  },
+  "fileNameHint": {
+    "message": "Video başlığını kullanmak için boş bırakın"
+  },
+  "more": {
+    "message": "Seçenekler"
+  },
+  "engine": {
+    "message": "İndirme yöntemi"
+  },
+  "copyLink": {
+    "message": "Bağlantıyı kopyala"
+  },
+  "copied": {
+    "message": "Kopyalandı ✓"
+  },
+  "starting": {
+    "message": "Başlıyor…"
+  },
+  "started": {
+    "message": "İndirme başladı ✓"
+  },
+  "live": {
+    "message": "CANLI"
+  },
+  "withAudio": {
+    "message": "Video + ses"
+  },
+  "audioOnly": {
+    "message": "Yalnızca ses"
+  },
+  "drmBlocked": {
+    "message": "Bu video DRM korumalı, indirilemez"
+  },
+  "needsHelper": {
+    "message": "Yardımcı gerekli"
+  },
+  "mergeNote": {
+    "message": "Video ve ses tek bir MP4 dosyasında birleştirilecek."
+  },
+  "tsNote": {
+    "message": "TS olarak kaydedilecek (MP4’e dönüştürme ayarlardan kapalı)."
+  },
+  "liveNote": {
+    "message": "Bu bir canlı yayın: siz iptal edene ya da yayın bitene kadar kaydeder."
+  },
+  "shorts": {
+    "message": "Shorts"
+  },
+  "jobDownloading": {
+    "message": "İndiriliyor"
+  },
+  "jobQueued": {
+    "message": "Sırada"
+  },
+  "jobQueuedDetail": {
+    "message": "Mevcut indirmeden sonra başlar"
+  },
+  "jobProcessing": {
+    "message": "Tamamlanıyor…"
+  },
+  "jobMerging": {
+    "message": "Video ve ses birleştiriliyor…"
+  },
+  "jobDone": {
+    "message": "Kaydedildi ✓"
+  },
+  "jobStopped": {
+    "message": "Durdu"
+  },
+  "jobCanceled": {
+    "message": "İptal edildi"
+  },
+  "jobPaused": {
+    "message": "Duraklatıldı"
+  },
+  "timeLeft": {
+    "message": "Kalan: $1"
+  },
+  "itemOf": {
+    "message": "Video $1/$2"
+  },
+  "partN": {
+    "message": "Bölüm $1"
+  },
+  "filesN": {
+    "message": "$1 dosya"
+  },
+  "noAudio": {
+    "message": "Ses yok"
+  },
+  "showInFolder": {
+    "message": "Klasörde göster"
+  },
+  "doneTitle": {
+    "message": "Bitti! Hepsi kaydedildi"
+  },
+  "openDownloads": {
+    "message": "İndirilenler klasörünü aç"
+  },
+  "clearList": {
+    "message": "Listeyi temizle"
+  },
+  "errorTitle": {
+    "message": "İndirme durdu"
+  },
+  "useHelper": {
+    "message": "Yardımcıyı kullan"
+  },
+  "helperTitle": {
+    "message": "Yardımcı şunun için gerekli: $1"
+  },
+  "helperTitleGeneric": {
+    "message": "Yardımcı yüklü değil"
+  },
+  "helperBody": {
+    "message": "Bilgisayarınızda çalışan, yüksek kalitede indiren ve video ile sesi birleştiren küçük bir uygulama. Kurulumu bir dakika sürer."
+  },
+  "helperDownload": {
+    "message": "$1 için yardımcıyı indir"
+  },
+  "yourSystem": {
+    "message": "Sisteminiz"
+  },
+  "helperStep1": {
+    "message": "1. İndirilen dosyadan $1 dosyasını açın"
+  },
+  "helperStep2": {
+    "message": "2. Bitmesini bekleyin (yaklaşık bir dakika)"
+  },
+  "helperStep3": {
+    "message": "3. Buraya dönüp İndir’e basın"
+  },
+  "supportTitle": {
+    "message": "Hudhud sizin için $1 video kaydetti"
+  },
+  "supportBody": {
+    "message": "İşinize yaradıysa, sonsuza kadar ücretsiz kalması için destek olun."
+  },
+  "updateTitle": {
+    "message": "Hudhud $1 çıktı"
+  },
+  "updateBody": {
+    "message": "İndirip kurulumu çalıştırın. Sonrasında buradan tek tıkla güncelleyebilirsiniz."
+  },
+  "updateBodyManaged": {
+    "message": "Bir dakikadan kısa sürer. Ayarlarınız ve indirmeleriniz kalır."
+  },
+  "updateCta": {
+    "message": "Güncellemeyi indir"
+  },
+  "updateNow": {
+    "message": "Şimdi güncelle"
+  },
+  "updateMoveBody": {
+    "message": "Tek tıkla güncelleme için: Hudhud’u uzantılar sayfasından kaldırın ve bu klasörden yeniden yükleyin (yalnızca bir kez)."
+  },
+  "copyPath": {
+    "message": "Yolu kopyala"
+  },
+  "moveTitle": {
+    "message": "Tek tıkla güncelleme"
+  },
+  "moveBody": {
+    "message": "Hudhud’u uzantılar sayfasından kaldırın ve bu klasörden yeniden yükleyin. Yalnızca bir kez."
+  },
+  "updating": {
+    "message": "Güncelleniyor…"
+  },
+  "updateBusy": {
+    "message": "Önce indirmelerin bitmesini bekleyin, sonra güncelleyin."
+  },
+  "updateNotManaged": {
+    "message": "Bu kopya Hudhud klasöründen yüklenmemiş. Güncellemeyi indirip kurulumu çalıştırın."
+  },
+  "updateFailed": {
+    "message": "Güncelleme başarısız: $1"
+  },
+  "updatedTo": {
+    "message": "Hudhud güncellendi: $1"
+  },
+  "helperUpdatedTo": {
+    "message": "Yardımcı güncellendi: $1"
+  },
+  "updateHelperTitle": {
+    "message": "Yardımcı $1 çıktı"
+  },
+  "errQualities": {
+    "message": "Kaliteler okunamadı"
+  },
+  "errEngineUnavailable": {
+    "message": "Bu indirme yöntemi kullanılamıyor"
+  },
+  "errNeedsHelper": {
+    "message": "Bu video için yardımcı gerekli ($1 dosyasını çalıştırın)"
+  },
+  "errEngineOffline": {
+    "message": "Şu anda kullanılamıyor: $1"
+  },
+  "errGone": {
+    "message": "Bu video artık yok. Sayfayı yenileyin."
+  },
+  "errNotWeb": {
+    "message": "Bu bir web sayfası değil"
+  },
+  "errMergeFailed": {
+    "message": "Birleştirme başarısız ($1)"
+  },
+  "errJobNotFound": {
+    "message": "Bu indirme bulunamadı"
+  },
+  "errContextNeedsHelper": {
+    "message": "Yardımcı gerekli ($1 dosyasını çalıştırın). Ya da videoyu oynatıp Hudhud simgesini kullanın."
+  },
+  "errSignIn": {
+    "message": "Site oturum açmanızı istiyor. Siteyi tarayıcınızda açıp oturum açın, sonra tekrar deneyin."
+  },
+  "errAge": {
+    "message": "Bu videoda yaş sınırı var. Tarayıcınızda siteye oturum açıp tekrar deneyin."
+  },
+  "errPrivate": {
+    "message": "Bu video gizli. Yalnızca sahibi izleyebilir."
+  },
+  "errMembers": {
+    "message": "Bu video yalnızca kanal üyeleri için. Üyeyseniz tarayıcınızda oturum açıp tekrar deneyin."
+  },
+  "errGeo": {
+    "message": "Bu video ülkenizde kullanılamıyor."
+  },
+  "errUnavailable": {
+    "message": "Bu video kaldırılmış ya da artık mevcut değil."
+  },
+  "errLiveNotStarted": {
+    "message": "Canlı yayın henüz başlamadı. Başladığında tekrar deneyin."
+  },
+  "errDrm": {
+    "message": "Bu video DRM korumalı, indirilemez."
+  },
+  "errNeedDeno": {
+    "message": "YouTube için yardımcının eksik bir parçası gerekiyor. $1 dosyasını yeniden çalıştırın."
+  },
+  "errUpdateYtdlp": {
+    "message": "Site değişti. Ayarlar → Yardımcı bölümünden yt-dlp’yi güncelleyip tekrar deneyin."
+  },
+  "errUnsupported": {
+    "message": "Yardımcı bu siteyi desteklemiyor. Videoyu oynatıp Hudhud simgesinden indirin."
+  },
+  "errToolMissing": {
+    "message": "Yardımcının bir parçası eksik. $1 dosyasını yeniden çalıştırın."
+  },
+  "errForbidden": {
+    "message": "Site indirmeyi reddetti. Sayfayı yenileyip tekrar deneyin ya da yardımcıyı kullanın."
+  },
+  "errTooMany": {
+    "message": "Site çok fazla indirme alıyor. Birkaç dakika bekleyip tekrar deneyin."
+  },
+  "errServer": {
+    "message": "Sitede şu anda bir sorun var. Daha sonra tekrar deneyin."
+  },
+  "errNetwork": {
+    "message": "Bağlantı koptu ya da site yanıt vermiyor. İnternetinizi kontrol edip tekrar deneyin."
+  },
+  "errDiskFull": {
+    "message": "Diskte yeterli alan yok. Biraz yer açıp tekrar deneyin."
+  },
+  "errAccess": {
+    "message": "Bu klasöre kaydedilemiyor. Ayarlardan başka bir klasör seçin."
+  },
+  "errNameLong": {
+    "message": "Dosya adı çok uzun. Ayarlardan “En uzun ad uzunluğu” değerini düşürün."
+  },
+  "errBlocked": {
+    "message": "Tarayıcınız ya da antivirüs programınız dosyayı engelledi."
+  },
+  "errFileFailed": {
+    "message": "Dosya kaydedilemedi. İndirilenler klasörünüzü kontrol edip tekrar deneyin."
+  },
+  "errBrowserClosed": {
+    "message": "Tarayıcı, indirme bitmeden kapandı. Tekrar deneyin."
+  },
+  "errUnknown": {
+    "message": "Beklenmedik bir sorun oluştu. Tekrar deneyin; yine olursa “Sorun bildir”e basın."
+  },
+  "toastStarted": {
+    "message": "İndirme başladı"
+  },
+  "notifDone": {
+    "message": "İndirme tamamlandı ✓"
+  },
+  "notifFailed": {
+    "message": "İndirme durdu"
+  },
+  "notifOpen": {
+    "message": "Klasörde göster"
+  },
+  "videoTitle": {
+    "message": "Video başlığı"
+  },
+  "nativeMissing": {
+    "message": "Yardımcı yüklü değil ($1 dosyasını çalıştırın)"
+  },
+  "nativeForbidden": {
+    "message": "Yardımcı bu uzantıya izin vermiyor (kurulumda uzantı kimliği yanlış)"
+  },
+  "nativeCrashed": {
+    "message": "Yardımcı beklenmedik şekilde kapandı"
+  },
+  "nativeError": {
+    "message": "Yardımcı hatası"
+  },
+  "nativeDisconnected": {
+    "message": "Bağlantı kesildi"
+  },
+  "nativeLost": {
+    "message": "Yardımcıyla bağlantı koptu (dosya yine de klasöre kaydedilmiş olabilir)"
+  },
+  "nativeTimeout": {
+    "message": "Yardımcı yanıt vermedi"
+  },
+  "hlsBad": {
+    "message": "Okunamayan m3u8 listesi"
+  },
+  "hlsNoVariants": {
+    "message": "Listede kalite yok"
+  },
+  "hlsLive": {
+    "message": "Bu bir canlı yayın; yardımcıyla kaydedin"
+  },
+  "hlsEmpty": {
+    "message": "Videoda hiç parça yok"
+  },
+  "hlsAudioUnsupported": {
+    "message": "Ayrı ses, tarayıcının desteklemediği bir biçimde; yardımcıyı kullanın"
+  },
+  "remuxFailed": {
+    "message": "MP4’e dönüştürme başarısız ($1); yardımcıyı kullanın"
+  },
+  "savedAsTs": {
+    "message": "TS olarak kaydedildi. Neden: $1"
+  },
+  "ctxMedia": {
+    "message": "Bu videoyu Hudhud ile indir"
+  },
+  "ctxLink": {
+    "message": "Bu bağlantıyı Hudhud ile indir"
+  },
+  "ctxPage": {
+    "message": "Bu sayfanın videosunu Hudhud ile indir"
+  },
+  "ctxPageMp3": {
+    "message": "Yalnızca sesi indir (MP3)"
+  },
+  "optTitle": {
+    "message": "Hudhud ayarları"
+  },
+  "navSave": {
+    "message": "Kayıt yeri"
+  },
+  "navHelper": {
+    "message": "Yardımcı"
+  },
+  "navSubs": {
+    "message": "Altyazılar ve meta veriler"
+  },
+  "navBrowser": {
+    "message": "Tarayıcıda indirme"
+  },
+  "navNaming": {
+    "message": "Dosya adları"
+  },
+  "navLook": {
+    "message": "Dil ve görünüm"
+  },
+  "navAbout": {
+    "message": "Hakkında"
+  },
+  "saveDesc": {
+    "message": "Tüm indirmeler buraya gider; isterseniz her site için ayrı bir klasöre."
+  },
+  "optSubdir": {
+    "message": "İndirilenler içindeki klasör (tarayıcı)"
+  },
+  "optSubdirHint": {
+    "message": "Örneğin Hudhud. Doğrudan İndirilenler’e kaydetmek için boş bırakın."
+  },
+  "optNativeDir": {
+    "message": "Yardımcı klasörü"
+  },
+  "optNativeDirHint": {
+    "message": "İndirilenler’i kullanmak için boş bırakın."
+  },
+  "choose": {
+    "message": "Seç…"
+  },
+  "helperDesc": {
+    "message": "Bilgisayarınızda çalışan; YouTube’u ve zorlu siteleri halleden, video ile sesi birleştiren küçük bir uygulama."
+  },
+  "status": {
+    "message": "Durum"
+  },
+  "connected": {
+    "message": "Bağlı · yardımcı $1 · yt-dlp $2"
+  },
+  "notConnected": {
+    "message": "Bağlı değil"
+  },
+  "updateYtdlp": {
+    "message": "yt-dlp’yi güncelle"
+  },
+  "updated": {
+    "message": "Güncellendi: $1"
+  },
+  "optConcurrent": {
+    "message": "Aynı anda indirme sayısı"
+  },
+  "optRate": {
+    "message": "Hız sınırı"
+  },
+  "optRateHint": {
+    "message": "2M ya da 500K gibi. Sınır istemiyorsanız boş bırakın."
+  },
+  "noLimit": {
+    "message": "Sınırsız"
+  },
+  "optAutoUpdate": {
+    "message": "yt-dlp’yi otomatik güncelle"
+  },
+  "optAutoUpdateHint": {
+    "message": "Haftada bir, çünkü YouTube sık değişiyor"
+  },
+  "optDefaultEngine": {
+    "message": "Varsayılan indirme yöntemi"
+  },
+  "optSubs": {
+    "message": "Varsa altyazıları indir"
+  },
+  "optSubLangs": {
+    "message": "Altyazı dilleri"
+  },
+  "optEmbedMeta": {
+    "message": "Meta verileri göm"
+  },
+  "optEmbedMetaHint": {
+    "message": "Başlık, kanal ve tarih MP4’ün içine"
+  },
+  "optEmbedThumb": {
+    "message": "Kapak görselini göm"
+  },
+  "browserDesc": {
+    "message": "Hudhud’un yardımcı olmadan indirdiği videolar için."
+  },
+  "optHls": {
+    "message": "Yayınları (HLS) MP4’e dönüştür"
+  },
+  "optHlsHint": {
+    "message": "Doğrudan tarayıcıda, uygulama gerekmeden"
+  },
+  "optMinSize": {
+    "message": "Şundan küçük videoları yok say (MB)"
+  },
+  "optMinSizeHint": {
+    "message": "Reklamları ve hareketli GIF’leri atlar"
+  },
+  "optNotifications": {
+    "message": "İndirme bitince bildir"
+  },
+  "optHistory": {
+    "message": "İndirmeleri tarayıcı geçmişinde tut"
+  },
+  "optTemplate": {
+    "message": "Ad şablonu"
+  },
+  "optTemplateHint": {
+    "message": "Kullanılabilir: %title %hostname %quality %date %selector"
+  },
+  "optMaxLen": {
+    "message": "En uzun ad uzunluğu"
+  },
+  "optRules": {
+    "message": "Site kuralları (JSON)"
+  },
+  "optRulesHint": {
+    "message": "Gelişmiş: her site için farklı şablon ve klasör."
+  },
+  "rulesInvalid": {
+    "message": "Geçersiz JSON: $1"
+  },
+  "optLang": {
+    "message": "Arayüz dili"
+  },
+  "langAuto": {
+    "message": "Tarayıcıyla aynı"
+  },
+  "optTheme": {
+    "message": "Görünüm"
+  },
+  "themeAuto": {
+    "message": "Sistemle aynı"
+  },
+  "themeLight": {
+    "message": "Açık"
+  },
+  "themeDark": {
+    "message": "Koyu"
+  },
+  "aboutTitle": {
+    "message": "Hudhud ücretsiz ve açık kaynak"
+  },
+  "aboutBody": {
+    "message": "Size zaman kazandırıyorsa, InstaPay ile istediğiniz kadar destek olun."
+  },
+  "version": {
+    "message": "Sürüm $1"
+  },
+  "checkUpdates": {
+    "message": "Güncellemeleri denetle"
+  },
+  "checking": {
+    "message": "Denetleniyor…"
+  },
+  "upToDate": {
+    "message": "En son sürümü kullanıyorsunuz"
+  },
+  "updateFound": {
+    "message": "Sürüm $1 çıktı. Hudhud’u açıp “Güncelle”ye basın."
+  },
+  "updateCheckFailed": {
+    "message": "Şu anda GitHub’a ulaşılamadı"
+  },
+  "privacy": {
+    "message": "Gizlilik"
+  },
+  "sourceCode": {
+    "message": "Kaynak kodu"
+  },
+  "copyDiagnostics": {
+    "message": "Tanılama bilgisini kopyala"
+  },
+  "reportProblem": {
+    "message": "Sorun bildir"
+  },
+  "diagCopied": {
+    "message": "Kopyalandı ✓ GitHub’daki bildiriminize yapıştırın"
+  },
+  "diagHint": {
+    "message": "Uzantı, yardımcı, tarayıcı ve sistem sürümleri ile son hata. Bağlantı ve dosya adı yok."
+  },
+  "shortcut": {
+    "message": "Hudhud’u açma kısayolu: Alt+Shift+D"
+  },
+  "ruleNotArray": {
+    "message": "Kurallar bir dizi olmalı: [ {...}, {...} ]"
+  },
+  "ruleNotObject": {
+    "message": "Kural $1 bir nesne değil"
+  },
+  "ruleNoMatch": {
+    "message": "Kural $1 içinde \"match\" eksik"
+  },
+  "ruleReplace": {
+    "message": "Kural $1 içindeki \"replace\" bir dizi olmalı"
+  },
+  "pathAbsolute": {
+    "message": "Klasör tam bir yol olmalı, örneğin /home/me/Videos ya da C:\\Videos"
+  },
+  "missingTool": {
+    "message": "Eksik: $1"
+  },
+  "helperNotInstalled": {
+    "message": "Yüklü değil. Yardımcı indirmesindeki $1 dosyasını çalıştırın."
+  },
+  "helperOld": {
+    "message": "Eski sürüm, yeni $1 dosyasını çalıştırın"
+  },
+  "defaultSuffix": {
+    "message": "(varsayılan)"
+  },
+  "example": {
+    "message": "Örnek"
+  },
+  "getHelper": {
+    "message": "Yardımcıyı indir"
+  },
+  "welcomeTitle": {
+    "message": "Hudhud’a hoş geldiniz"
+  },
+  "welcomeSub": {
+    "message": "Üç kısa adım ve Hudhud her sayfadaki her videoyu bulmaya hazır."
+  },
+  "step1Title": {
+    "message": "Simgeyi adres çubuğunun yanına sabitleyin"
+  },
+  "step1Body": {
+    "message": "Tarayıcıdaki yapboz simgesine tıklayıp Hudhud’u sabitleyin; böylece tepeliğin kalktığını görürsünüz."
+  },
+  "step2Title": {
+    "message": "Yardımcıyı kurun (isteğe bağlı, YouTube için gerekli)"
+  },
+  "step2Body": {
+    "message": "En iyi kalitede indiren ve video ile sesi birleştiren küçük bir uygulama. $1 dosyasını açıp bir dakika bekleyin."
+  },
+  "step2Done": {
+    "message": "Yardımcı bağlı ✓"
+  },
+  "otherSystems": {
+    "message": "Diğer sistemler"
+  },
+  "step3Title": {
+    "message": "Deneyin"
+  },
+  "step3Body": {
+    "message": "Herhangi bir videoyu açıp ibibiğe tıklayın. Tepelik kalktıysa bir şey bulmuş demektir."
+  },
+  "tryVideo": {
+    "message": "Deneme videosu aç"
+  }
+}
