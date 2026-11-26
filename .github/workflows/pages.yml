@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Fonts (optional, falls back to system fonts)
         run: pip install fonttools brotli && scripts/fetch-fonts.sh || echo "::warning::fonts not fetched"
       - name: Firefox add-on from the latest release (Pages serves .xpi as application/x-xpinstall)
@@ -31,8 +31,8 @@ jobs:
           if ls /tmp/ff/*.xpi >/dev/null 2>&1; then
             cp /tmp/ff/*.xpi site/firefox/hudhud.xpi && cp /tmp/ff/updates.json site/firefox/updates.json && ls -la site/firefox
           else echo "no signed Firefox add-on yet"; fi
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
   # deploying from its own job avoids "No artifacts named github-pages" when the upload isn't listed yet

@@ -138,7 +138,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] **Friendly error messages** (`lib/errors.js`) in the popup, job list and notifications, in the UI language. Unknown technical errors show `errUnknown`; the raw text stays for diagnostics.
 - [x] Legal line on the site footer and the welcome page (`legalNote`).
 - [x] `CHANGELOG.md` (English + Arabic per version). The release workflow publishes the version's section as the release notes; the update banner and the "updated to" banner show its points (`lib/changelog.js`).
-- [ ] Bump GitHub Actions versions in `ci.yml` and `release.yml` (Node 20 deprecation warnings). `pages.yml` already uses `deploy-pages@v5`.
+- [x] GitHub Actions on Node 24: checkout, setup-node, setup-go @v7, configure-pages @v6, upload-pages-artifact @v5, deploy-pages @v5; Go cache off (no go.sum).
 - [ ] Recreate story/remux fixtures in `tests/fixtures/gen.sh` so `--full` works anywhere.
 - [ ] At **1.0**: stop publishing the legacy `hudhud-helper-{os}.zip` copies.
 

@@ -11,13 +11,14 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version-file: helper/go.mod
+          cache: false # the helper has no dependencies (no go.sum), so there is nothing to cache
       - name: gofmt
         run: test -z "$(gofmt -l helper)" || { gofmt -l helper; exit 1; }
       - name: Quick suite (locales, syntax, unit, go vet)
@@ -28,13 +29,14 @@ jobs:
   firefox:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version-file: helper/go.mod
+          cache: false # the helper has no dependencies (no go.sum), so there is nothing to cache
       - name: Tools
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
