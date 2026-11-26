@@ -9,8 +9,13 @@ export function scrubError(msg) {
     .replace(/\b[a-z][a-z0-9+.-]*:\/\/[^\s'"<>)\]]+/gi, (u) => {
       try { return `<url ${new URL(u).hostname}>`; } catch { return '<url>'; }
     })
-    // Windows paths (C:\..., \\server\share\...) and POSIX/home paths
+    // yt-dlp prefixes messages with "[extractor] <video id>:" — the id says what was downloaded
+    .replace(/\[([\w:-]+)\] [^\s:]+:/g, '[$1] <id>:')
+    // Windows paths (C:\..., \\server\share\...) and POSIX/home paths. File names can contain spaces,
+    // so first take a path up to its file extension, then fall back to a path without spaces.
+    .replace(/(?:[a-zA-Z]:|\\\\[^\\\s]+)\\[^'"<>|\n]*?\.[a-zA-Z0-9]{1,5}(?=$|[\s:'",;)])/g, '<path>')
     .replace(/(?:[a-zA-Z]:|\\\\[^\\\s]+)\\[^\s'"<>|]*/g, '<path>')
+    .replace(/(?:~|\/(?:home|Users|tmp|var|private|mnt|media|Volumes|root))\/[^'"<>\n]*?\.[a-zA-Z0-9]{1,5}(?=$|[\s:'",;)])/g, '<path>')
     .replace(/(?:~|\/(?:home|Users|tmp|var|private|mnt|media|Volumes|root))\/[^\s'"<>]*/g, '<path>')
     .replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, '<email>')
     .replace(/\s+/g, ' ')

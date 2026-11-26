@@ -90,4 +90,7 @@ const diag = formatDiagnostics({
 assert.ok(diag.includes('Helper: 0.9.6') && diag.includes('Deno: no') && diag.includes('One-click updates: yes') && diag.includes('<url x.com>'), diag);
 assert.ok(!/Omar|secret-id|AppData/.test(diag), diag);
 assert.ok(formatDiagnostics({ extVersion: '1', browser: 'x', os: 'mac', helper: null }).includes('Helper: not connected'));
+assert.equal(scrubError('ERROR: [youtube] dQw4w9WgXcQ: Sign in to confirm'), 'ERROR: [youtube] <id>: Sign in to confirm');
+assert.equal(scrubError('ERROR: unable to write C:\\Users\\Aly\\My Videos\\lecture 3.mp4: No space left on device'), 'ERROR: unable to write <path>: No space left on device');
+assert.equal(scrubError("can't open /home/aly/my clips/part two.mkv: denied"), "can't open <path>: denied");
 console.log('diagnostics tests passed');
