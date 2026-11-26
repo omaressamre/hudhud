@@ -75,7 +75,7 @@ try:
   check('installs and opens the welcome page', ok)
 
   results = {}
-  for page, kind in (('hlspage.html', 'hls'), ('directpage.html', 'direct')):
+  for page, kind in (('ff-hls.html', 'hls'), ('directpage.html', 'direct')):
     d.switch_to.new_window('tab'); d.get(f'http://127.0.0.1:8765/{page}'); time.sleep(3)
     if kind == 'hls':
       info = bridge({'type': 'nativeInfo'})

@@ -11,7 +11,8 @@ Checks that `_locales` is generated from `scripts/strings.mjs`, that every JS fi
 ## Full suite (local)
 
 ```bash
-HH_SITE=/path/to/fixtures/site HH_REMUX=/path/to/fixtures/remux tests/run-all.sh --full
+tests/fixtures/gen.sh --full     # once: ~35 MB of generated videos and playlists in tests/.fixtures/ (~20 s)
+tests/run-all.sh --full
 ```
 
 Needs Google Chrome, Python 3 with Playwright, ffmpeg/ffprobe and Go. It serves the fixtures with `tests/serve.py` on port 8765 and runs:
@@ -29,7 +30,7 @@ Needs Google Chrome, Python 3 with Playwright, ffmpeg/ffprobe and Go. It serves 
 | `e2e9.py` | helper installed by `installers/install.sh` (set `HH_INSTALL_HOME`) |
 | `e2e10.py` | one-click update: extension loaded from the install folder, helper swaps both from a fake release, extension reloads (`HH_INSTALL_HOME`, `HH_BUNDLE`) |
 
-The media fixtures (a few hundred MB of generated test videos and HLS playlists) are **not** in the repository. Point `HH_SITE` / `HH_REMUX` at your copy, or put them in `tests/.fixtures/` (git-ignored). `tests/fakebin/yt-dlp` is a fake yt-dlp that the helper tests use instead of the network.
+The media fixtures are **not** in the repository: `tests/fixtures/gen.sh --full` generates them with ffmpeg (needs libx264, libx265, libvpx-vp9, libopus, libmp3lame) into `tests/.fixtures/` (git-ignored), or set `HH_SITE` / `HH_REMUX` to another copy. The HTML pages they serve live in `tests/site/`. Every e2e test prints its results; look for `IDENTICAL` in e2e6/e2e7 and `complete` jobs. `tests/fakebin/yt-dlp` is a fake yt-dlp that the helper tests use instead of the network.
 
 ## Visual checks
 
@@ -37,4 +38,4 @@ The media fixtures (a few hundred MB of generated test videos and HLS playlists)
 
 ## Firefox
 
-CI runs `tests/firefox_e2e.py` in headless Firefox with geckodriver and Selenium, on fixtures made by `tests/fixtures/gen.sh` (needs ffmpeg). WebDriver can't script `moz-extension://` pages, so the test adds a content-script bridge to a copy of the build (never shipped). It checks install, the helper over native messaging, HLS → MP4 through the offscreen iframe, and a direct download. `web-ext lint` runs on the same build.
+CI runs `tests/firefox_e2e.py` in headless Firefox with geckodriver and Selenium, on the small fixture set from `tests/fixtures/gen.sh` (no `--full`; pages `ff-hls.html` and `directpage.html`). WebDriver can't script `moz-extension://` pages, so the test adds a content-script bridge to a copy of the build (never shipped). It checks install, the helper over native messaging, HLS → MP4 through the offscreen iframe, and a direct download. `web-ext lint` runs on the same build.

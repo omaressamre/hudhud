@@ -3,7 +3,7 @@
 #   quick (CI):   tests/run-all.sh            → syntax, locales, unit tests that need no media, go vet + build
 #   full (local): tests/run-all.sh --full     → + browser end-to-end tests with Chrome, ffmpeg and fixtures
 # Full mode needs: google-chrome, python3 + playwright, ffmpeg/ffprobe, Go, and the media fixtures in
-# HH_SITE (defaults to tests/.fixtures/site; generate them with tests/fixtures/gen.sh when available).
+# HH_SITE (defaults to tests/.fixtures/site; generate them with tests/fixtures/gen.sh --full, ~20 s).
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"

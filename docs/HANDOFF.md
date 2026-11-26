@@ -104,7 +104,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 ## 6. Testing
 
 - `tests/run-all.sh` (CI runs it): locales in sync, JS syntax, `tests/unit.mjs` (detection, naming, locales, Firefox manifest), `go test` (self-update: swap, checksum, legacy name, helper-only), `go vet` for linux, windows and darwin.
-- `tests/run-all.sh --full` runs the Chrome e2e tests locally. It needs Chrome, Playwright, ffmpeg and a fixture site on `:8765`. The original big fixtures lived only in the old sandbox (`/home/claude/testsite`, not in the repo). `tests/fixtures/gen.sh` regenerates a small set (HLS + direct MP4), enough for the Firefox test. Recreating story/remux fixtures is still open.
+- `tests/run-all.sh --full` runs the Chrome e2e tests locally. It needs Chrome, Playwright, ffmpeg and a fixture site on `:8765`. The original big fixtures lived only in the old sandbox (`/home/claude/testsite`, not in the repo). `tests/fixtures/gen.sh` makes the small set for the Firefox test; `tests/fixtures/gen.sh --full` makes everything `--full` needs.
 - **Firefox e2e runs in CI only** (`firefox` job in `ci.yml`, Selenium + geckodriver on ubuntu-latest). CI runs on every branch push, so you can iterate on a branch.
 - `tests/e2e10.py` tests the whole one-click update against a fake release. Chrome reload only works with Developer mode on, and the test sets that pref.
 - Visual checks: `tests/ui_states.py` and `tests/ui_shots.py`.
@@ -140,7 +140,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] Legal line on the site footer and the welcome page (`legalNote`).
 - [x] `CHANGELOG.md` (English + Arabic per version). The release workflow publishes the version's section as the release notes; the update banner and the "updated to" banner show its points (`lib/changelog.js`).
 - [x] GitHub Actions on Node 24: checkout, setup-node, setup-go @v7, configure-pages @v6, upload-pages-artifact @v5, deploy-pages @v5; Go cache off (no go.sum).
-- [ ] Recreate story/remux fixtures in `tests/fixtures/gen.sh` so `--full` works anywhere.
+- [x] `tests/fixtures/gen.sh --full` recreates every fixture (~35 MB, ~20 s). Full run on 2026-11-26: all e2e pass; e2e6 remux and e2e7 merge IDENTICAL to ffmpeg for every case.
 - [ ] At **1.0**: stop publishing the legacy `hudhud-helper-{os}.zip` copies.
 
 **Later / optional**
