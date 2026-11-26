@@ -92,6 +92,8 @@ h3 small { font-weight: 400; color: var(--text-2); font-size: 14px; }
 .steps { list-style: none; padding: 0; margin: 36px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; counter-reset: s; }
 .steps li { background: var(--bg); border: 1px solid var(--border); border-radius: 22px; padding: 26px; }
 .steps p { margin: 0; color: var(--text-2); font-size: 16px; }
+.steps .hint { margin-top: 10px; font-size: 14px; }
+.steps .hint a, .note a[href="#warnings"] { color: var(--coral); }
 .num { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--plum); color: #fff; font: 700 18px var(--font-brand); margin-bottom: 16px; }
 :root[data-theme="dark"] .num { background: var(--coral); }
 
@@ -120,7 +122,9 @@ h3 small { font-weight: 400; color: var(--text-2); font-size: 14px; }
 .support { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .support > img { width: 180px; flex: none; }
 
-details { border-bottom: 1px solid var(--border); padding: 18px 0; }
+details { border-bottom: 1px solid var(--border); padding: 18px 0; scroll-margin-top: 96px; }
+details strong { unicode-bidi: isolate; }
+details bdi { white-space: nowrap; }
 summary { cursor: pointer; font-weight: 600; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
 summary::-webkit-details-marker { display: none; }
 summary::after { content: '+'; color: var(--coral); font-size: 24px; line-height: 1; transition: transform .2s; }

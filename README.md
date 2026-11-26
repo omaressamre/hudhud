@@ -32,6 +32,8 @@ Hudhud is not in the Chrome Web Store. Get it from the [latest release](https://
 2. A setup page opens: in `chrome://extensions` turn on **Developer mode**, click **Load unpacked** and pick that folder. You only do this once.
 3. **Updates:** when a new release is out, the popup shows **Update now**. The helper downloads the release for your system, checks it against `SHA256SUMS.txt`, replaces the extension folder and itself, and the extension reloads.
 
+**Warnings on first run** (the helper isn't code-signed): Windows SmartScreen → **More info → Run anyway**; macOS → **System Settings → Privacy & Security → Open Anyway**; an antivirus flagging `hudhud-helper` is a false positive (compare it with `SHA256SUMS.txt`, and please open an issue). Details: [site FAQ](https://omaressamre.github.io/hudhud/#warnings).
+
 `hudhud-vX.Y.Z-extension-only.zip` is the extension alone, for people who don't want the helper (it can't update itself). Uninstall with the matching `uninstall` script, then remove Hudhud from `chrome://extensions`.
 
 > **"Get the update" instead of "Update now"?** Chrome is loading Hudhud from another folder. Remove it in `chrome://extensions` and **Load unpacked** from the Hudhud folder above; the popup shows that path with a Copy button.

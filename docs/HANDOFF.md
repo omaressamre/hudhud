@@ -134,7 +134,8 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] **"Copy diagnostics" button**: `extension/lib/diagnostics.js` (scrubs URLs to host, paths, emails), Settings → About (Copy diagnostics + Report a problem), popup error block (Report a problem). Report a problem copies the text and opens the bug form with the `diagnostics` field prefilled. Not released yet.
 - [x] **GitHub issue templates**: `.github/ISSUE_TEMPLATE/{bug,feature,config}.yml` (bilingual issue forms; blank issues off, FAQ link).
 - [ ] Real-site **QA matrix** (YouTube, FB, IG, TikTok, X, HLS sites × Windows/macOS × Chrome/Edge/Firefox).
-- [ ] **SmartScreen / antivirus:** check builds on VirusTotal, submit false positives to Microsoft, and add a "how to get past SmartScreen" note to the site.
+- [x] Site FAQ `#warnings` (SmartScreen, antivirus false positives, macOS Gatekeeper), linked from step 1 and the download box; README note; `install.bat` stops with a message when run from inside the zip (ships in the next release).
+- [ ] **VirusTotal:** check the release files and submit false positives (Microsoft: https://www.microsoft.com/wdsi/filesubmission).
 - [x] **Friendly error messages** (`lib/errors.js`) in the popup, job list and notifications, in the UI language. Unknown technical errors show `errUnknown`; the raw text stays for diagnostics.
 - [x] Legal line on the site footer and the welcome page (`legalNote`).
 - [x] `CHANGELOG.md` (English + Arabic per version). The release workflow publishes the version's section as the release notes; the update banner and the "updated to" banner show its points (`lib/changelog.js`).

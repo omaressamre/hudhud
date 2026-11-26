@@ -128,6 +128,7 @@
           <span class="num">1</span>
           <h3 data-i18n="s1t">نزّل هدهد وشغّل التسطيب</h3>
           <p data-i18n="s1d">ملف واحد فيه الإضافة والمساعد. فُكّه وشغّل ملف التسطيب، وهو هيجيب الباقي لوحده. مش محتاج صلاحيات أدمن.</p>
+          <p class="hint"><a href="#warnings" data-i18n="s1warn">ويندوز أو الماك حذّرك؟ ده طبيعي، اعرف تكمّل إزاي</a></p>
         </li>
         <li>
           <span class="num">2</span>
@@ -176,6 +177,7 @@
           <strong>Firefox</strong><small data-i18n="ffSub">إضافة موقّعة بتتحدّث لوحدها. لو عايز يوتيوب، نزّل المساعد لنظامك من فوق.</small>
         </a>
         <p class="note"><a href="https://github.com/omaressamre/hudhud/releases/latest" data-extonly data-i18n="dlExtOnly">الإضافة لوحدها من غير المساعد (للمتقدمين)</a></p>
+        <p class="note"><a href="#warnings" data-i18n="dlWarn">ويندوز أو الماك أو برنامج الحماية حذّرك؟ اعرف ليه وتكمّل إزاي</a></p>
         <p class="note" data-i18n="dlNote">المساعد بيستخدم yt-dlp وffmpeg وDeno وبينزّلهم من مصادرهم الرسمية أثناء التثبيت.</p>
       </div>
       <div class="drm">
@@ -209,6 +211,9 @@
       <details><summary data-i18n="q1">هو مجاني فعلًا؟</summary><p data-i18n="a1">أيوه، مجاني بالكامل ومن غير إعلانات. الكود مفتوح تحت رخصة GPL-3.0.</p></details>
       <details><summary data-i18n="q2">ليه مش موجود في متجر كروم؟</summary><p data-i18n="a2">متجر كروم مش بيسمح بإضافات بتنزّل من يوتيوب، فبننشره هنا مباشرة. التثبيت بياخد دقيقة.</p></details>
       <details><summary data-i18n="q3">محتاج المساعد؟</summary><p data-i18n="a3">التسطيب بيجيب الاتنين مع بعض وده الأسهل. الإضافة لوحدها بتنزّل الفيديوهات المباشرة والستوريز وHLS، والمساعد بيضيف يوتيوب والبلاي ليستات وMP3 والترجمة ومواقع تانية كتير.</p></details>
+      <details id="warnings"><summary><span data-i18n="q8">ويندوز بيقولي «<bdi>Windows protected your PC</bdi>»؟</span></summary><p data-i18n="a8">ده تحذير SmartScreen، وبيظهر لأي برنامج جديد مش عليه توقيع بشهادة مدفوعة. مش معناه إن فيه فيروس. دوس <strong>More info</strong> (مزيد من المعلومات)، وبعدين <strong>Run anyway</strong> (تشغيل على أي حال). ولو ظهرلك «<bdi>The publisher could not be verified</bdi>»، دوس <strong>Run</strong>. واتأكد إنك فكّيت الملف الأول: كليك يمين عليه ← <strong>Extract All</strong>، وشغّل <code>install.bat</code> من الفولدر الجديد، مش من جوه الملف المضغوط.</p></details>
+      <details><summary data-i18n="q9">برنامج الحماية بيقول إن المساعد فيروس؟</summary><p data-i18n="a9">ده إنذار غلط بيحصل كتير مع البرامج الجديدة اللي مش موقّعة، وخصوصًا المكتوبة بلغة Go زي المساعد. المساعد بيحمّل الفيديوهات وبس، وكل الكود مفتوح على GitHub. تقدر تتأكد بنفسك: ارفع الملف على <a href="https://www.virustotal.com/">VirusTotal</a>، أو قارن بصمته بملف <code>SHA256SUMS.txt</code> اللي في صفحة الإصدار. لو برنامج الحماية مسحه، رجّعه من الحجر (Quarantine)، وضيف فولدر هدهد للاستثناءات، وبلّغنا على <a href="https://github.com/omaressamre/hudhud/issues/new?template=bug.yml">GitHub</a> علشان نبعته للشركة تصلّحه.</p></details>
+      <details><summary><span data-i18n="q10">الماك بيقولي إن <bdi>install.command</bdi> مش هيتفتح؟</span></summary><p data-i18n="a10">الماك بيمنع الملفات اللي جاية من مطوّر مش مسجّل عند Apple. افتح <strong>System Settings ← Privacy &amp; Security</strong>، وانزل لتحت هتلاقي رسالة عن <code>install.command</code>. دوس <strong>Open Anyway</strong> وأكّد بكلمة السر. في النسخ القديمة من macOS تقدر بدل كده تعمل كليك يمين على الملف ← <strong>Open</strong>. ده مرة واحدة بس، والتسطيب بيشيل المنع من باقي ملفات هدهد لوحده.</p></details>
       <details><summary data-i18n="q6">إزاي أحدّث هدهد؟</summary><p data-i18n="a6">لما يطلع إصدار جديد هتلاقي زرار «حدّث دلوقتي» جوه الإضافة. بيحدّث الإضافة والمساعد مع بعض في أقل من دقيقة.</p></details>
       <details><summary data-i18n="q7">زرار التحديث بيقولي «حمّل التحديث» مش «حدّث دلوقتي»؟</summary><p data-i18n="a7">ده معناه إن كروم محمّل هدهد من فولدر تاني، غالبًا الفولدر اللي فكّيت فيه الملف، مش من فولدر هدهد. التحديث بضغطة بيشتغل بس من فولدر هدهد. افتح <code>chrome://extensions</code>، شيل هدهد، ودوس «تحميل إضافة غير مضغوطة» واختار الفولدر ده: في ويندوز <code>%LOCALAPPDATA%\Hudhud\extension</code>، وفي ماك <code>~/Library/Application Support/Hudhud/extension</code>، وفي لينكس <code>~/.local/share/hudhud/extension</code>. هدهد كمان بيعرضلك المسار ده جوه الإضافة مع زرار «انسخ المسار». ده مرة واحدة بس، وبعدها كل التحديثات بضغطة.</p></details>
       <details><summary data-i18n="q4">بيشتغل على إيدج وبرايف؟</summary><p data-i18n="a4">أيوه، على أي متصفح مبني على Chromium: كروم، إيدج، برايف، فيفالدي.</p></details>

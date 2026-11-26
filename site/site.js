@@ -23,11 +23,13 @@ const EN = {
   f6t: 'Private by design', f6d: 'No accounts, no tracking, no ads. Everything happens on your computer.',
   howTitle: 'Three steps and you’re set',
   s1t: 'Download Hudhud and run the installer', s1d: 'One file with the extension and the helper. Unzip it and run the installer; it fetches the rest. No admin rights needed.',
+  s1warn: 'Windows or macOS warned you? That’s normal, here’s how to continue',
   s2t: 'Add the extension to your browser', s2d: 'A guide opens by itself: turn on “Developer mode” and pick the Hudhud folder. You do this once; after that, updates are one click inside the extension.',
   s3t: 'Press download', s3d: 'Open any video, click the Hudhud icon and pick a quality. The file lands in your Downloads folder.',
   dlTitle: 'Download', dlSub: 'Hudhud isn’t in the Chrome Web Store — you get it straight from here. Latest release:',
   dlMain: 'Download Hudhud', dlMainSub: 'Extension + helper · Chrome · Edge · Brave',
   dlExtOnly: 'Just the extension, without the helper (advanced)',
+  dlWarn: 'Windows, macOS or your antivirus warned you? Why, and how to continue',
   ffSub: 'Signed add-on that updates itself. For YouTube, also get the helper for your system above.',
   ffMain: 'Add Hudhud to Firefox', ffMainSub: 'Then get the helper below for YouTube and playlists',
   osWin: 'install.bat', osMac: 'install.command', osLinux: 'bash install.sh',
@@ -41,6 +43,12 @@ const EN = {
   q3: 'Do I need the helper?', a3: 'The installer sets up both, which is the easiest way. The extension alone downloads direct videos, stories and HLS; the helper adds YouTube, playlists, MP3, subtitles and many more sites.',
   q7: 'The update button says “Get the update”, not “Update now”?',
   a7: 'That means Chrome loads Hudhud from another folder (usually the one you unzipped) instead of the Hudhud folder, and one-click updates only work from the Hudhud folder. Open <code>chrome://extensions</code>, remove Hudhud, click “Load unpacked” and pick: on Windows <code>%LOCALAPPDATA%\\Hudhud\\extension</code>, on macOS <code>~/Library/Application Support/Hudhud/extension</code>, on Linux <code>~/.local/share/hudhud/extension</code>. Hudhud also shows this path inside the extension with a “Copy path” button. You only do this once; after that every update is one click.',
+  q8: 'Windows says “Windows protected your PC”?',
+  a8: 'That’s Windows SmartScreen. It shows up for any new program that isn’t signed with a paid certificate; it doesn’t mean there’s a virus. Click <strong>More info</strong>, then <strong>Run anyway</strong>. If you see “The publisher could not be verified”, click <strong>Run</strong>. Also make sure you extracted the zip first: right-click it → <strong>Extract All</strong>, then run <code>install.bat</code> from the new folder, not from inside the zip.',
+  q9: 'My antivirus says the helper is a virus?',
+  a9: 'That’s a false positive. It happens a lot with new unsigned programs, especially ones written in Go like the helper. The helper only downloads videos, and all of its code is open on GitHub. You can check for yourself: upload the file to <a href="https://www.virustotal.com/">VirusTotal</a>, or compare its fingerprint with <code>SHA256SUMS.txt</code> on the release page. If your antivirus removed it, restore it from quarantine, add the Hudhud folder to the exclusions, and tell us on <a href="https://github.com/omaressamre/hudhud/issues/new?template=bug.yml">GitHub</a> so we can report it to the vendor.',
+  q10: 'macOS says install.command can’t be opened?',
+  a10: 'macOS blocks files from developers that aren’t registered with Apple. Open <strong>System Settings → Privacy &amp; Security</strong>, scroll down to the message about <code>install.command</code>, click <strong>Open Anyway</strong> and confirm with your password. On older macOS versions you can instead right-click the file → <strong>Open</strong>. You only do this once; the installer unblocks the rest of Hudhud’s files itself.',
   q6: 'How do I update Hudhud?', a6: 'When a new version is out, an “Update now” button appears inside the extension. It updates the extension and the helper together in under a minute.',
   q4: 'Does it work on Edge and Brave?', a4: 'Yes, on any Chromium browser: Chrome, Edge, Brave, Vivaldi.',
   q5: 'Is it safe?', a5: 'The helper installs for your user only, without admin rights, and only talks to our extension. All the code is open for you to review.',
@@ -162,3 +170,11 @@ document.getElementById('theme').addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next; save('theme', next); updateShot();
 });
+
+// links to #warnings open that FAQ entry
+function openHashedDetails() {
+  const d = location.hash && document.getElementById(location.hash.slice(1));
+  if (d && d.tagName === 'DETAILS') { d.open = true; d.scrollIntoView({ block: 'start' }); }
+}
+window.addEventListener('hashchange', openHashedDetails);
+openHashedDetails();
