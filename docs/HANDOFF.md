@@ -135,7 +135,7 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] **GitHub issue templates**: `.github/ISSUE_TEMPLATE/{bug,feature,config}.yml` (bilingual issue forms; blank issues off, FAQ link).
 - [ ] Real-site **QA matrix** (YouTube, FB, IG, TikTok, X, HLS sites × Windows/macOS × Chrome/Edge/Firefox).
 - [x] Site FAQ `#warnings` (SmartScreen, antivirus false positives, macOS Gatekeeper), linked from step 1 and the download box; README note; `install.bat` stops with a message when run from inside the zip (ships in the next release).
-- [ ] **VirusTotal:** check the release files and submit false positives (Microsoft: https://www.microsoft.com/wdsi/filesubmission).
+- [x] **VirusTotal (0.9.7 `hudhud-helper.exe`, 2026-11-26):** 2/70 — Bkav Pro (`W32.Malware` generic) and Sangfor Engine Zero (ML). Microsoft, Kaspersky, ESET, Avast, Bitdefender-class engines, Google, Malwarebytes, Sophos, Symantec: clean. Not reported (both are small heuristic engines). Re-check after big helper changes; if Microsoft ever flags it, submit at https://www.microsoft.com/wdsi/filesubmission. https://www.virustotal.com/gui/file/304d4dbf64a8616f9c180e946989a07dd78c6c8cd4802d14b0742fd2bc4b52a6
 - [x] **Friendly error messages** (`lib/errors.js`) in the popup, job list and notifications, in the UI language. Unknown technical errors show `errUnknown`; the raw text stays for diagnostics.
 - [x] Legal line on the site footer and the welcome page (`legalNote`).
 - [x] `CHANGELOG.md` (English + Arabic per version). The release workflow publishes the version's section as the release notes; the update banner and the "updated to" banner show its points (`lib/changelog.js`).
