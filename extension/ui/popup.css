@@ -55,6 +55,7 @@ section:empty { display: none; }
 .page .name { display: none; }
 .page.open .name { display: block; }
 .qsel { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid var(--hh-border-default); background: var(--hh-bg-surface); border-radius: 10px; padding: 7px 10px; font-size: 13px; font-weight: 500; cursor: pointer; }
+.qsel .qsize { font-weight: 400; color: var(--hh-text-secondary); font-size: 12px; }
 .qsel svg { width: 16px; height: 16px; color: var(--hh-text-secondary); }
 .checkrow { display: flex; }
 

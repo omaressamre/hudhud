@@ -349,7 +349,8 @@ async function probeItem({ tabId, itemId: id }) {
     x.probed = true;
     if (error) { x.probeError = error; return; }
     delete x.probeError;
-    x.variants = (data.heights || []).map((h) => ({ height: h, label: `${h}p` }));
+    x.variants = (data.heights || []).map((h) => ({ height: h, label: `${h}p`, size: data.sizes?.[h] || null }));
+    x.audioSizes = data.audioSizes || null;
     x.duration = data.duration || x.duration;
     x.hasAudio = data.hasAudio;
     x.live = data.live;
@@ -532,11 +533,12 @@ async function startDownload({ tabId, item, baseName, engineId, variant = 0, aud
   const ext = engine.id === 'native'
     ? (audioFormat === 'mp3' ? 'mp3' : (audioOnly || audioFormat === 'm4a' || item.audioOnly) ? 'm4a' : 'mp4')
     : item.ext;
-  const path = buildPath(name || (playlist ? 'Playlist' : t('videoTitle')), ext, settings, rule);
+  const shownName = name || sanitizeSegment(item.title || '') || (playlist ? 'Playlist' : t('videoTitle'));
+  const path = buildPath(shownName, ext, settings, rule);
   const jobId = crypto.randomUUID();
 
   const job = {
-    jobId, engine: engine.id, downloadId: null, path, title: name, url: item.url, pageUrl,
+    jobId, engine: engine.id, downloadId: null, path, title: name, autoName: titleMode, url: item.url, pageUrl,
     kind: item.kind, playlist,
     mode: engine.id === 'browser' && (item.kind === 'hls' || (item.split && item.audio)) ? 'hls' : undefined,
     quality: audioFormat ? audioFormat.toUpperCase() : audioOnly ? 'AUDIO' : (item.variants?.[variant]?.label || ''),
@@ -599,17 +601,19 @@ async function probePage({ tabId }) {
         id: key, kind: 'page', site: r.extractor || new URL(url).hostname.replace(/^www\./, ''), url, pageUrl: url, ext: 'mp4', detectedAt: Date.now(),
         title: r.isPlaylist ? (r.playlistTitle || r.title || '') : (r.title || ''), thumb: /^https:/.test(r.thumbnail || '') ? r.thumbnail : null, thumbTried: true,
         duration: r.duration, live: r.live, hasAudio: r.hasAudio, isPlaylist: !!r.isPlaylist, playlistCount: r.playlistCount || 0,
-        variants: (r.heights || []).map((h) => ({ height: h, label: `${h}p` })), probed: true, probedTitle: true, channel: r.uploader || r.channel || '',
+        variants: (r.heights || []).map((h) => ({ height: h, label: `${h}p`, size: r.sizes?.[h] || null })), audioSizes: r.audioSizes || null, probed: true, probedTitle: true, channel: r.uploader || r.channel || '',
       };
     });
   }
   return { ...r, suggestedName, pageUrl: url };
 }
 
-async function downloadPage({ tabId, baseName, height = 0, audioOnly = false, audioFormat = '', playlist = false, url: forcedUrl }) {
+async function downloadPage({ tabId, baseName, title = '', height = 0, audioOnly = false, audioFormat = '', playlist = false, url: forcedUrl }) {
   const url = forcedUrl || await tabUrl(tabId);
   await i18nReady;
-  const item = { kind: 'page', url, variants: [{ height, label: height ? height + 'p' : t('bestQuality') }] };
+  // the title to show in the list until yt-dlp reports it: from the popup, or from an earlier probe of this URL
+  const known = title || probeCache.get(url)?.data?.title || '';
+  const item = { kind: 'page', url, title: known, variants: [{ height, label: height ? height + 'p' : t('bestQuality') }] };
   return startDownload({ tabId, item, baseName, engineId: 'native', variant: 0, audioOnly, audioFormat, playlist, pageUrl: url });
 }
 
@@ -622,6 +626,13 @@ onNativeEvent((m) => updateJobs((jobs) => {
     case 'started': j.dir = m.dir; j.queued = false; break;
     case 'progress':
       Object.assign(j, { percent: m.percent, speed: m.speed, eta: m.eta, downloaded: m.downloaded, total: m.total, part: m.part, item: m.item, items: m.items, queued: false });
+      break;
+    case 'title':
+      // yt-dlp names the file after the video: show that name while it downloads (not for playlists)
+      if (j.autoName && !j.playlist && m.title) {
+        const clean = sanitizeSegment(m.title);
+        if (clean) j.path = j.path.replace(/[^/]*(\.[^./]+)$/, (_, ext) => clean + ext);
+      }
       break;
     case 'done': finishJob(j, 'complete', { file: m.file || j.file, files: m.files }); break;
     case 'error': finishJob(j, 'interrupted', { error: m.message }); break;

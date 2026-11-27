@@ -14,7 +14,7 @@ if '-J' in a and '--yes-playlist' in a and 'list=' in url:
     print(json.dumps({'_type': 'playlist', 'title': 'قايمة تجريبية', 'entries': [{}]*12})); sys.exit(0)
 if '-J' in a:
     print(json.dumps({'title': 'Fake Page Title', 'thumbnail': 'https://example.invalid/t.jpg', 'duration': 125.0, 'extractor_key': 'Generic',
-      'formats': [{'height': 360, 'vcodec': 'avc1', 'acodec': 'none'}, {'height': 1080, 'vcodec': 'avc1', 'acodec': 'none'}, {'height': None, 'vcodec': 'none', 'acodec': 'mp4a'}]})); sys.exit(0)
+      'formats': [{'height': 360, 'vcodec': 'avc1', 'acodec': 'none', 'ext': 'mp4', 'filesize': 9000000}, {'height': 1080, 'vcodec': 'avc1', 'acodec': 'none', 'ext': 'mp4', 'filesize_approx': 52000000}, {'height': None, 'vcodec': 'none', 'acodec': 'mp4a', 'ext': 'm4a', 'filesize': 2000000}]})); sys.exit(0)
 if 'playlist-test' in url and '--yes-playlist' in a:
     tpl = a[a.index('-o')+1]
     for it in range(1,4):
@@ -23,7 +23,8 @@ if 'playlist-test' in url and '--yes-playlist' in a:
         o = tpl.replace('%(playlist_index)03d', '%03d' % it).replace('%(title).120B', 'item%d' % it).replace('%(ext)s','mp4')
         os.makedirs(os.path.dirname(o), exist_ok=True); open(o,'wb').write(b'x'); print('VSFILE ' + o, flush=True)
     sys.exit(0)
-out = a[a.index('-o')+1].replace('%(ext)s', 'mp4').replace('%%', '%')
+out = a[a.index('-o')+1].replace('%(title).150B', 'Fake Page Title').replace('%(ext)s', 'mp4').replace('%%', '%')
+print('VSTITLE Fake Page Title', flush=True)
 steps = 60 if 'slow' in url else 8
 for i in range(steps+1):
     p = i*100/steps

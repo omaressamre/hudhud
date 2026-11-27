@@ -230,7 +230,7 @@ function openMenu(anchor, options, current, onPick) {
   const m = $('#menu');
   m.replaceChildren(...options.map((o) => o === '-' ? el('hr') : el('button', { class: o.value === current ? 'on' : '', onclick: () => { closeMenu(); onPick(o.value); } }, [
     el('span', { class: 'l' }, [o.value === current ? iconEl('check') : null, o.label]),
-    el('span', { class: 'r', text: o.hint || '' }),
+    el('span', { class: 'r', text: o.hint || '', dir: 'ltr' }),
   ])));
   m.hidden = false;
   const r = anchor.getBoundingClientRect();
@@ -243,17 +243,23 @@ function openMenu(anchor, options, current, onPick) {
 }
 function closeMenu() { $('#menu').hidden = true; }
 
+/** estimated file size for the quality menu: "≈ 52 MB" (approx) or "52 MB" (exact) */
+export function sizeHint(bytes, approx = true) {
+  const s = fmtSize(bytes);
+  return s ? (approx ? '≈ ' : '') + s : '';
+}
 function pageOptions(it) {
+  const a = it.audioSizes || {};
   const opts = (it.variants?.length ? it.variants : [{ height: 0, label: t('bestQuality') }])
-    .map((v) => ({ value: 'v' + (v.height || 0), label: v.height ? `${v.height}p` + (v.height >= 2160 ? ' · 4K' : '') : t('bestQuality'), hint: v.height >= 1440 ? 'WebM' : v.height ? 'MP4' : '' }));
-  if (it.hasAudio !== false) opts.push('-', { value: 'mp3', label: t('audioMp3') }, { value: 'm4a', label: t('audioM4a') });
+    .map((v) => ({ value: 'v' + (v.height || 0), label: v.height ? `${v.height}p` + (v.height >= 2160 ? ' · 4K' : '') : t('bestQuality'), hint: sizeHint(v.size?.bytes, v.size?.approx) }));
+  if (it.hasAudio !== false) opts.push('-', { value: 'mp3', label: t('audioMp3'), hint: sizeHint(a.mp3) }, { value: 'm4a', label: t('audioM4a'), hint: sizeHint(a.m4a, a.approx) });
   return opts;
 }
 
 // ───────── page card (YouTube & yt-dlp sites) ─────────
 function renderPage() {
   const it = state?.items.find((i) => i.kind === 'page');
-  const k = it ? JSON.stringify([it.id, it.title, it.thumb, it.duration, it.variants?.length, it.playlistCount, it.probed, it.probeError, hasNative(), picked.get(it.id), openOpts.has(it.id), playlistChecked.get(it.id), local.dismissedPlaylist?.includes(it.id)]) : '';
+  const k = it ? JSON.stringify([it.id, it.title, it.thumb, it.duration, it.variants?.length, it.variants?.[0]?.size, it.playlistCount, it.probed, it.probeError, hasNative(), picked.get(it.id), openOpts.has(it.id), playlistChecked.get(it.id), local.dismissedPlaylist?.includes(it.id)]) : '';
   if (k === keys.page) return;
   keys.page = k;
   const box = $('#pageCard');
@@ -265,7 +271,7 @@ function renderPage() {
   const opts = pageOptions(it);
   if (!picked.has(it.id) || !opts.some((o) => o.value === picked.get(it.id))) picked.set(it.id, opts[0].value);
   const cur = opts.find((o) => o.value === picked.get(it.id));
-  const q = el('button', { class: 'qsel', onclick: (e) => { e.stopPropagation(); openMenu(q, opts, picked.get(it.id), (v) => { picked.set(it.id, v); keys.page = ''; renderPage(); }); } }, [cur.label, iconEl('chevron')]);
+  const q = el('button', { class: 'qsel', onclick: (e) => { e.stopPropagation(); openMenu(q, opts, picked.get(it.id), (v) => { picked.set(it.id, v); keys.page = ''; renderPage(); }); } }, [cur.label, cur.hint ? el('span', { class: 'qsize', text: cur.hint, dir: 'ltr' }) : null, iconEl('chevron')]);
   const name = el('input', { class: 'input name', placeholder: t('fileNameHint'), value: names.get(it.id) ?? '', title: t('fileName') });
   name.addEventListener('input', () => names.set(it.id, name.value));
   const note = el('div', { class: 'note' + (it.probeError ? ' err' : ''), text: it.probeError ? `${t('errQualities')}: ${it.probeError}` : it.live ? t('liveNote') : '' });
@@ -275,7 +281,7 @@ function renderPage() {
     try {
       await send({
         type: 'downloadPage', tabId, url: it.url,
-        baseName: name.value.trim(),
+        baseName: name.value.trim(), title: it.title || '',
         height: v.startsWith('v') ? Number(v.slice(1)) : 0,
         audioFormat: v === 'mp3' || v === 'm4a' ? v : '',
         playlist: it.isPlaylist || !!playlistChecked.get(it.id),

@@ -565,6 +565,7 @@ func ytdlpArgs(q *Req, outDir, name, cookieFile string) []string {
 		"--concurrent-fragments", "4", "--retries", "10", "--fragment-retries", "10",
 		"--progress-template", progressTpl,
 		"--print", "after_move:VSFILE %(filepath)s",
+		"--print", "before_dl:VSTITLE %(title)s",
 		"-f", formatFor(q),
 	)
 	audio := q.AudioOnly || q.AudioFormat != ""
@@ -770,6 +771,8 @@ func runYtdlp(q *Req, j *job, outDir, name string) {
 			event(q.JobID, "progress", ev)
 		case strings.HasPrefix(line, "VSFILE "):
 			files = append(files, strings.TrimSpace(line[7:]))
+		case strings.HasPrefix(line, "VSTITLE "):
+			event(q.JobID, "title", map[string]any{"title": strings.TrimSpace(line[8:])})
 		default:
 			log.Printf("job %s %s: %s", q.JobID, src, line)
 			if src == "stderr" {
@@ -1020,11 +1023,86 @@ type ytInfo struct {
 	Channel       string            `json:"channel"`
 	PlaylistCount int               `json:"playlist_count"`
 	Entries       []json.RawMessage `json:"entries"`
-	Formats       []struct {
-		Height *int   `json:"height"`
-		Vcodec string `json:"vcodec"`
-		Acodec string `json:"acodec"`
-	} `json:"formats"`
+	Formats       []ytFormat        `json:"formats"`
+}
+
+type ytFormat struct {
+	Height         *int    `json:"height"`
+	Vcodec         string  `json:"vcodec"`
+	Acodec         string  `json:"acodec"`
+	Ext            string  `json:"ext"`
+	Filesize       float64 `json:"filesize"`
+	FilesizeApprox float64 `json:"filesize_approx"`
+	Tbr            float64 `json:"tbr"`
+}
+
+// size of one format in bytes: exact, yt-dlp's estimate, or bitrate × duration. approx tells which.
+func (f ytFormat) size(duration float64) (bytes float64, approx bool) {
+	switch {
+	case f.Filesize > 0:
+		return f.Filesize, false
+	case f.FilesizeApprox > 0:
+		return f.FilesizeApprox, true
+	case f.Tbr > 0 && duration > 0:
+		return f.Tbr * 1000 / 8 * duration, true
+	}
+	return 0, true
+}
+
+func hasV(f ytFormat) bool { return f.Vcodec != "" && f.Vcodec != "none" }
+func hasA(f ytFormat) bool { return f.Acodec != "" && f.Acodec != "none" }
+
+// better reports whether a is preferred over b the way "-S res,ext:mp4:m4a" picks: wanted ext first, then bitrate.
+func better(a, b ytFormat, ext string) bool {
+	if (a.Ext == ext) != (b.Ext == ext) {
+		return a.Ext == ext
+	}
+	return a.Tbr > b.Tbr
+}
+
+// estimateSizes: the expected file size for each height (best video of that height + best audio, as
+// formatFor/-S choose them) and for audio only. 0 = unknown. Sizes are rounded estimates for the menu.
+func estimateSizes(formats []ytFormat, duration float64) (map[int]map[string]any, map[string]any) {
+	var bestA *ytFormat
+	for i, f := range formats {
+		if hasA(f) && !hasV(f) && (bestA == nil || better(f, *bestA, "m4a")) {
+			bestA = &formats[i]
+		}
+	}
+	aSize, aApprox := 0.0, true
+	if bestA != nil {
+		aSize, aApprox = bestA.size(duration)
+	}
+	bestV := map[int]ytFormat{}
+	for _, f := range formats {
+		if f.Height == nil || *f.Height <= 0 || !hasV(f) {
+			continue
+		}
+		if cur, ok := bestV[*f.Height]; !ok || better(f, cur, "mp4") {
+			bestV[*f.Height] = f
+		}
+	}
+	out := map[int]map[string]any{}
+	for h, f := range bestV {
+		v, approx := f.size(duration)
+		if v > 0 && !hasA(f) {
+			if aSize > 0 {
+				v += aSize
+				approx = approx || aApprox
+			} else {
+				approx = true
+			}
+		}
+		out[h] = map[string]any{"bytes": int64(v), "approx": approx}
+	}
+	audio := map[string]any{"m4a": int64(aSize), "approx": aApprox}
+	// MP3 at --audio-quality 0 is VBR around 245 kb/s
+	if duration > 0 {
+		audio["mp3"] = int64(245000 / 8 * duration)
+	} else {
+		audio["mp3"] = int64(0)
+	}
+	return out, audio
 }
 
 func runJSON(q *Req, playlist bool) (*ytInfo, error) {
@@ -1101,6 +1179,13 @@ func probe(q *Req) (map[string]any, error) {
 	}
 	res["heights"] = heights
 	res["hasAudio"] = hasAudio || len(in.Formats) == 0
+	sizes, audio := estimateSizes(in.Formats, in.Duration)
+	bySize := map[string]any{}
+	for h, s := range sizes {
+		bySize[strconv.Itoa(h)] = s
+	}
+	res["sizes"] = bySize
+	res["audioSizes"] = audio
 	// فيديو جوه playlist (زي youtube.com/watch?v=..&list=..): نعرض الاختيارين
 	if strings.Contains(q.URL, "list=") {
 		if pl, err := runJSON(q, true); err == nil && pl.Type == "playlist" {

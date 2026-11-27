@@ -40,6 +40,11 @@ async def main():
     print(' after SPA nav:', [(i['ytId'], i.get('short'), i.get('title')) for i in st['items']])
     r = await M({'type':'downloadPage','tabId':tab,'url':st['items'][0]['url'],'baseName':st['items'][0]['suggestedName'],'height':0,'audioFormat':''})
     print(' download:', r.get('ok'), r.get('error'))
+    # no file name typed (the popup default): the list must show the video's title, not "Video title"
+    r = await M({'type':'downloadPage','tabId':tab,'url':st['items'][0]['url'],'baseName':'','title':'My Real Title','height':360,'audioFormat':''})
+    jobs = await o.evaluate("chrome.storage.local.get('jobs').then(r=>r.jobs)")
+    j = next(x for x in jobs if x.get('autoName'))
+    print(' auto-named job shows:', j['path'].split('/')[-1], '| saved as:', (j.get('file') or '').split('/')[-1])
     pop = await ctx.new_page(); await pop.set_viewport_size({'width':400,'height':420})
     await yt.evaluate("history.pushState({}, '', '/watch?v=abcDEF12345&list=PLx')"); await yt.wait_for_timeout(800)
     await pop.goto(f'chrome-extension://{ext}/popup.html?tabId={tab}'); await pop.wait_for_timeout(2500)
