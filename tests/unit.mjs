@@ -160,3 +160,16 @@ assert.deepEqual(notesFor('## What changed\n* x', 'ar'), []);
 assert.equal(changelogSection('## 1.0.0\nx\n## 0.9.0\ny', '0.9.0'), 'y');
 assert.equal(changelogSection('## 1.0.10\nx', '1.0.1'), '');
 console.log('changelog tests passed');
+
+// ── remembered quality, sizes
+const { pickQuality, fmtSize: fsz } = await import(L + 'format.js');
+const qo = (hs, audio = true) => [...hs.map((h) => ({ value: 'v' + h })), ...(audio ? ['-', { value: 'mp3' }, { value: 'm4a' }] : [])];
+assert.equal(pickQuality(qo([1080, 720, 360]), undefined), 'v1080');
+assert.equal(pickQuality(qo([1080, 720, 360]), 'v720'), 'v720');
+assert.equal(pickQuality(qo([1080, 480, 360]), 'v720'), 'v480');   // nearest below
+assert.equal(pickQuality(qo([2160, 1440]), 'v720'), 'v1440');       // nothing below → lowest
+assert.equal(pickQuality(qo([1080, 720]), 'mp3'), 'mp3');
+assert.equal(pickQuality(qo([1080], false), 'mp3'), 'v1080');
+assert.equal(pickQuality(qo([0]), 'v720'), 'v0');                    // not probed yet: "best"
+assert.equal(fsz(52000000), '49.6 MB');
+console.log('quality tests passed');

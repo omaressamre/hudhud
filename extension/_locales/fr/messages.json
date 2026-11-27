@@ -221,6 +221,9 @@
   "noAudio": {
     "message": "Sans audio"
   },
+  "play": {
+    "message": "Lire"
+  },
   "showInFolder": {
     "message": "Afficher dans le dossier"
   },
@@ -349,6 +352,9 @@
   },
   "errContextNeedsHelper": {
     "message": "Nécessite l’assistant (lancez $1). Ou lancez la vidéo et utilisez l’icône Hudhud."
+  },
+  "errNoSpace": {
+    "message": "Cette vidéo fait environ $1, mais il ne reste que $2 sur ce disque. Libérez de la place ou choisissez une qualité plus basse."
   },
   "errSignIn": {
     "message": "Le site vous demande de vous connecter. Ouvrez-le dans votre navigateur, connectez-vous, puis réessayez."

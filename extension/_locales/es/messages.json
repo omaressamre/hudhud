@@ -221,6 +221,9 @@
   "noAudio": {
     "message": "Sin audio"
   },
+  "play": {
+    "message": "Reproducir"
+  },
   "showInFolder": {
     "message": "Mostrar en la carpeta"
   },
@@ -349,6 +352,9 @@
   },
   "errContextNeedsHelper": {
     "message": "Necesita el asistente (ejecuta $1). O reproduce el video y usa el ícono de Hudhud."
+  },
+  "errNoSpace": {
+    "message": "Este video pesa unos $1, pero solo quedan $2 libres en el disco. Libera espacio o elige una calidad más baja."
   },
   "errSignIn": {
     "message": "El sitio te pide iniciar sesión. Ábrelo en tu navegador, inicia sesión y vuelve a intentarlo."

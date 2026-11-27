@@ -12,6 +12,7 @@ import { latestReleaseApi } from './lib/config.js';
 import { formatDiagnostics, browserName } from './lib/diagnostics.js';
 import { friendlyError } from './lib/errors.js';
 import { notesFor } from './lib/changelog.js';
+import { fmtSize } from './lib/format.js';
 
 let i18nReady = initI18n();
 async function tt(key, ...a) { await i18nReady; return t(key, ...a); }
@@ -515,7 +516,7 @@ async function contextDownload(info, tab) {
 }
 
 // ───────────── التحميل ─────────────
-async function startDownload({ tabId, item, baseName, engineId, variant = 0, audioOnly = false, audioFormat = '', playlist = false, pageUrl }) {
+async function startDownload({ tabId, item, baseName, engineId, variant = 0, audioOnly = false, audioFormat = '', playlist = false, pageUrl, expectBytes = 0 }) {
   const settings = await getSettings();
   await i18nReady;
   if (item.drm) throw new Error(t('drmBlocked'));
@@ -530,6 +531,12 @@ async function startDownload({ tabId, item, baseName, engineId, variant = 0, aud
   const titleMode = engine.id === 'native' && item.kind === 'page' && !String(baseName || '').trim();
   const name = titleMode ? '' : (sanitizeSegment(baseName) || 'video');
   const relDir = buildRelDir(settings, rule);
+  // not enough free space for the expected size: say so now instead of failing halfway
+  if (engine.id === 'native' && expectBytes > 0) {
+    let free = 0;
+    try { free = (await nativeRequest('space', { baseDir: settings.nativeDir || '', relDir }))?.free || 0; } catch {} // older helper: no check
+    if (free > 0 && free < expectBytes * 1.1) throw new Error(t('errNoSpace', fmtSize(expectBytes), fmtSize(free)));
+  }
   const ext = engine.id === 'native'
     ? (audioFormat === 'mp3' ? 'mp3' : (audioOnly || audioFormat === 'm4a' || item.audioOnly) ? 'm4a' : 'mp4')
     : item.ext;
@@ -608,13 +615,13 @@ async function probePage({ tabId }) {
   return { ...r, suggestedName, pageUrl: url };
 }
 
-async function downloadPage({ tabId, baseName, title = '', height = 0, audioOnly = false, audioFormat = '', playlist = false, url: forcedUrl }) {
+async function downloadPage({ tabId, baseName, title = '', expectBytes = 0, height = 0, audioOnly = false, audioFormat = '', playlist = false, url: forcedUrl }) {
   const url = forcedUrl || await tabUrl(tabId);
   await i18nReady;
   // the title to show in the list until yt-dlp reports it: from the popup, or from an earlier probe of this URL
   const known = title || probeCache.get(url)?.data?.title || '';
   const item = { kind: 'page', url, title: known, variants: [{ height, label: height ? height + 'p' : t('bestQuality') }] };
-  return startDownload({ tabId, item, baseName, engineId: 'native', variant: 0, audioOnly, audioFormat, playlist, pageUrl: url });
+  return startDownload({ tabId, item, baseName, engineId: 'native', variant: 0, audioOnly, audioFormat, playlist, pageUrl: url, expectBytes });
 }
 
 // أحداث البرنامج المساعد → سجل التحميلات
@@ -861,6 +868,13 @@ async function cancelJob({ jobId }) {
   else if (j.mode === 'hls') await chrome.runtime.sendMessage({ target: 'offscreen', type: 'hls-cancel', jobId });
 }
 
+async function openJob({ jobId }) {
+  const { jobs = [] } = await chrome.storage.local.get('jobs');
+  const j = jobs.find((x) => x.jobId === jobId);
+  if (!j?.file) throw new Error(t('errJobNotFound'));
+  await nativeRequest('openFile', { file: j.file });
+}
+
 async function revealJob({ jobId }) {
   const { jobs = [] } = await chrome.storage.local.get('jobs');
   const j = jobs.find((x) => x.jobId === jobId);
@@ -899,6 +913,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     case 'downloadPage': reply(downloadPage(msg)); return true;
     case 'cancelJob': reply(cancelJob(msg)); return true;
     case 'revealJob': reply(revealJob(msg)); return true;
+    case 'openJob': reply(openJob(msg)); return true;
     case 'openFolder': reply(openFolder()); return true;
     case 'engines': reply(engineStatus()); return true;
     case 'nativeInfo': reply(nativeInfo(true)); return true;

@@ -1,6 +1,6 @@
 # Hudhud — handoff
 
-Snapshot: **2026-11-26, v0.9.7**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
+Snapshot: **2026-11-28, v0.9.8**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
 
 > **ملخص للمستخدم:** الملف ده بيشرح لأي محادثة جديدة مع Claude كل حاجة عن هدهد: الكود، والقرارات اللي خدناها، وإزاي بنطلّع إصدار، وإيه اللي فاضل. ابدأ المحادثة الجديدة بإنك تديها لينك الريبو وتقولها تقرا `docs/HANDOFF.md`.
 
@@ -142,6 +142,13 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - [x] GitHub Actions on Node 24: checkout, setup-node, setup-go @v7, configure-pages @v6, upload-pages-artifact @v5, deploy-pages @v5; Go cache off (no go.sum).
 - [x] `tests/fixtures/gen.sh --full` recreates every fixture (~35 MB, ~20 s). Full run on 2026-11-26: all e2e pass; e2e6 remux and e2e7 merge IDENTICAL to ffmpeg for every case.
 - [ ] At **1.0**: stop publishing the legacy `hudhud-helper-{os}.zip` copies.
+
+**Done in 0.9.8 (from user feedback after the LinkedIn launch)**
+- Real video title in the downloads list during the download (popup passes `title`; helper `--print before_dl:VSTITLE` → `title` event).
+- Estimated size per quality (helper `estimateSizes`: best video of that height, mp4 preferred, + best audio; ≈ when estimated).
+- Remembers the last quality (`lastQuality` in storage, `pickQuality` in `lib/format.js`).
+- ▶ Play on finished jobs: Chrome `downloads.open` for browser downloads (permission `downloads.open`, removed from the Firefox build so Firefox doesn't prompt), helper `openFile` otherwise.
+- Free-space check before native page downloads (helper `space` command; refuses when free < 1.1 × expected size).
 
 **Later / optional**
 - InstaPay QR code next to the button (for desktop visitors).

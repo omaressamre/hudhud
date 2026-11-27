@@ -4,6 +4,22 @@ Each version has an English and an Arabic list. The release workflow publishes t
 version it releases as the GitHub release notes (`scripts/changelog.mjs`), and the update banner in
 the extension shows the first points of it. Keep each point short and written for users.
 
+## 0.9.8 — 2026-11-28
+
+### English
+- The downloads list shows the video's real name right away, not “Video title”.
+- Each quality shows its file size, so you know what you're downloading.
+- Hudhud remembers the quality you picked last time.
+- A ▶ button plays the video as soon as it's saved.
+- Warns you before downloading if there isn't enough disk space.
+
+### العربية
+- قايمة التحميلات بقت بتكتب اسم الفيديو الحقيقي من الأول، مش «Video title».
+- كل جودة مكتوب جنبها حجم الملف، فتعرف هتحمّل قد إيه.
+- هدهد بقى بيفتكر آخر جودة اخترتها.
+- زرار ▶ بيشغّل الفيديو أول ما يتحفظ.
+- بيقولك قبل التحميل لو المساحة على الجهاز مش كفاية.
+
 ## 0.9.7 — 2026-11-26
 
 ### English

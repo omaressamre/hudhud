@@ -29,7 +29,7 @@ import (
 	"time"
 )
 
-const Version = "0.9.7"
+const Version = "0.9.8"
 
 type Req struct {
 	ID        string `json:"id"`
@@ -270,6 +270,37 @@ func handle(q *Req) {
 			return
 		}
 		reply(q.ID, nil)
+	case "openFile":
+		// play a finished download with the system's default app
+		st, err := os.Stat(q.File)
+		if q.File == "" || err != nil || st.IsDir() {
+			replyErr(q.ID, errors.New(tr("الملف مش موجود", "file not found")))
+			return
+		}
+		if err := openFolder(q.File); err != nil { // open/xdg-open/explorer open files with their default app too
+			replyErr(q.ID, err)
+			return
+		}
+		reply(q.ID, nil)
+	case "space":
+		// free space where the download will be saved (the nearest folder that exists)
+		dir := filepath.Join(resolveBase(q.BaseDir), cleanRel(q.RelDir))
+		for {
+			if st, err := os.Stat(dir); err == nil && st.IsDir() {
+				break
+			}
+			parent := filepath.Dir(dir)
+			if parent == dir {
+				break
+			}
+			dir = parent
+		}
+		free, err := freeBytes(dir)
+		if err != nil {
+			replyErr(q.ID, err)
+			return
+		}
+		reply(q.ID, map[string]any{"free": free, "dir": dir})
 	case "openDir":
 		dir := resolveBase(q.BaseDir)
 		os.MkdirAll(dir, 0o755)

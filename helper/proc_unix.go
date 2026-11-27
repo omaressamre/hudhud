@@ -146,3 +146,12 @@ func chooseFolder() (string, error) {
 	}
 	return "", errors.New(tr("مفيش أداة لاختيار الفولدر على الجهاز؛ اكتب المسار بإيدك في الخانة، أو ثبّت zenity", "no folder picker available; type the path in the box instead"))
 }
+
+// freeBytes: space available to this user on the disk that holds dir
+func freeBytes(dir string) (uint64, error) {
+	var st syscall.Statfs_t
+	if err := syscall.Statfs(dir, &st); err != nil {
+		return 0, err
+	}
+	return uint64(st.Bavail) * uint64(st.Bsize), nil
+}

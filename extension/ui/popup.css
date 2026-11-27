@@ -88,6 +88,8 @@ section:empty { display: none; }
 .job .act svg { width: 15px; height: 15px; }
 .job .act.retry { color: var(--hh-accent-primary); }
 .job .act.folder { color: var(--hh-text-primary); }
+.job .acts { display: flex; gap: 6px; flex: none; }
+.job .act.play { color: var(--hh-accent-primary); }
 .job .r2 { font-size: 11px; color: var(--hh-text-secondary); }
 .job .st { display: flex; gap: 6px; font-weight: 500; color: var(--hh-text-primary); white-space: nowrap; }
 .job .st .pct { color: var(--hh-accent-primary); font-weight: 600; direction: ltr; }

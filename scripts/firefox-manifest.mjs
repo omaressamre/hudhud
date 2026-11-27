@@ -11,7 +11,7 @@ export function firefoxManifest(m) {
   delete out.key; // Chrome-only (fixed extension id)
   delete out.minimum_chrome_version;
   out.background = { scripts: [m.background.service_worker], type: 'module' }; // event page with a DOM
-  out.permissions = m.permissions.filter((p) => p !== 'offscreen'); // offscreen.html runs in an iframe instead
+  out.permissions = m.permissions.filter((p) => p !== 'offscreen' && p !== 'downloads.open'); // offscreen.html runs in an iframe instead; Play goes through the helper (a new permission would make Firefox ask on update)
   out.browser_specific_settings = {
     gecko: {
       id: GECKO_ID,

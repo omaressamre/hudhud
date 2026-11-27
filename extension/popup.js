@@ -1,8 +1,10 @@
-import { platformReady, currentOs, installer } from './lib/platform.js';
+import { platformReady, currentOs, installer, IS_FIREFOX } from './lib/platform.js';
 import { initI18n, applyI18n, applyTheme, t, tn, fmtNum, getLang } from './lib/i18n.js';
 import { CONFIG, openReleaseAsset, bugReportUrl } from './lib/config.js';
 import { icon, iconEl, mascot } from './ui/icons.js';
 import { friendlyError } from './lib/errors.js';
+import { fmtSize, pickQuality } from './lib/format.js';
+export { fmtSize };
 
 const $ = (s) => document.querySelector(s);
 function el(tag, props = {}, children = []) {
@@ -19,13 +21,6 @@ function el(tag, props = {}, children = []) {
 }
 const btn = (kind, label, onclick, extra = {}) => el('button', { class: `btn btn-${kind}`, onclick, ...extra }, [label]);
 
-export function fmtSize(b) {
-  if (!b) return '';
-  const u = ['B', 'KB', 'MB', 'GB'];
-  let i = 0;
-  while (b >= 1024 && i < u.length - 1) { b /= 1024; i++; }
-  return `${b.toFixed(i > 1 ? 1 : 0)} ${u[i]}`;
-}
 export function fmtDur(s) {
   if (!s) return '';
   s = Math.round(s);
@@ -204,6 +199,19 @@ async function reportProblem() {
   try { text = await send({ type: 'diagnostics' }); await navigator.clipboard.writeText(text); } catch {}
   chrome.tabs.create({ url: bugReportUrl(text) });
 }
+// play a finished file: Chrome opens browser downloads itself (needs a click), the helper opens the rest
+function canPlay(j) {
+  if (j.playlist || j.files > 1) return false;
+  if (j.engine === 'browser' && j.downloadId != null && !IS_FIREFOX && chrome.downloads.open) return true;
+  return !!j.file && hasNative();
+}
+function playJob(j) {
+  if (j.engine === 'browser' && j.downloadId != null && !IS_FIREFOX && chrome.downloads.open) {
+    try { chrome.downloads.open(j.downloadId); } catch (e) { flash(e.message, true); }
+    return;
+  }
+  send({ type: 'openJob', jobId: j.jobId }).catch((e) => flash(e.message, true));
+}
 function jobError(j) {
   if (j.error === 'CANCELED') return t('jobCanceled');
   return friendlyError(j.error, t, installer());
@@ -251,8 +259,8 @@ export function sizeHint(bytes, approx = true) {
 function pageOptions(it) {
   const a = it.audioSizes || {};
   const opts = (it.variants?.length ? it.variants : [{ height: 0, label: t('bestQuality') }])
-    .map((v) => ({ value: 'v' + (v.height || 0), label: v.height ? `${v.height}p` + (v.height >= 2160 ? ' · 4K' : '') : t('bestQuality'), hint: sizeHint(v.size?.bytes, v.size?.approx) }));
-  if (it.hasAudio !== false) opts.push('-', { value: 'mp3', label: t('audioMp3'), hint: sizeHint(a.mp3) }, { value: 'm4a', label: t('audioM4a'), hint: sizeHint(a.m4a, a.approx) });
+    .map((v) => ({ value: 'v' + (v.height || 0), label: v.height ? `${v.height}p` + (v.height >= 2160 ? ' · 4K' : '') : t('bestQuality'), hint: sizeHint(v.size?.bytes, v.size?.approx), bytes: v.size?.bytes || 0 }));
+  if (it.hasAudio !== false) opts.push('-', { value: 'mp3', label: t('audioMp3'), hint: sizeHint(a.mp3), bytes: a.mp3 || 0 }, { value: 'm4a', label: t('audioM4a'), hint: sizeHint(a.m4a, a.approx), bytes: a.m4a || 0 });
   return opts;
 }
 
@@ -269,9 +277,9 @@ function renderPage() {
     out.push(banner('info', 'info', t('playlistInfoTitle'), t('playlistInfoBody'), btn('secondary', t('gotIt'), () => dismissPlaylist(it.id))));
   }
   const opts = pageOptions(it);
-  if (!picked.has(it.id) || !opts.some((o) => o.value === picked.get(it.id))) picked.set(it.id, opts[0].value);
+  if (!picked.has(it.id) || !opts.some((o) => o.value === picked.get(it.id))) picked.set(it.id, pickQuality(opts, local.lastQuality));
   const cur = opts.find((o) => o.value === picked.get(it.id));
-  const q = el('button', { class: 'qsel', onclick: (e) => { e.stopPropagation(); openMenu(q, opts, picked.get(it.id), (v) => { picked.set(it.id, v); keys.page = ''; renderPage(); }); } }, [cur.label, cur.hint ? el('span', { class: 'qsize', text: cur.hint, dir: 'ltr' }) : null, iconEl('chevron')]);
+  const q = el('button', { class: 'qsel', onclick: (e) => { e.stopPropagation(); openMenu(q, opts, picked.get(it.id), (v) => { picked.set(it.id, v); local.lastQuality = v; chrome.storage.local.set({ lastQuality: v }); keys.page = ''; renderPage(); }); } }, [cur.label, cur.hint ? el('span', { class: 'qsize', text: cur.hint, dir: 'ltr' }) : null, iconEl('chevron')]);
   const name = el('input', { class: 'input name', placeholder: t('fileNameHint'), value: names.get(it.id) ?? '', title: t('fileName') });
   name.addEventListener('input', () => names.set(it.id, name.value));
   const note = el('div', { class: 'note' + (it.probeError ? ' err' : ''), text: it.probeError ? `${t('errQualities')}: ${it.probeError}` : it.live ? t('liveNote') : '' });
@@ -282,6 +290,7 @@ function renderPage() {
       await send({
         type: 'downloadPage', tabId, url: it.url,
         baseName: name.value.trim(), title: it.title || '',
+        expectBytes: (it.isPlaylist || playlistChecked.get(it.id)) ? 0 : (opts.find((o) => o.value === v)?.bytes || 0),
         height: v.startsWith('v') ? Number(v.slice(1)) : 0,
         audioFormat: v === 'mp3' || v === 'm4a' ? v : '',
         playlist: it.isPlaylist || !!playlistChecked.get(it.id),
@@ -486,7 +495,10 @@ async function jobView(j) {
   }
   let act;
   if (j.state === 'in_progress') act = el('button', { class: 'act', title: t('cancel'), html: icon('x'), onclick: () => send({ type: 'cancelJob', jobId: j.jobId }).catch((e) => flash(e.message, true)) });
-  else if (j.state === 'complete') act = el('button', { class: 'act folder', title: t('showInFolder'), html: icon('folder'), onclick: () => send({ type: 'revealJob', jobId: j.jobId }).catch((e) => flash(e.message, true)) });
+  else if (j.state === 'complete') {
+    const folder = el('button', { class: 'act folder', title: t('showInFolder'), html: icon('folder'), onclick: () => send({ type: 'revealJob', jobId: j.jobId }).catch((e) => flash(e.message, true)) });
+    act = canPlay(j) ? el('span', { class: 'acts' }, [el('button', { class: 'act play', title: t('play'), html: icon('play'), onclick: () => playJob(j) }), folder]) : folder;
+  }
   else if (j.req && j.error !== 'CANCELED') act = el('button', { class: 'act retry', title: t('retry'), html: icon('retry'), onclick: () => retry(j.jobId) });
   else act = el('button', { class: 'act', title: t('remove'), html: icon('x'), onclick: () => send({ type: 'removeJob', jobId: j.jobId }).then(loadJobs).catch(() => {}) });
   const name = (j.file ? basename(j.file) : j.title || basename(j.path));
@@ -525,7 +537,7 @@ async function loadState() {
   renderAll();
 }
 async function loadJobs() {
-  const r = await chrome.storage.local.get(['jobs', 'stats', 'helperUpdate', 'dismissedUpdate', 'dismissedPlaylist', 'justUpdated', 'dismissedMove']);
+  const r = await chrome.storage.local.get(['jobs', 'stats', 'helperUpdate', 'dismissedUpdate', 'dismissedPlaylist', 'justUpdated', 'dismissedMove', 'lastQuality']);
   // only the new version shows it (the old popup also sees the key just before the reload)
   if (r.justUpdated && r.justUpdated === chrome.runtime.getManifest().version) {
     justUpdated = r.justUpdated;

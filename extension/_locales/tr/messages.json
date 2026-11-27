@@ -221,6 +221,9 @@
   "noAudio": {
     "message": "Ses yok"
   },
+  "play": {
+    "message": "Oynat"
+  },
   "showInFolder": {
     "message": "Klasörde göster"
   },
@@ -349,6 +352,9 @@
   },
   "errContextNeedsHelper": {
     "message": "Yardımcı gerekli ($1 dosyasını çalıştırın). Ya da videoyu oynatıp Hudhud simgesini kullanın."
+  },
+  "errNoSpace": {
+    "message": "Bu video yaklaşık $1, ama diskte yalnızca $2 boş yer var. Biraz yer açın ya da daha düşük bir kalite seçin."
   },
   "errSignIn": {
     "message": "Site oturum açmanızı istiyor. Siteyi tarayıcınızda açıp oturum açın, sonra tekrar deneyin."

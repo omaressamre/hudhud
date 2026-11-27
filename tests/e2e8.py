@@ -49,6 +49,16 @@ async def main():
     await yt.evaluate("history.pushState({}, '', '/watch?v=abcDEF12345&list=PLx')"); await yt.wait_for_timeout(800)
     await pop.goto(f'chrome-extension://{ext}/popup.html?tabId={tab}'); await pop.wait_for_timeout(2500)
     await pop.screenshot(path=SHOTS+'/popup_yt.png')
+    # not enough free space for the expected size → refused before the download starts
+    r = await M({'type':'downloadPage','tabId':tab,'url':st['items'][0]['url'],'baseName':'','title':'Huge','height':360,'audioFormat':'','expectBytes':10**15})
+    print(' free-space check:', r.get('ok'), (r.get('error') or '')[:60])
+    # the last quality picked is remembered (720 isn't offered here → nearest below: 360)
+    await o.evaluate("chrome.storage.local.set({lastQuality:'v720'})")
+    await pop.goto(f'chrome-extension://{ext}/popup.html?tabId={tab}'); await pop.wait_for_timeout(2000)
+    print(' remembered quality →', (await pop.evaluate("document.querySelector('#pageCard .qsel')?.textContent")))
+    await pop.wait_for_timeout(2500)
+    print(' play buttons on finished jobs:', await pop.evaluate("document.querySelectorAll('.job .act.play').length"))
+    await pop.set_viewport_size({'width':400,'height':1000}); await pop.wait_for_timeout(300); await pop.screenshot(path=SHOTS+'/popup_yt_play.png', full_page=True)
 
     print('=== Thumbnails')
     tp = await ctx.new_page(); await tp.goto('http://127.0.0.1:8765/thumbs.html'); await tp.wait_for_timeout(2500)

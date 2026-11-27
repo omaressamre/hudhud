@@ -89,6 +89,7 @@ export default {
   partN: ['جزء $1', 'Part $1'],
   filesN: ['$1 ملف', '$1 files'],
   noAudio: ['من غير صوت', 'No audio'],
+  play: ['شغّل', 'Play'],
   showInFolder: ['افتح الفولدر', 'Show in folder'],
   doneTitle: ['خلصنا! كل التحميلات جاهزة', 'Done! Everything’s saved'],
   openDownloads: ['افتح فولدر التحميلات', 'Open downloads folder'],
@@ -137,6 +138,7 @@ export default {
   errJobNotFound: ['مش لاقي التحميل ده', 'Can’t find this download'],
   errContextNeedsHelper: ['محتاج المساعد (شغّل $1). أو شغّل الفيديو وحمّله من أيقونة هدهد.', 'Needs the helper (run $1). Or play the video and use the Hudhud icon.'],
   // friendly errors (lib/errors.js); $1 = installer file name
+  errNoSpace: ['الفيديو ده حوالي $1، والمساحة الفاضية على الجهاز $2 بس. فضّي مساحة أو اختار جودة أقل.', 'This video is about $1, but only $2 is free on this disk. Free up some space or pick a lower quality.'],
   errSignIn: ['الموقع عايزك تسجّل دخول. افتحه في المتصفح وسجّل، وبعدين جرّب تاني.', 'The site wants you to sign in. Open it in your browser, sign in, then try again.'],
   errAge: ['الفيديو ده لـ+18، ولازم تكون مسجّل دخول. سجّل في المتصفح وجرّب تاني.', 'This video is age-restricted. Sign in to the site in your browser, then try again.'],
   errPrivate: ['الفيديو ده خاص، وصاحبه بس اللي يقدر يشوفه.', 'This video is private. Only its owner can watch it.'],

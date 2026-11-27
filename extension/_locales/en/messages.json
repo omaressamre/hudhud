@@ -239,6 +239,9 @@
   "noAudio": {
     "message": "No audio"
   },
+  "play": {
+    "message": "Play"
+  },
   "showInFolder": {
     "message": "Show in folder"
   },
@@ -367,6 +370,9 @@
   },
   "errContextNeedsHelper": {
     "message": "Needs the helper (run $1). Or play the video and use the Hudhud icon."
+  },
+  "errNoSpace": {
+    "message": "This video is about $1, but only $2 is free on this disk. Free up some space or pick a lower quality."
   },
   "errSignIn": {
     "message": "The site wants you to sign in. Open it in your browser, sign in, then try again."
