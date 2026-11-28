@@ -70,6 +70,7 @@ export default {
   jobProcessing: 'Tamamlanıyor…',
   jobMerging: 'Video ve ses birleştiriliyor…',
   jobDone: 'Kaydedildi ✓',
+  jobLost: 'Bu indirme, tarayıcı ya da yardımcı kapandığında durdu. “Tekrar dene”ye basın.',
   jobStopped: 'Durdu',
   jobCanceled: 'İptal edildi',
   jobPaused: 'Duraklatıldı',

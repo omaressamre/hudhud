@@ -4,6 +4,18 @@ Each version has an English and an Arabic list. The release workflow publishes t
 version it releases as the GitHub release notes (`scripts/changelog.mjs`), and the update banner in
 the extension shows the first points of it. Keep each point short and written for users.
 
+## 0.9.9 — 2026-11-28
+
+### English
+- A download that stopped when the browser or the helper closed no longer stays “downloading” forever: Hudhud notices it and offers Retry.
+- Cancel always removes a download from the list, even when nothing was downloading it any more.
+- A stuck download no longer blocks “Update now”.
+
+### العربية
+- التحميل اللي وقف لما المتصفح أو المساعد اتقفل مبقاش يفضل «بيتحمّل» على طول: هدهد بياخد باله ويديك «جرّب تاني».
+- زرار الإلغاء بقى بيشيل التحميل من القايمة دايمًا، حتى لو مفيش حاجة شغّالة عليه.
+- التحميل المعلّق مبقاش بيمنع «حدّث دلوقتي».
+
 ## 0.9.8 — 2026-11-28
 
 ### English

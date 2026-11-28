@@ -197,6 +197,9 @@
   "jobDone": {
     "message": "Guardado ✓"
   },
+  "jobLost": {
+    "message": "Esta descarga se detuvo cuando se cerró el navegador o el asistente. Pulsa «Reintentar»."
+  },
   "jobStopped": {
     "message": "Detenida"
   },

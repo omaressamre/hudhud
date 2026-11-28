@@ -81,6 +81,7 @@ export default {
   jobProcessing: ['بيجهّز الملف…', 'Finishing up…'],
   jobMerging: ['بيدمج الصوت والصورة…', 'Merging video and audio…'],
   jobDone: ['اتحمّل ✓', 'Saved ✓'],
+  jobLost: ['التحميل ده وقف لما المتصفح أو المساعد اتقفل. دوس «جرّب تاني».', 'This download stopped when the browser or the helper closed. Press “Retry”.'],
   jobStopped: ['وقف', 'Stopped'],
   jobCanceled: ['اتلغى', 'Canceled'],
   jobPaused: ['متوقف مؤقتاً', 'Paused'],

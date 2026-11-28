@@ -197,6 +197,9 @@
   "jobDone": {
     "message": "Kaydedildi ✓"
   },
+  "jobLost": {
+    "message": "Bu indirme, tarayıcı ya da yardımcı kapandığında durdu. “Tekrar dene”ye basın."
+  },
   "jobStopped": {
     "message": "Durdu"
   },

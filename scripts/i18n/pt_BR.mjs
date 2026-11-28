@@ -69,6 +69,7 @@ export default {
   jobProcessing: 'Finalizando…',
   jobMerging: 'Juntando vídeo e áudio…',
   jobDone: 'Salvo ✓',
+  jobLost: 'Este download parou quando o navegador ou o assistente fechou. Clique em “Tentar de novo”.',
   jobStopped: 'Parado',
   jobCanceled: 'Cancelado',
   jobPaused: 'Pausado',

@@ -1,6 +1,6 @@
 # Hudhud — handoff
 
-Snapshot: **2026-11-28, v0.9.8**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
+Snapshot: **2026-11-28, v0.9.9**. Give this file to the next Claude session first. It explains where the project stands, how to work on it, and what's left.
 
 > **ملخص للمستخدم:** الملف ده بيشرح لأي محادثة جديدة مع Claude كل حاجة عن هدهد: الكود، والقرارات اللي خدناها، وإزاي بنطلّع إصدار، وإيه اللي فاضل. ابدأ المحادثة الجديدة بإنك تديها لينك الريبو وتقولها تقرا `docs/HANDOFF.md`.
 
@@ -149,6 +149,9 @@ More detail: `docs/ARCHITECTURE.md`, `docs/TESTING.md`, `README.md`, `CONTRIBUTI
 - Remembers the last quality (`lastQuality` in storage, `pickQuality` in `lib/format.js`).
 - ▶ Play on finished jobs: Chrome `downloads.open` for browser downloads (permission `downloads.open`, removed from the Firefox build so Firefox doesn't prompt), helper `openFile` otherwise.
 - Free-space check before native page downloads (helper `space` command; refuses when free < 1.1 × expected size).
+
+**Done in 0.9.9**
+- Stuck “in progress” entries (browser/helper restarted) blocked updates and couldn't be cancelled. `reconcileJobs()` in background.js checks every old in-progress entry against reality (helper `active` command, `chrome.downloads.search`, the offscreen document) at startup, when the popup opens and before a self-update; `cancelJob` always marks the entry stopped. Manual fix for older versions: service-worker console → filter `in_progress` out of `jobs` in `chrome.storage.local`.
 
 **Later / optional**
 - InstaPay QR code next to the button (for desktop visitors).

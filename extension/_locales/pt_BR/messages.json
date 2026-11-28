@@ -197,6 +197,9 @@
   "jobDone": {
     "message": "Salvo ✓"
   },
+  "jobLost": {
+    "message": "Este download parou quando o navegador ou o assistente fechou. Clique em “Tentar de novo”."
+  },
   "jobStopped": {
     "message": "Parado"
   },

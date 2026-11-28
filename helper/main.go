@@ -29,7 +29,7 @@ import (
 	"time"
 )
 
-const Version = "0.9.8"
+const Version = "0.9.9"
 
 type Req struct {
 	ID        string `json:"id"`
@@ -247,6 +247,15 @@ func handle(q *Req) {
 	case "cancel":
 		cancelJob(q.JobID)
 		reply(q.ID, nil)
+	case "active":
+		// jobs this helper is running or queueing: the extension drops "running" entries that aren't here
+		jobsMu.Lock()
+		ids := make([]string, 0, len(jobs))
+		for id := range jobs {
+			ids = append(ids, id)
+		}
+		jobsMu.Unlock()
+		reply(q.ID, map[string]any{"jobs": ids})
 	case "probe":
 		res, err := probe(q)
 		if err != nil {

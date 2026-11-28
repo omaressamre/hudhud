@@ -586,6 +586,7 @@ async function init() {
     tabId = tab?.id;
   }
   await Promise.all([loadState(), loadJobs()]);
+  send({ type: 'reconcileJobs' }).catch(() => {}); // drop "in progress" entries that nothing is downloading any more
   setInterval(loadState, 2000);
   setInterval(loadJobs, 1000);
   chrome.storage.onChanged.addListener((c, area) => {

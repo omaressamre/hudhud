@@ -477,7 +477,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') chrome.tabs.create({ url: chrome.runtime.getURL('welcome.html') });
   checkHelperUpdate(true);
 });
-chrome.runtime.onStartup.addListener(() => { buildMenus(); checkHelperUpdate(); });
+chrome.runtime.onStartup.addListener(() => { buildMenus(); checkHelperUpdate(); reconcileJobs().catch(() => {}); });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   contextDownload(info, tab).catch((e) => toast(t('brand'), String(e.message || e)));
@@ -837,7 +837,9 @@ async function diagnostics() {
 /** one-click update: the helper replaces itself and the extension folder, then we reload */
 async function selfUpdate() {
   const { jobs = [] } = await chrome.storage.local.get('jobs');
-  if (jobs.some((j) => j.state === 'in_progress')) throw new Error(t('updateBusy'));
+  await reconcileJobs().catch(() => {});
+  const { jobs: now = [] } = await chrome.storage.local.get('jobs');
+  if (now.some((j) => j.state === 'in_progress')) throw new Error(t('updateBusy'));
   const info = await nativeInfo(true);
   if (IS_FIREFOX) {
     // Firefox keeps the extension up to date; the helper replaces only itself
@@ -863,9 +865,48 @@ async function cancelJob({ jobId }) {
   const { jobs = [] } = await chrome.storage.local.get('jobs');
   const j = jobs.find((x) => x.jobId === jobId);
   if (!j) return;
-  if (j.engine === 'native') await nativeRequest('cancel', { jobId });
-  else if (j.downloadId != null) await chrome.downloads.cancel(j.downloadId);
-  else if (j.mode === 'hls') await chrome.runtime.sendMessage({ target: 'offscreen', type: 'hls-cancel', jobId });
+  try {
+    if (j.engine === 'native') await nativeRequest('cancel', { jobId }, 8000);
+    else if (j.downloadId != null) await chrome.downloads.cancel(j.downloadId);
+    else if (j.mode === 'hls') await chrome.runtime.sendMessage({ target: 'offscreen', type: 'hls-cancel', jobId });
+  } catch (e) { console.warn('[Hudhud] cancel', e); }
+  // Cancel always clears the entry, even when nothing was running any more (helper or browser restarted)
+  await updateJobs((list) => { const x = list.find((y) => y.jobId === jobId); if (x?.state === 'in_progress') finishJob(x, 'interrupted', { error: 'CANCELED' }); });
+}
+
+/**
+ * Entries still "in progress" whose download no longer exists anywhere (the browser or the helper
+ * restarted, the offscreen page was closed…) are marked stopped, so they can be retried and don't
+ * block updates. Runs at startup, when the popup opens and before a self-update.
+ */
+async function reconcileJobs() {
+  const { jobs = [] } = await chrome.storage.local.get('jobs');
+  const old = (j) => j.state === 'in_progress' && Date.now() - (j.startedAt || 0) > 15_000;
+  const cands = jobs.filter(old);
+  if (!cands.length) return;
+  let nativeIds = null; // null = couldn't ask (old helper or not running): leave helper jobs alone
+  if (cands.some((j) => j.engine === 'native')) {
+    try { nativeIds = new Set((await nativeRequest('active', {}, 8000))?.jobs || []); } catch {}
+  }
+  let offscreen = true;
+  if (!IS_FIREFOX && cands.some((j) => j.mode === 'hls')) offscreen = await chrome.offscreen.hasDocument().catch(() => true);
+  const dl = {};
+  for (const j of cands) if (j.engine !== 'native' && j.downloadId != null) dl[j.jobId] = (await chrome.downloads.search({ id: j.downloadId }).catch(() => []))[0] || null;
+  await updateJobs((list) => {
+    for (const j of list) {
+      if (!old(j)) continue;
+      if (j.engine === 'native') {
+        if (nativeIds && !nativeIds.has(j.jobId)) finishJob(j, 'interrupted', { error: t('jobLost') });
+      } else if (j.downloadId != null) {
+        const d = dl[j.jobId];
+        if (!d) finishJob(j, 'interrupted', { error: t('jobLost') });
+        else if (d.state === 'complete') finishJob(j, 'complete', { file: d.filename });
+        else if (d.state === 'interrupted') finishJob(j, 'interrupted', { error: d.error || t('jobLost') });
+      } else if (j.mode === 'hls' ? !offscreen : Date.now() - (j.startedAt || 0) > 120_000) {
+        finishJob(j, 'interrupted', { error: t('jobLost') });
+      }
+    }
+  });
 }
 
 async function openJob({ jobId }) {
@@ -914,6 +955,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     case 'cancelJob': reply(cancelJob(msg)); return true;
     case 'revealJob': reply(revealJob(msg)); return true;
     case 'openJob': reply(openJob(msg)); return true;
+    case 'reconcileJobs': reply(reconcileJobs()); return true;
     case 'openFolder': reply(openFolder()); return true;
     case 'engines': reply(engineStatus()); return true;
     case 'nativeInfo': reply(nativeInfo(true)); return true;

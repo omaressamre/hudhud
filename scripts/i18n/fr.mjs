@@ -69,6 +69,7 @@ export default {
   jobProcessing: 'Finalisation…',
   jobMerging: 'Fusion de la vidéo et de l’audio…',
   jobDone: 'Enregistré ✓',
+  jobLost: 'Ce téléchargement s’est arrêté à la fermeture du navigateur ou de l’assistant. Cliquez sur « Réessayer ».',
   jobStopped: 'Arrêté',
   jobCanceled: 'Annulé',
   jobPaused: 'En pause',

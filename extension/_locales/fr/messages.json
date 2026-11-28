@@ -197,6 +197,9 @@
   "jobDone": {
     "message": "Enregistré ✓"
   },
+  "jobLost": {
+    "message": "Ce téléchargement s’est arrêté à la fermeture du navigateur ou de l’assistant. Cliquez sur « Réessayer »."
+  },
   "jobStopped": {
     "message": "Arrêté"
   },

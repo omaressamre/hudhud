@@ -215,6 +215,9 @@
   "jobDone": {
     "message": "Saved ✓"
   },
+  "jobLost": {
+    "message": "This download stopped when the browser or the helper closed. Press “Retry”."
+  },
   "jobStopped": {
     "message": "Stopped"
   },

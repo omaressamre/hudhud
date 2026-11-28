@@ -58,6 +58,12 @@ async def main():
     print(' remembered quality →', (await pop.evaluate("document.querySelector('#pageCard .qsel')?.textContent")))
     await pop.wait_for_timeout(2500)
     print(' play buttons on finished jobs:', await pop.evaluate("document.querySelectorAll('.job .act.play').length"))
+    # a download nothing is running any more (helper/browser restarted) must not stay "in progress" forever
+    await o.evaluate("chrome.storage.local.get('jobs').then(r=>chrome.storage.local.set({jobs:[{jobId:'ghost-1',engine:'native',state:'in_progress',path:'Hudhud/ghost.mp4',startedAt:Date.now()-600000,percent:12},{jobId:'ghost-2',engine:'native',state:'in_progress',path:'Hudhud/ghost2.mp4',startedAt:Date.now()-600000,percent:30},...(r.jobs||[])]}))")
+    await M({'type':'cancelJob','jobId':'ghost-2'})
+    await M({'type':'reconcileJobs'})
+    ghosts = await o.evaluate("chrome.storage.local.get('jobs').then(r=>r.jobs.filter(j=>j.jobId.startsWith('ghost')).map(j=>j.jobId+':'+j.state+':'+(j.error||'').slice(0,30)))")
+    print(' stuck downloads cleared:', ghosts)
     await pop.set_viewport_size({'width':400,'height':1000}); await pop.wait_for_timeout(300); await pop.screenshot(path=SHOTS+'/popup_yt_play.png', full_page=True)
 
     print('=== Thumbnails')
